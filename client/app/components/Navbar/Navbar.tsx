@@ -34,7 +34,7 @@ const Navbar = () => {
           className=""
         />
         <AiOutlineMenu
-          className="lg:hidden text-3xl text-[#1cffd9] cursor-pointer"
+          className="lg:hidden text-3xl text-primary cursor-pointer"
           onClick={() => setMenu(!menu)}
         />
         <nav
@@ -45,7 +45,7 @@ const Navbar = () => {
         >
           <div className="lg:hidden flex justify-end px-3">
             <AiOutlineClose
-              className=" text-3xl text-[#1cffd9] cursor-pointer my-2"
+              className=" text-3xl text-primary cursor-pointer my-2"
               onClick={() => setMenu(!menu)}
             />
           </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
               ) : (
                 <li key={i}>
                   <Link
-                    className="text-lg font-semibold text-[#1cffd9]/70 hover:text-[#1cffd9] transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
+                    className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
                     href={link.link}
                   >
                     {link.title}
