@@ -19,10 +19,10 @@ const Navbar = () => {
     },[])
   return (
     <header
-      className={`w-full z-50 ${
-        scroll > 150
-          ? `fixed py-2.5 bg-black`
-          : `md:absolute md:pt-10 fixed md:bg-transparent bg-black py-2.5`
+      className={`w-full z-50 overflow-x-clip ${
+        scroll > 100
+          ? `fixed py-2.5 bg-black/80`
+          : `md:absolute md:pt-10 fixed md:bg-transparent bg-black/80 py-2.5`
       }`}
     >
       <div className="container overflow-x-hidden flex justify-between items-center w-full mx-auto px-4 lg:px-28">
