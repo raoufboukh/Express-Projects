@@ -51,3 +51,33 @@ export const services = [
       "Duis dignissim mi ut laoreet mollis. Nunc id tellus finibus, eleifend mi maximus",
   },
 ];
+
+export const companyFooter = [
+  {
+    title: "Lorem ipsum",
+  },
+  {
+    title: " Praesent pretium",
+  },
+  {
+    title: "Pellentesque",
+  },
+  {
+    title: "Aliquam",
+  },
+];
+
+export const helpFooter = [
+  {
+    title: "Etiam dapibus",
+  },
+  {
+    title: "Nunc sit",
+  },
+  {
+    title: "Etiam tempor",
+  },
+  {
+    title: "Lorem ipsum",
+  },
+];
