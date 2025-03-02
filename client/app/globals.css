@@ -18,14 +18,22 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .bg-hero {
   background-image: url('../public/assets/home_clinic3_slider_bg.jpg');
   background-position: center;
   background-size: 120%;
+}
+
+.bg-work {
+  background-image: url('../public/assets/home_clinic3_pic10.jpg');
+  background-position: center;
+  background-size: 120%;
+  background-repeat: no-repeat;
+}
+
+.bg-cta {
+  background-image: url('../public/assets/home_clinic3_pic11.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

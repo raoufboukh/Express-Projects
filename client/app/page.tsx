@@ -1,11 +1,13 @@
 import Hero from "./components/Hero/Hero";
-import Navbar from "./components/Navbar/Navbar";
+import Services from "./components/Services/Services";
+import Work from "./components/Work/Work";
 
 export default function Home() {
   return (
     <div className="">
-      <Navbar />
       <Hero />
+      <Services />
+      <Work />
     </div>
   );
 }

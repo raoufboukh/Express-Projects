@@ -66,6 +66,7 @@ const Navbar = () => {
                   <Link
                     className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
                     href={link.link}
+                    onClick={() => setMenu(false)}
                   >
                     {link.title}
                   </Link>{" "}
