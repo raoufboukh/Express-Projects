@@ -37,3 +37,28 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.bg-vid1 {
+  background-image: url('../public/assets/home_clinic3_pic12.jpg');
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+}
+
+.bg-vid2 {
+  background-image: url('../public/assets/home_clinic3_pic13.jpg');
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+}
+
+.hover-show {
+  opacity: 0;
+}
+
+.bg-vid1 > div:hover .hover-hide,
+.bg-vid2 > div:hover .hover-hide {
+  opacity: 0;
+}
+.bg-vid1 > div:hover .hover-show,
+.bg-vid2 > div:hover .hover-show {
+  opacity: 1;
+}
