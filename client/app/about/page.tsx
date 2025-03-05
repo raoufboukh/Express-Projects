@@ -7,9 +7,9 @@ import VideosWork from '../components/Work/VideosWork';
 const About = () => {
   return (
     <section className="">
-      <div className="bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-blue-950">
+      <div className="pages">
         <div className="container mx-auto lg:px-20 px-4">
-          <h2 className="text-white font-bold text-7xl mt-10">About Us</h2>
+          <h2 className="h2">About Us</h2>
         </div>
       </div>
       <div className="container mx-auto lg:px-20 px-4 my-20">

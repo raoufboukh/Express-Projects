@@ -4,6 +4,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-primary: #1cffd9;
+  --color-secondary: #001b37;
 }
 
 :root {
@@ -61,4 +62,12 @@
 .bg-vid1 > div:hover .hover-show,
 .bg-vid2 > div:hover .hover-show {
   opacity: 1;
+}
+
+.h2 {
+  @apply text-white font-bold text-7xl mt-20
+}
+
+.pages{
+  @apply bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-secondary
 }
