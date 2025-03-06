@@ -9,79 +9,145 @@ export const getUsers = async (req, res) => {
     }
 }
 
+export const getOneUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getDoctors = async (req, res) => {
+  try {
+    const doctors = await User.find({ role: "doctor" }).select("-password");
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getOneDoctor = async (req, res) => {
+  try {
+    const doctor = await User.findById(req.params.id).select("-password");
+    res.status(200).json(doctor);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const getScan = async (req, res) => {
-    try {
-        const user = await User.findById(req.user._id);
-        res.status(200).json(user.scanResults);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
+  try {
+    const user = await User.findById(req.user._id);
+    res.status(200).json(user.scanResults);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const addScan = async (req, res) => {
-    try {
-        const {date, result, aiAnalysis} = req.body;
-        if (!date) 
-            return res.status(400).json({ message: "Date required" });
-        if (!result) 
-            return res.status(400).json({ message: "Result required" });
-        if (!aiAnalysis)
-            return res.status(400).json({ message: "AI Analysis required" });
+  try {
+    const { date, result, aiAnalysis } = req.body;
+    if (!date) return res.status(400).json({ message: "Date required" });
+    if (!result) return res.status(400).json({ message: "Result required" });
+    if (!aiAnalysis)
+      return res.status(400).json({ message: "AI Analysis required" });
 
-        const user = await User.findByIdAndUpdate(req.user._id, {
-            $push: {
-                scanResults: {
-                    date,
-                    result,
-                    aiAnalysis
-                }
-            }
-        }, {new: true});
-        res.status(200).json(user.scanResults);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: {
+          scanResults: {
+            date,
+            result,
+            aiAnalysis,
+          },
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(user.scanResults);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const bookAppointment = async (req, res) => {
-    try {
-        const {date} = req.body;
-        if (!date) 
-            return res.status(400).json({ message: "Date required" });
+  try {
+    const { date } = req.body;
+    if (!date) return res.status(400).json({ message: "Date required" });
 
-        const admins = await User.find({ role: "admin" });
-        if (admins.length === 0) 
-            return res.status(404).json({ message: "No admins found" });
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(404).json({ message: "No admins found" });
 
-        const user = await User.findByIdAndUpdate(req.user._id, {
-            $push: {
-                appointments: {
-                    date
-                }
-            }
-        }, {new: true});
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: {
+          appointments: {
+            date,
+          },
+        },
+      },
+      { new: true }
+    );
 
-        admins.forEach(async (admin) => {
-            await User.findByIdAndUpdate(admin._id, {
-                $push: {
-                    notifications: {
-                        message: "New appointment booked",
-                        appointment: {
-                            date
-                        },
-                        senderId: user._id
-                    }
-                }
-            });
-        })
-        res.status(200).json(user.appointments);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
+    admins.forEach(async (admin) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $push: {
+          notifications: {
+            message: "New appointment booked",
+            appointment: {
+              date,
+            },
+            senderId: user._id,
+          },
+        },
+      });
+    });
+    res.status(200).json(user.appointments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const cancelAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "Appointment ID required" });
+
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(404).json({ message: "No admins found" });
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: {
+          appointments: {
+            _id: id,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    admins.forEach(async (admin) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $pull: {
+          notifications: {
+            "appointment._id": id,
+          },
+        },
+      });
+    });
+    res.status(200).json({ message: "Appointment cancelled" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const updateAccountType = async (req, res) => {
     try {
