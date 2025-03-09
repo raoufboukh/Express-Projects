@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="bg-hero bg-fixed bg-no-repeat h-screen md:h-[110vh]">
+    <section className="bg-hero bg-fixed bg-center bg-cover lg:bg-[length:120%] bg-no-repeat h-screen md:h-[110vh]">
       <div className="container relative h-full flex items-center px-4 mx-auto lg:px-28">
         <div className="">
           <h1 className="text-5xl md:text-7xl leading-tight font-semibold text-white/90">
