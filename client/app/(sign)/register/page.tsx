@@ -1,17 +1,44 @@
 "use client";
+import { useMutation } from "@tanstack/react-query";
+import { check, register } from "@/app/components/lib/dataFetching";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const data = await check();
+        if (data) {
+          router.push("/");
+        }
+      } catch (err) {
+        console.error("Error during auth check:", err);
+      }
+    };
+    checkAuth();
+  });
+
+  const { mutate, error, isPending } = useMutation({
+    mutationFn: () => register(username, email, password),
+    onSuccess: (data) => {
+      console.log("Login successful", data);
+      router.push("/");
+    },
+    onError: (err) => {
+      console.error("Login failed", err);
+    },
+  });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    mutate();
   };
   return (
     <div className="bg-black h-screen pb-5 flex justify-center items-center">
@@ -28,11 +55,12 @@ const Login = () => {
         <div className="text-center">
           <h3 className="text-lg">Welcome!</h3>
           <p className="text-gray-400">Create New Account</p>
+          {error && <p className="text-red-500">Erreur de connexion</p>}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="my-4">
             <label htmlFor="username" className="block text-gray-400">
-              Email
+              Username
             </label>
             <input
               type="text"
@@ -70,8 +98,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white p-2 rounded-md"
+              disabled={isPending}
             >
-              Create Account
+              {isPending ? "Loading..." : "Register"}
             </button>
           </div>
         </form>
@@ -86,4 +115,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
