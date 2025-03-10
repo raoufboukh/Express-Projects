@@ -130,3 +130,21 @@ export const team = [
     footer: "Maecenas mi tortor, pellentesque a aliquam ut, fringilla.",
   },
 ];
+
+export const linksUser = [
+  {
+    title: "Appointment",
+    link: "/appointment",
+    role: ["user", "admin", "doctor"],
+  },
+  {
+    title: "Notification",
+    link: "/notification",
+    role: ["user", "admin", "doctor"],
+  },
+  {
+    title: "Logout",
+    link: "",
+    role: ["user", "admin", "doctor"],
+  },
+];

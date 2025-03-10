@@ -4,19 +4,34 @@ import { links } from "../constants"
 import Link from "next/link"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
-
+// import { useQuery } from "@tanstack/react-query";
+import { check } from "../lib/dataFetching";
+import LinksUser from "./LinksUser";
 
 const Navbar = () => {
-    const [scroll, setScroll] = useState(0);
-    const [menu, setMenu] = useState(false);
+  const [scroll, setScroll] = useState(0);
+  const [menu, setMenu] = useState(false);
+  const [data,setData] = useState(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-          setScroll(window.scrollY);
-        }
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    },[])
+  useEffect(() => {
+    const handleScroll = () => {
+      setScroll(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const ah = await check();
+        setData(ah);
+      } catch (err) {
+        console.error("Error during auth check:", err);
+      }
+    };
+    checkAuth();
+  },[data]);
   return (
     <header
       className={`w-full z-50 overflow-x-clip ${
@@ -25,7 +40,7 @@ const Navbar = () => {
           : `md:absolute md:pt-10 fixed md:bg-transparent bg-black/80 py-2.5`
       }`}
     >
-      <div className="container overflow-x-hidden flex justify-between items-center w-full mx-auto px-4 lg:px-28">
+      <div className="container flex justify-between items-center w-full mx-auto px-4 lg:px-28">
         <Image
           src="/assets/logo.png"
           alt="logo"
@@ -51,7 +66,7 @@ const Navbar = () => {
           </div>
           <ul className="lg:flex lg:mt-0 mt-8 items-center gap-10">
             {links.map((link, i) =>
-              link.title !== "Login" ? (
+              i + 1 !== links.length ? (
                 <li key={i}>
                   <Link
                     className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
@@ -61,6 +76,8 @@ const Navbar = () => {
                     {link.title}
                   </Link>{" "}
                 </li>
+              ) : data ? (
+                <LinksUser key={i} />
               ) : (
                 <li key={i}>
                   <Link
@@ -78,6 +95,6 @@ const Navbar = () => {
       </div>
     </header>
   );
-}
+};
 
 export default Navbar
