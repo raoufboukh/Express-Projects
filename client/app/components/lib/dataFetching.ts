@@ -23,11 +23,11 @@ export const register = async (username: string, email: string, password: string
 
 export const logout = async () => {
   try {
-    const { data } = await axiosInstance.post<{ message: string }>("/auth/logout");
+    const { data } = await axiosInstance.get("/auth/logout");
     return data;
   } catch (error) {
-    console.error('Logout failed:', error)
-    throw error
+    console.error('Logout failed:', error);
+    throw error;
   }
 };
 
