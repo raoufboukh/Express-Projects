@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import OurTeam from '../components/Team/OurTeam';
-import ContactTeam from '../components/Team/ContactTeam';
+import OurTeam from "@/components/Team/OurTeam";
+import ContactTeam from "@/components/Team/ContactTeam";
 
 const Team = () => {
   return (

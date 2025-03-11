@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import { check, register } from "@/app/components/lib/dataFetching";
+import { check, register } from "@/lib/dataFetching";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";

@@ -24,7 +24,7 @@ userRouter.get("/:id", getOneDoctor);
 userRouter.get("/scan", ProtectRoute, getScan);
 userRouter.post("/scan", ProtectRoute, addScan);
 userRouter.post("/appointment", ProtectRoute, bookAppointment);
-userRouter.post("/appointment/:id", ProtectRoute, cancelAppointment);
+userRouter.delete("/appointment/:id", ProtectRoute, cancelAppointment);
 userRouter.put("/account-type", ProtectRoute, updateAccountType);
 userRouter.get("/notifications", ProtectRoute, getNotifications);
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);

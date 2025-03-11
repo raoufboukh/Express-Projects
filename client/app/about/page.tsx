@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react'
-import { about } from '../components/constants';
-import Link from 'next/link';
-import VideosWork from '../components/Work/VideosWork';
+import { about } from "@/components/constants";
+import Link from "next/link";
+import VideosWork from "@/components/Work/VideosWork";
 
 const About = () => {
   return (

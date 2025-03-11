@@ -1,5 +1,5 @@
 "use client";
-import { check, login } from "@/app/components/lib/dataFetching";
+import { check, login } from "@/lib/dataFetching";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
