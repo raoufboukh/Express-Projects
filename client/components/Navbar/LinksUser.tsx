@@ -3,7 +3,7 @@ import { linksUser } from "../constants"
 import { useState } from "react";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
-import { logout } from "../lib/dataFetching";
+import { logout } from "../../lib/dataFetching";
 
 
 const LinksUser = () => {
@@ -12,7 +12,7 @@ const LinksUser = () => {
   const logoutMutation = useMutation({
     mutationFn: logout,
   });
-
+  
   const handleLogout = () => {
     logoutMutation.mutate();
     setSecond(false);

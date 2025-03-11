@@ -23,7 +23,7 @@ export default function LayoutWrapper({
   );
 
   const pathname = usePathname();
-  const hideLayout = ["/login", "/register"].includes(pathname);
+  const hideLayout = ["/dashboard", "/login", "/register"].some(path => pathname.startsWith(path));
 
   return (
     <QueryClientProvider client={queryClient}>

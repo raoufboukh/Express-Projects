@@ -4,8 +4,7 @@ import { links } from "../constants"
 import Link from "next/link"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
-// import { useQuery } from "@tanstack/react-query";
-import { check } from "../lib/dataFetching";
+import { check } from "../../lib/dataFetching";
 import LinksUser from "./LinksUser";
 
 const Navbar = () => {
@@ -41,13 +40,15 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex justify-between items-center w-full mx-auto px-4 lg:px-28">
-        <Image
-          src="/assets/logo.png"
-          alt="logo"
-          width={170}
-          height={170}
-          className=""
-        />
+        <Link href="/">
+          <Image
+            src="/assets/logo.png"
+            alt="logo"
+            width={170}
+            height={170}
+            className=""
+          />
+        </Link>
         <AiOutlineMenu
           className="lg:hidden text-3xl text-primary cursor-pointer"
           onClick={() => setMenu(!menu)}

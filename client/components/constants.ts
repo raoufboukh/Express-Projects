@@ -1,29 +1,31 @@
+import { Calendar, Home, Inbox, Search, LogOut } from "lucide-react";
+
 export const links = [
-    {
-        title: "Home",
-        link: "/"
-    },
-    {
-        title: "About",
-        link: "/about"
-    },
-    {
-        title: "Services",
-        link: "/services"
-    },
-    {
-        title: "Team",
-        link: "/team"
-    },
-    {
-        title: "Scan",
-        link: "/scan"
-    },
-    {
-        title: "Login",
-        link: "/login"
-    },
-]
+  {
+    title: "Home",
+    link: "/",
+  },
+  {
+    title: "About",
+    link: "/about",
+  },
+  {
+    title: "Services",
+    link: "/services",
+  },
+  {
+    title: "Team",
+    link: "/team",
+  },
+  {
+    title: "Scan",
+    link: "/scan",
+  },
+  {
+    title: "Login",
+    link: "/login",
+  },
+];
 
 export const services = [
   {
@@ -95,7 +97,6 @@ export const about = [
   },
 ];
 
-
 export const team = [
   {
     image: "/assets/home_clinic3_pic19.jpg",
@@ -133,18 +134,41 @@ export const team = [
 
 export const linksUser = [
   {
-    title: "Appointment",
-    link: "/appointment",
-    role: ["user", "admin", "doctor"],
-  },
-  {
-    title: "Notification",
-    link: "/notification",
+    title: "Dashboard",
+    link: "/dashboard",
     role: ["user", "admin", "doctor"],
   },
   {
     title: "Logout",
     link: "",
     role: ["user", "admin", "doctor"],
+  },
+];
+
+export const dashboardLinks = [
+  {
+    title: "Home",
+    link: "/",
+    icon: Home,
+  },
+  {
+    title: "Search",
+    link: "/search",
+    icon: Search,
+  },
+  {
+    title: "Calendar",
+    link: "/calendar",
+    icon: Calendar,
+  },
+  {
+    title: "Inbox",
+    link: "/inbox",
+    icon: Inbox,
+  },
+  {
+    title: "Logout",
+    link: "/",
+    icon: LogOut,
   },
 ];
