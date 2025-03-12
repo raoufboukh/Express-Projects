@@ -1,4 +1,5 @@
-import { Calendar, Home, Inbox, Search, LogOut } from "lucide-react";
+import { Calendar, Home, Inbox, LogOut, Scan, User } from "lucide-react";
+import { GiDoctorFace } from "react-icons/gi";
 
 export const links = [
   {
@@ -150,25 +151,42 @@ export const dashboardLinks = [
     title: "Home",
     link: "/",
     icon: Home,
+    role: ["admin", "doctor", "user"],
   },
   {
-    title: "Search",
-    link: "/search",
-    icon: Search,
+    title: "Users",
+    link: "",
+    icon: User,
+    role: ["admin"],
   },
   {
-    title: "Calendar",
-    link: "/calendar",
+    title: "Doctors",
+    link: "",
+    icon: GiDoctorFace,
+    role: ["admin"],
+  },
+  {
+    title: "Appointments",
+    link: "",
     icon: Calendar,
+    role: ["user"],
   },
   {
-    title: "Inbox",
-    link: "/inbox",
+    title: "Notifications",
+    link: "",
     icon: Inbox,
+    role: ["admin", "doctor"],
+  },
+  {
+    title: "Scans",
+    link: "",
+    icon: Scan,
+    role: ["user"],
   },
   {
     title: "Logout",
     link: "/",
     icon: LogOut,
+    role: ["admin", "doctor", "user"],
   },
 ];
