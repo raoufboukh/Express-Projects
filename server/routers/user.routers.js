@@ -18,7 +18,7 @@ import { ProtectRoute } from "../middleware/middleware.js";
 const userRouter = express.Router();
 
 userRouter.get("/", getUsers);
-userRouter.get("/", getDoctors);
+userRouter.get("/doctors", getDoctors);
 userRouter.get("/:id", getOneUser);
 userRouter.get("/:id", getOneDoctor);
 userRouter.get("/scan", ProtectRoute, getScan);

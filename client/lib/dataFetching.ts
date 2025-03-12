@@ -66,7 +66,7 @@ export const getUser = async (id: string) => {
 
 export const getDoctors = async () => {
   try {
-    const { data } = await axiosInstance.get("/users");
+    const { data } = await axiosInstance.get("/users/doctors");
     return data;
   } catch (error) {
     console.error("Get doctors failed:", error);
@@ -76,7 +76,7 @@ export const getDoctors = async () => {
 
 export const getDoctor = async (id: string) => {
   try {
-    const { data } = await axiosInstance.get(`/users/${id}`);
+    const { data } = await axiosInstance.get(`/users/doctors/${id}`);
     return data;
   } catch (error) {
     console.error("Get doctor failed:", error);
