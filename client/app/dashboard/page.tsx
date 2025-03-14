@@ -10,16 +10,19 @@ import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import Users from "@/components/Users/Users";
 import Doctors from "@/components/Doctors/Doctors";
+import Notifications from "@/components/Notification/Notifications";
+import Appointments from "@/components/Appointment/Appointments";
+import Scans from "@/components/Scans/Scans";
 
 interface User {
-    username: string;
-    email: string;
-    _id: string;
-    role: string;
-    notifications: any[];
-    appointments: any[];
-    scans: any[];
-    typeAccount: string;
+  username: string;
+  email: string;
+  _id: string;
+  role: string;
+  notifications: any[];
+  appointments: any[];
+  scans: any[];
+  typeAccount: string;
 }
 
 const AppSidebar = () => {
@@ -42,7 +45,7 @@ const AppSidebar = () => {
       try {
         const data = await check();
         if (!data) {
-            router.push("/");
+          router.push("/");
         }
         setUser(data);
       } catch (err) {
@@ -50,7 +53,7 @@ const AppSidebar = () => {
       }
     };
     checkAuth();
-  },[]);
+  }, []);
 
   const themes = {
     dark: {
@@ -59,7 +62,7 @@ const AppSidebar = () => {
       menuItem: "hover:bg-[#2D3139] text-gray-300 hover:text-white",
       active: "bg-[#2D3139] text-white",
       button: "bg-indigo-600 hover:bg-indigo-700 text-white",
-      main: "bg-[#F8F9FB] dark:bg-[#121317]"
+      main: "bg-[#F8F9FB] dark:bg-[#121317]",
     },
     light: {
       sidebar: "bg-white text-gray-800 border-r border-gray-200",
@@ -67,7 +70,7 @@ const AppSidebar = () => {
       menuItem: "hover:bg-gray-100 text-gray-600 hover:text-gray-900",
       active: "bg-gray-100 text-indigo-600",
       button: "bg-indigo-600 hover:bg-indigo-700 text-white",
-      main: "bg-gray-50"
+      main: "bg-gray-50",
     },
     blue: {
       sidebar: "bg-[#0F172A] text-white",
@@ -75,8 +78,8 @@ const AppSidebar = () => {
       menuItem: "hover:bg-[#1E293B] text-blue-300 hover:text-white",
       active: "bg-blue-700/30 text-white",
       button: "bg-blue-600 hover:bg-blue-700 text-white",
-      main: "bg-[#F8FAFC]"
-    }
+      main: "bg-[#F8FAFC]",
+    },
   };
 
   const theme = themes[activeTheme as keyof typeof themes];
@@ -180,11 +183,7 @@ const AppSidebar = () => {
                       } transition-all duration-200`}
                       onClick={() => setActiveItem(item.title)}
                     >
-                      <span
-                        className={`text-xl ${
-                          collapsed ? "" : "mr-3"
-                        }`}
-                      >
+                      <span className={`text-xl ${collapsed ? "" : "mr-3"}`}>
                         <item.icon />
                       </span>
                       {!collapsed && (
@@ -203,11 +202,7 @@ const AppSidebar = () => {
                         theme.menuItem
                       } transition-all duration-200`}
                     >
-                      <span
-                        className={`text-xl ${
-                          collapsed ? "" : "mr-3"
-                        }`}
-                      >
+                      <span className={`text-xl ${collapsed ? "" : "mr-3"}`}>
                         <item.icon />
                       </span>
                       {!collapsed && (
@@ -258,6 +253,12 @@ const AppSidebar = () => {
             <Users />
           ) : activeItem === "Doctors" ? (
             <Doctors />
+          ) : activeItem === "Notifications" ? (
+            <Notifications />
+          ) : activeItem === "Appointments" ? (
+            <Appointments />
+          ) : activeItem === "Scans" ? (
+            <Scans />
           ) : null}
         </main>
       </div>
