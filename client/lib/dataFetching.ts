@@ -134,16 +134,6 @@ export const updateAccountType = async () => {
   }
 };
 
-export const notifications = async () => {
-  try {
-    const { data } = await axiosInstance.get("/users/notifications");
-    return data;
-  } catch (error) {
-    console.error("Notifications failed:", error);
-    throw error;
-  }
-};
-
 export const acceptNotification = async (id: string) => {
   try {
     const response = await axiosInstance.post(
