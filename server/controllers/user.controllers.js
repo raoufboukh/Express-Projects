@@ -1,13 +1,14 @@
+import mongoose from "mongoose";
 import { User } from "../models/auth.models.js";
 
 export const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({ role: "user" }).select("-password");
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
+  try {
+    const users = await User.find({ role: "user" }).select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const getOneUser = async (req, res) => {
   try {
@@ -89,9 +90,10 @@ export const bookAppointment = async (req, res) => {
         $push: {
           notifications: {
             message: `book appointment from ${
-              user.name.charAt(0).toUpperCase() + user.name.slice(1)
+              user.username.charAt(0).toUpperCase() + user.username.slice(1)
             }`,
             appointment: {
+              _id: user.appointments[user.appointments.length - 1]._id,
               date,
             },
             senderId: user._id,
@@ -110,7 +112,7 @@ export const cancelAppointment = async (req, res) => {
     const { id } = req.params;
     if (!id)
       return res.status(400).json({ message: "Appointment ID required" });
-
+    const appointmentId = new mongoose.Types.ObjectId(id); // Ensure correct type
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
       return res.status(404).json({ message: "No admins found" });
@@ -119,25 +121,33 @@ export const cancelAppointment = async (req, res) => {
       req.user._id,
       {
         $pull: {
-          appointments: {
-            _id: id,
-          },
+          appointments: { _id: appointmentId },
         },
       },
       { new: true }
     );
 
-    admins.forEach(async (admin) => {
-      await User.findByIdAndUpdate(admin._id, {
-        $pull: {
-          notifications: {
-            "appointment._id": id,
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log("Updated User Appointments:", user.appointments);
+    await Promise.all(
+      admins.map(async (admin) => {
+        const updatedAdmin = await User.findByIdAndUpdate(
+          admin._id,
+          {
+            $pull: {
+              notifications: { "appointment._id": appointmentId },
+            },
           },
-        },
-      });
-    });
-    res.status(200).json({ message: "Appointment cancelled" });
+          { new: true }
+        );
+      })
+    );
+
+    res.status(200).json({ message: "Appointment cancelled successfully" });
   } catch (error) {
+    console.error("Error cancelling appointment:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -177,13 +187,15 @@ export const rejectAppointment = async (req, res) => {
       return res.status(404).json({ message: "Notification not found" });
 
     const senderId = notification.notifications[0].senderId;
-    const userSender = await User.findByIdAndUpdate(
-      senderId,
+    const appointmentId = notification.notifications[0].appointment._id;
+    const userSender = await User.findOneAndUpdate(
       {
-        $push: {
-          appointments: {
-            status: "rejected",
-          },
+        _id: senderId,
+        "appointments._id": appointmentId,
+      },
+      {
+        $set: {
+          "appointments.$.status": "rejected",
         },
       },
       { new: true }
@@ -223,13 +235,15 @@ export const acceptAppointment = async (req, res) => {
       return res.status(404).json({ message: "Notification not found" });
 
     const senderId = notification.notifications[0].senderId;
-    const userSender = await User.findByIdAndUpdate(
-      senderId,
+    const appointmentId = notification.notifications[0].appointment._id;
+    const userSender = await User.findOneAndUpdate(
       {
-        $push: {
-          appointments: {
-            status: "accepted",
-          },
+        _id: senderId,
+        "appointments._id": appointmentId,
+      },
+      {
+        $set: {
+          "appointments.$.status": "accepted",
         },
       },
       { new: true }

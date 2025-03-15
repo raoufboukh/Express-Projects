@@ -86,7 +86,7 @@ export const getDoctor = async (id: string) => {
 
 export const addScan = async (data: any) => {
   try {
-    const response = await axiosInstance.post("/users/scan", data);
+    const response = await axiosInstance.post("/users/scan", { data });
     return response.data;
   } catch (error) {
     console.error("Add scan failed:", error);
@@ -94,19 +94,9 @@ export const addScan = async (data: any) => {
   }
 };
 
-export const getScan = async (id: string) => {
-  try {
-    const { data } = await axiosInstance.get(`users/scan/${id}`);
-    return data;
-  } catch (error) {
-    console.error("Get scan failed:", error);
-    throw error;
-  }
-};
-
 export const bookAppointment = async (date: Date) => {
   try {
-    const response = await axiosInstance.post("/users/appointment", date);
+    const response = await axiosInstance.post("/users/appointment", { date });
     return response.data;
   } catch (error) {
     console.error("Book appointment failed:", error);
@@ -136,9 +126,7 @@ export const updateAccountType = async () => {
 
 export const acceptNotification = async (id: string) => {
   try {
-    const response = await axiosInstance.post(
-      `/users/acceptNotification/${id}`
-    );
+    const response = await axiosInstance.put(`/users/acceptNotification/${id}`);
     return response.data;
   } catch (error) {
     console.error("Accept notification failed:", error);
@@ -148,9 +136,7 @@ export const acceptNotification = async (id: string) => {
 
 export const rejectNotification = async (id: string) => {
   try {
-    const response = await axiosInstance.post(
-      `/users/rejectNotification/${id}`
-    );
+    const response = await axiosInstance.put(`/users/rejectNotification/${id}`);
     return response.data;
   } catch (error) {
     console.error("Reject notification failed:", error);

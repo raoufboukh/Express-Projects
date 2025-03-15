@@ -18,7 +18,7 @@ const userRouter = express.Router();
 userRouter.get("/", getUsers);
 userRouter.get("/doctors", getDoctors);
 userRouter.get("/:id", getOneUser);
-userRouter.get("/:id", getOneDoctor);
+userRouter.get("/doctors/:id", getOneDoctor);
 userRouter.post("/scan", ProtectRoute, addScan);
 userRouter.post("/appointment", ProtectRoute, bookAppointment);
 userRouter.delete("/appointment/:id", ProtectRoute, cancelAppointment);
