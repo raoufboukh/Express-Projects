@@ -13,6 +13,7 @@ import Doctors from "@/components/Doctors/Doctors";
 import Notifications from "@/components/Notification/Notifications";
 import Appointments from "@/components/Appointment/Appointments";
 import Scans from "@/components/Scans/Scans";
+import BookApp from "@/components/Appointment/BookApp";
 
 interface User {
   username: string;
@@ -259,6 +260,8 @@ const AppSidebar = () => {
             <Appointments />
           ) : activeItem === "Scans" ? (
             <Scans />
+          ) : activeItem === "BookAppointments" ? (
+            <BookApp />
           ) : null}
         </main>
       </div>

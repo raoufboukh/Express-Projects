@@ -1,4 +1,13 @@
-import { Calendar, Home, Inbox, LogOut, Scan, User } from "lucide-react";
+import {
+  BookOpen,
+  Calendar,
+  Home,
+  Inbox,
+  LogOut,
+  Scan,
+  ScanLine,
+  User,
+} from "lucide-react";
 import { GiDoctorFace } from "react-icons/gi";
 
 export const links = [
@@ -166,6 +175,12 @@ export const dashboardLinks = [
     role: ["admin"],
   },
   {
+    title: "BookAppointments",
+    link: "",
+    icon: BookOpen,
+    role: ["user"],
+  },
+  {
     title: "Appointments",
     link: "",
     icon: Calendar,
@@ -176,6 +191,12 @@ export const dashboardLinks = [
     link: "",
     icon: Inbox,
     role: ["admin", "doctor"],
+  },
+  {
+    title: "Scan",
+    link: "",
+    icon: ScanLine,
+    role: ["user"],
   },
   {
     title: "Scans",
