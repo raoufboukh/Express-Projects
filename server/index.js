@@ -18,15 +18,14 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-app.use('/auth',router);
-app.use('/users', userRouter);
+app.use("/auth", router);
+app.use("/users", userRouter);
 
 const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.CONNECTION_URL).then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(port, () => {
-        console.log("Server is running on port 5000");
-    })
-})
-
+  console.log("Connected to MongoDB");
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+});
