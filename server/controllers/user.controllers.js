@@ -58,7 +58,7 @@ export const addScan = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json(user.scanResults);
+    res.status(200).json({ message: "Add Scan Successeful" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -101,7 +101,7 @@ export const bookAppointment = async (req, res) => {
         },
       });
     });
-    res.status(200).json(user.appointments);
+    res.status(200).json({ message: "Booking Done" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -112,7 +112,7 @@ export const cancelAppointment = async (req, res) => {
     const { id } = req.params;
     if (!id)
       return res.status(400).json({ message: "Appointment ID required" });
-    const appointmentId = new mongoose.Types.ObjectId(id); // Ensure correct type
+    const appointmentId = new mongoose.Types.ObjectId(id);
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
       return res.status(404).json({ message: "No admins found" });
@@ -166,7 +166,7 @@ export const updateAccountType = async (req, res) => {
         accountType: "basic",
       });
     }, 30 * 24 * 60 * 60 * 1000);
-    res.status(200).json(user.accountType);
+    res.status(200).json({ message: "Updated Account Successeful" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
