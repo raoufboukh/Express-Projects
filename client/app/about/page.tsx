@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import React from 'react'
-import { about } from "@/components/constants";
+import Image from "next/image";
 import Link from "next/link";
-import VideosWork from "@/components/Work/VideosWork";
+import React from "react";
 
-const About = () => {
+import { about } from "@/components/constants";
+import VideosWork from "@/components/Work/videos-work";
+
+function About() {
   return (
     <section className="">
       <div className="pages">
@@ -53,7 +54,7 @@ const About = () => {
                 velit sodales vitae.
               </p>
               <Link
-                href={"/team"}
+                href="/team"
                 className="bg-black text-white block w-fit py-2 px-3 mt-5"
               >
                 Our Team
@@ -62,7 +63,7 @@ const About = () => {
           </div>
           <div className="lg:basis-[45%] basis-full">
             <Image
-              src={"/assets/home_clinic3_pic16.jpg"}
+              src="/assets/home_clinic3_pic16.jpg"
               alt="doctor"
               width={1000}
               height={1000}
@@ -72,7 +73,7 @@ const About = () => {
               <h3 className="text-4xl font-bold py-3">Book online</h3>
               <p className="text-xl">Fusce lobortis</p>
               <Link
-                href={"/book"}
+                href="/book"
                 className="bg-black mx-auto text-white px-4 block w-fit py-3 mt-3 rounded-md"
               >
                 Read more
@@ -86,4 +87,4 @@ const About = () => {
   );
 }
 
-export default About
+export default About;

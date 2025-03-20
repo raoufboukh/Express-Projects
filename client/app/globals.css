@@ -8,30 +8,30 @@
 }
 
 .bg-hero {
-  background-image: url('../public/assets/home_clinic3_slider_bg.jpg');
+  background-image: url("../public/assets/home_clinic3_slider_bg.jpg");
 }
 
 .bg-work {
-  background-image: url('../public/assets/home_clinic3_pic10.jpg');
+  background-image: url("../public/assets/home_clinic3_pic10.jpg");
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .bg-cta {
-  background-image: url('../public/assets/home_clinic3_pic11.jpg');
+  background-image: url("../public/assets/home_clinic3_pic11.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .bg-vid1 {
-  background-image: url('../public/assets/home_clinic3_pic12.jpg');
+  background-image: url("../public/assets/home_clinic3_pic12.jpg");
   background-position: 100% 0;
   background-repeat: no-repeat;
 }
 
 .bg-vid2 {
-  background-image: url('../public/assets/home_clinic3_pic13.jpg');
+  background-image: url("../public/assets/home_clinic3_pic13.jpg");
   background-position: 50% 0%;
   background-repeat: no-repeat;
 }
@@ -50,11 +50,11 @@
 }
 
 .h2 {
-  @apply text-white font-bold text-7xl mt-20
+  @apply text-white font-bold text-7xl mt-20;
 }
 
-.pages{
-  @apply bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-secondary
+.pages {
+  @apply bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-secondary;
 }
 
 :root {

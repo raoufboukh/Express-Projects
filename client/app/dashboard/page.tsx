@@ -1,19 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
-import { useState, useEffect } from "react";
-import { check } from "@/lib/dataFetching";
+
 import { useRouter } from "next/navigation";
-import Users from "@/components/Users/Users";
-import Doctors from "@/components/Doctors/Doctors";
-import Notifications from "@/components/Notification/Notifications";
-import Appointments from "@/components/Appointment/Appointments";
-import Scans from "@/components/Scans/Scans";
-import BookApp from "@/components/Appointment/BookApp";
-import Sidebar from "@/components/SideBar/Sidebar";
+import { useEffect, useState } from "react";
+
 import { themes } from "@/components/constants";
 
-interface User {
+import Users from "@/components/Users/users";
+import { check } from "@/lib/data-fetching";
+import Sidebar from "@/components/SideBar/sidebar";
+import Doctors from "@/components/Doctors/doctors";
+import Notifications from "@/components/Notification/notifications";
+import Appointments from "@/components/Appointment/appointments";
+import Scans from "@/components/Scans/scans";
+import BookApp from "@/components/Appointment/book-app";
+
+type User = {
   username: string;
   email: string;
   _id: string;
@@ -22,9 +25,9 @@ interface User {
   appointments: any[];
   scans: any[];
   typeAccount: string;
-}
+};
 
-const AppSidebar = () => {
+function AppSidebar() {
   const router = useRouter();
   const [activeTheme, setActiveTheme] = useState("dark");
   const [activeItem, setActiveItem] = useState("");
@@ -91,6 +94,6 @@ const AppSidebar = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AppSidebar;

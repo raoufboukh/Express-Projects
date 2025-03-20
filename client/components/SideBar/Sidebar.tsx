@@ -1,24 +1,30 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { motion } from "framer-motion";
 import { useState } from "react";
+
 import { dashboardLinks, themes } from "../constants";
-import Logout from "./Logout";
-import ButtonLink from "./ButtonLink";
-import ScanButton from "./ScanButton";
+import Logout from "./logout";
+import ScanButton from "./scan-button";
+import ButtonLink from "./button-link";
 
-interface SidebarProps {
-    activeItem: string;
-    setActiveItem: (item: string) => void;
-    activeTheme: string;
-    setActiveTheme: (theme: string) => void;
-    user: any;
-}
+type SidebarProps = {
+  activeItem: string;
+  setActiveItem: (item: string) => void;
+  activeTheme: string;
+  setActiveTheme: (theme: string) => void;
+  user: any;
+};
 
-
-const Sidebar:React.FC<SidebarProps> = ({activeItem, setActiveItem, activeTheme, setActiveTheme, user}) => {
-    const [collapsed, setCollapsed] = useState(false);
-    const theme = themes[activeTheme as keyof typeof themes];
+const Sidebar: React.FC<SidebarProps> = ({
+  activeItem,
+  setActiveItem,
+  activeTheme,
+  setActiveTheme,
+  user,
+}) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const theme = themes[activeTheme as keyof typeof themes];
 
   return (
     <motion.aside
@@ -34,6 +40,7 @@ const Sidebar:React.FC<SidebarProps> = ({activeItem, setActiveItem, activeTheme,
           <h1 className="text-xl font-bold hidden md:block">Dashboard</h1>
         )}
         <button
+          type="button"
           onClick={() => setCollapsed(!collapsed)}
           className="p-2 rounded-full hover:bg-white/10 md:block hidden"
         >
@@ -73,12 +80,14 @@ const Sidebar:React.FC<SidebarProps> = ({activeItem, setActiveItem, activeTheme,
         <div className="px-4 py-3">
           <div className="flex space-x-2">
             <button
+              type="button"
               onClick={() => setActiveTheme("dark")}
               className={`md:size-6 size-3 rounded-full bg-[#1A1D23] border ${
                 activeTheme === "dark" ? "border-white" : "border-transparent"
               } cursor-pointer`}
             />
             <button
+              type="button"
               onClick={() => setActiveTheme("light")}
               className={`md:size-6 size-3 rounded-full bg-white border ${
                 activeTheme === "light"
@@ -87,6 +96,7 @@ const Sidebar:React.FC<SidebarProps> = ({activeItem, setActiveItem, activeTheme,
               } cursor-pointer`}
             />
             <button
+              type="button"
               onClick={() => setActiveTheme("blue")}
               className={`md:size-6 size-3 rounded-full bg-[#0F172A] border ${
                 activeTheme === "blue"
@@ -149,6 +159,6 @@ const Sidebar:React.FC<SidebarProps> = ({activeItem, setActiveItem, activeTheme,
       </div>
     </motion.aside>
   );
-}
+};
 
-export default Sidebar
+export default Sidebar;

@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Link from 'next/link';
+import Link from "next/link";
 
-interface ButtonLinkProps {
-    item: any;
-    theme: any;
-    activeItem: string;
-    collapsed: boolean;
-    setActiveItem: (item: string) => void;
-}
+type ButtonLinkProps = {
+  item: any;
+  theme: any;
+  activeItem: string;
+  collapsed: boolean;
+  setActiveItem: (item: string) => void;
+};
 
-const ButtonLink:React.FC<ButtonLinkProps> = ({item, theme, activeItem, collapsed, setActiveItem}) => {
+const ButtonLink: React.FC<ButtonLinkProps> = ({ item, theme, activeItem, collapsed, setActiveItem }) => {
   return (
     <Link
       href={item.link}
@@ -26,6 +25,6 @@ const ButtonLink:React.FC<ButtonLinkProps> = ({item, theme, activeItem, collapse
       {!collapsed && <span className="md:block hidden">{item.title}</span>}
     </Link>
   );
-}
+};
 
-export default ButtonLink
+export default ButtonLink;

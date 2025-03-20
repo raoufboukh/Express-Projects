@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react'
-import TimeWork from './TimeWork';
-import VideosWork from './VideosWork';
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-const Work = () => {
+import TimeWork from "./time-work";
+import VideosWork from "./videos-work";
+
+function Work() {
   return (
     <section>
       <div className="container mx-auto lg:px-20 px-4">
@@ -48,4 +49,4 @@ const Work = () => {
   );
 }
 
-export default Work
+export default Work;

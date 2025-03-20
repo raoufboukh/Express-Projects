@@ -1,11 +1,9 @@
-
-
-const Scan = () => {
+function Scan() {
   return (
     <div>
-      
+
     </div>
-  )
+  );
 }
 
-export default Scan
+export default Scan;

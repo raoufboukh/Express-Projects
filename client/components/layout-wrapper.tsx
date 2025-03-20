@@ -1,9 +1,10 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Navbar from "./Navbar/Navbar";
-import Footer from "./Footer/Footer";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+
+import Footer from "./Footer/footer";
+import Navbar from "./Navbar/navbar";
 
 export default function LayoutWrapper({
   children,
@@ -19,7 +20,7 @@ export default function LayoutWrapper({
             retry: 1,
           },
         },
-      })
+      }),
   );
 
   const pathname = usePathname();

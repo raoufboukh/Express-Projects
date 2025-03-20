@@ -1,10 +1,11 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { cancelAppointment, check } from "@/lib/dataFetching";
+
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-const Appointments = () => {
+import { cancelAppointment, check } from "@/lib/data-fetching";
+
+function Appointments() {
   const [id, setId] = useState("");
   const [user, setUser] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -54,14 +55,15 @@ const Appointments = () => {
                   item.status === "pending"
                     ? "text-orange-500"
                     : item.status === "accepted"
-                    ? "text-green-500"
-                    : "text-red-500"
+                      ? "text-green-500"
+                      : "text-red-500"
                 }
               >
                 <span className="text-gray-300">Status: </span>
                 {item.status}
               </p>
               <button
+                type="button"
                 className="cursor-pointer block bg-primary px-2 py-1 mt-5 rounded-sm transition-all duration-300 hover:bg-primary/80 disabled:opacity-50"
                 onClick={() => {
                   setId(item._id);
@@ -83,6 +85,6 @@ const Appointments = () => {
       )}
     </div>
   );
-};
+}
 
 export default Appointments;
