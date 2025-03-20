@@ -9,7 +9,7 @@ const Work = () => {
     <section>
       <div className="container mx-auto lg:px-20 px-4">
         <div className="flex items-center justify-center flex-wrap gap-3 md:gap-0 mb-3 lg:mb-0">
-          <div className="bg-work md:min-h-[650px] h-[500px] py-32 basis-full md:basis-2/3 flex flex-col gap-3 justify-center px-10 md:px-20">
+          <div className="bg-work md:bg-[length:(120%)] bg-cover md:min-h-[650px] h-[500px] py-32 basis-full md:basis-2/3 flex flex-col gap-3 justify-center px-10 md:px-20">
             <h3 className="text-4xl sm:text-6xl leading-[1.1] font-semibold">
               Great working conditions.
             </h3>
@@ -41,8 +41,8 @@ const Work = () => {
             </div>
           </div>
         </div>
-        <TimeWork/>
-        <VideosWork/>
+        <TimeWork />
+        <VideosWork />
       </div>
     </section>
   );
