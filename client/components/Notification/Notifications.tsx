@@ -36,6 +36,10 @@ const Notifications = () => {
         return rejectNotification(id);
       }
     },
+    onSuccess: () => {
+      fetchUserData();
+      setId("");
+    },
   });
   return (
     <div>
@@ -72,7 +76,7 @@ const Notifications = () => {
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-red-500/80"
                     onClick={() => {
-                      setId(item.id);
+                      setId(item._id);
                       setMessage("Refuser");
                       mutate();
                     }}
