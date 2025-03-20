@@ -5,11 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LuEyeClosed, LuEye } from "react-icons/lu";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [show, setShow] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const checkAuth = async () => {
@@ -27,9 +29,8 @@ const Login = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => login(email, password),
-    onSuccess: (data) => {
-      console.log("Login successful", data);
-      router.push("/");
+    onSuccess: () => {
+      router.push("/dashboard");
     },
     onError: (err) => {
       console.error("Login failed", err);
@@ -91,14 +92,28 @@ const Login = () => {
             <label htmlFor="password" className="block text-gray-400">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-2 border border-gray-200 rounded-md"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={show ? "text" : "password"}
+                id="password"
+                className="w-full p-2 border border-gray-200 rounded-md"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <LuEyeClosed
+                onClick={() => setShow(true)}
+                className={`absolute right-4 top-4 text-gray-400 cursor-pointer ${
+                  show ? "hidden" : ""
+                }`}
+              />
+              <LuEye
+                onClick={() => setShow(false)}
+                className={`absolute right-4 top-4 text-gray-400 cursor-pointer ${
+                  show ? "" : "hidden"
+                }`}
+              />
+            </div>
           </div>
           <div className="my-4">
             <button
