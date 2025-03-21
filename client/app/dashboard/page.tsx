@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 
 import { themes } from "@/components/constants";
 
-import Users from "@/components/Users/users";
+import Users from "@/components/Users/Users";
 import { check } from "@/lib/data-fetching";
-import Sidebar from "@/components/SideBar/sidebar";
-import Doctors from "@/components/Doctors/doctors";
-import Notifications from "@/components/Notification/notifications";
-import Appointments from "@/components/Appointment/appointments";
-import Scans from "@/components/Scans/scans";
+import Sidebar from "@/components/SideBar/Sidebar";
+import Doctors from "@/components/Doctors/Doctors";
+import Notifications from "@/components/Notification/Notifications";
+import Appointments from "@/components/Appointment/Appointments";
+import Scans from "@/components/Scans/Scans";
 import BookApp from "@/components/Appointment/book-app";
 
 type User = {

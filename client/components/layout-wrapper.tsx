@@ -3,8 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import Footer from "./Footer/footer";
-import Navbar from "./Navbar/navbar";
+import Footer from "./Footer/Footer";
+import Navbar from "./Navbar/Navbar";
 
 export default function LayoutWrapper({
   children,

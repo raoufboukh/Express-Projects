@@ -44,7 +44,7 @@ function BookApp() {
               date.getDate(),
               12,
               0,
-              0,
+              0
             );
             setStartDate(newDate);
           }
@@ -64,10 +64,7 @@ function BookApp() {
       </button>
       {isPending && <p>Loading...</p>}
       {user.appointments && user?.appointments[0]?.date && (
-        <p>
-          You are booking at
-          {user.appointments[0].date.slice(0, 10)}
-        </p>
+        <p>You are booking at {user.appointments[0].date.slice(0, 10)}</p>
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 import { dashboardLinks, themes } from "../constants";
-import Logout from "./logout";
+import Logout from "./Logout";
 import ScanButton from "./scan-button";
 import ButtonLink from "./button-link";
 
