@@ -1,14 +1,14 @@
-import Image from "next/image"
-import { team } from "../constants"
+import Image from "next/image";
 
+import { team } from "../constants";
 
-const OurTeam = () => {
+function OurTeam() {
   return (
     <div>
       <h3 className="text-5xl font-bold mb-10">Our Family Team</h3>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
-        {team.map((member, i) => (
-          <div key={i}>
+        {team.map(member => (
+          <div key={member.title}>
             <Image
               src={member.image}
               alt={member.title}
@@ -27,4 +27,4 @@ const OurTeam = () => {
   );
 }
 
-export default OurTeam
+export default OurTeam;

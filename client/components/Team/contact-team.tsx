@@ -1,5 +1,4 @@
-
-const ContactTeam = () => {
+function ContactTeam() {
   return (
     <div className="bg-secondary py-20 md:py-32 px-4 my-28">
       <div className="sm:w-[600px] mx-auto text-center">
@@ -11,7 +10,7 @@ const ContactTeam = () => {
           Cras massa nibh, tincidunt ut eros a, vulputate consequat odio.
           Vestibulum vehicula tempor nulla, sed hendrerit urna interdum in
         </p>
-        <button className="bg-black text-white px-10 py-3 mt-10 rounded-full cursor-pointer">
+        <button type="button" className="bg-black text-white px-10 py-3 mt-10 rounded-full cursor-pointer">
           Contact Us
         </button>
       </div>

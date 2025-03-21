@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 
-const VideosWork = () => {
+function VideosWork() {
   return (
     <div className="py-24 border-t-2 border-gray-200">
       <h3 className="text-4xl md:text-6xl font-semibold mb-10">
@@ -57,4 +57,4 @@ const VideosWork = () => {
   );
 }
 
-export default VideosWork
+export default VideosWork;

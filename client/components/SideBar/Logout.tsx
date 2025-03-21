@@ -1,22 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { logout } from "@/lib/dataFetching";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 
-interface LogoutProps {
-    item: any;
-    collapsed: boolean;
-    theme: any;
-}
+import { logout } from "@/lib/data-fetching";
 
-const Logout:React.FC<LogoutProps> = ({item, collapsed, theme}) => {
-    const logoutMutation = useMutation({
+type LogoutProps = {
+  item: any;
+  collapsed: boolean;
+  theme: any;
+};
+
+const Logout: React.FC<LogoutProps> = ({ item, collapsed, theme }) => {
+  const logoutMutation = useMutation({
     mutationFn: logout,
-    });
+  });
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     logoutMutation.mutate();
-    };
+  };
 
   return (
     <Link
@@ -32,6 +32,6 @@ const Logout:React.FC<LogoutProps> = ({item, collapsed, theme}) => {
       {!collapsed && <span className="md:block hidden">{item.title}</span>}
     </Link>
   );
-}
+};
 
-export default Logout
+export default Logout;

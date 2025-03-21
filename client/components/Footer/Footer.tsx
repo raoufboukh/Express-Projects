@@ -1,10 +1,11 @@
-import Image from 'next/image'
-import React from 'react'
-import { companyFooter, helpFooter } from '../constants';
+import Image from "next/image";
+import React from "react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
-import AllRights from '../AllRights';
 
-const Footer = () => {
+import AllRights from "../all-rights";
+import { companyFooter, helpFooter } from "../constants";
+
+function Footer() {
   return (
     <>
       <footer className="my-20">
@@ -12,7 +13,7 @@ const Footer = () => {
           <div className="flex justify-center md:justify-between flex-wrap md:gap-0 gap-8">
             <div className="lg:basis-1/3 md:basis-1/2 basis-full text-center md:text-left mx-auto">
               <Image
-                src={"/assets/home_clinic3_pic9.png"}
+                src="/assets/home_clinic3_pic9.png"
                 alt="beclinic"
                 width={1000}
                 height={1000}
@@ -29,7 +30,9 @@ const Footer = () => {
                     key={i}
                     className="flex items-center gap-2 text-lg font-[300] md:justify-normal justify-center hover:text-primary hover:translate-x-0.5 transition-all duration-300 cursor-pointer text-gray-500"
                   >
-                    <MdOutlineArrowRightAlt className="text-sm" /> {comp.title}
+                    <MdOutlineArrowRightAlt className="text-sm" />
+                    {" "}
+                    {comp.title}
                   </li>
                 ))}
               </ul>
@@ -42,7 +45,9 @@ const Footer = () => {
                     key={i}
                     className="flex items-center gap-2 text-lg font-[300] md:justify-normal justify-center hover:text-primary hover:translate-x-0.5 transition-all duration-300 cursor-pointer text-gray-500"
                   >
-                    <MdOutlineArrowRightAlt className="text-sm" /> {help.title}
+                    <MdOutlineArrowRightAlt className="text-sm" />
+                    {" "}
+                    {help.title}
                   </li>
                 ))}
               </ul>
@@ -55,4 +60,4 @@ const Footer = () => {
   );
 }
 
-export default Footer
+export default Footer;
