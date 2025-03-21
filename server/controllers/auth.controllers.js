@@ -16,7 +16,7 @@ export const register = async (req, res) => {
             : "password is required"
         }`,
       });
-    if (!/\w+@\w{5,}\.\w{2,}/.test(email))
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
       return res.status(400).json({ message: "Invalid email" });
     if (password.length < 6)
       return res
