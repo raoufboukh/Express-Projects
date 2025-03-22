@@ -118,6 +118,15 @@ export const bookAppointment = async (req, res) => {
         }`,
       });
 
+      if (
+        req.user.accountType === "basic" &&
+        req.user.appointments.length >= 1 &&
+        req.user.role !== "admin"
+      )
+        return res
+          .status(400)
+          .json({ message: "You can only book one appointment at a time" });
+
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
       return res.status(404).json({ message: "No admins found" });

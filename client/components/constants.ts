@@ -174,13 +174,13 @@ export const dashboardLinks = [
     title: "BookAppointments",
     link: "",
     icon: BookOpen,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Appointments",
     link: "",
     icon: Calendar,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Notifications",
