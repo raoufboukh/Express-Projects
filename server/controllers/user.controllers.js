@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "../models/auth.models.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
@@ -14,6 +15,41 @@ export const getOneUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
     res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addUser = async (req, res) => {
+  try {
+    const { username, email, password, role } = req.body;
+    if (!username || !email || !password || !role)
+      return res.status(400).json({
+        message: `${
+          !username
+            ? "username is required"
+            : !email
+            ? "email is required"
+            : !password
+            ? "password is required"
+            : "role is required"
+        }`,
+      });
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
+      return res.status(400).json({ message: "Invalid email" });
+    if (password.length < 6)
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "User already exists" });
+    const hashedPass = await bcrypt.hash(password, 10);
+    const user = new User({ username, email, password: hashedPass, role });
+    if (user) {
+      await user.save();
+    }
+    res.status(201).json({ message: "User added successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -66,8 +102,21 @@ export const addScan = async (req, res) => {
 
 export const bookAppointment = async (req, res) => {
   try {
-    const { date } = req.body;
-    if (!date) return res.status(400).json({ message: "Date required" });
+    const { firstName, lastName, number, time, date } = req.body;
+    if (!date || !firstName || !lastName || !number || !time)
+      return res.status(400).json({
+        message: `${
+          !firstName
+            ? "FirstName is required"
+            : !lastName
+            ? "LastName is required"
+            : !number
+            ? "Number is required"
+            : !time
+            ? "Time is required"
+            : "Date is required"
+        }`,
+      });
 
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
@@ -78,6 +127,10 @@ export const bookAppointment = async (req, res) => {
       {
         $push: {
           appointments: {
+            firstName,
+            lastName,
+            number,
+            time,
             date,
           },
         },
@@ -94,6 +147,10 @@ export const bookAppointment = async (req, res) => {
             }`,
             appointment: {
               _id: user.appointments[user.appointments.length - 1]._id,
+              firstName,
+              lastName,
+              number,
+              time,
               date,
             },
             senderId: user._id,

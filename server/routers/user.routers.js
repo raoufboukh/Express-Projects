@@ -2,6 +2,7 @@ import express from "express";
 import {
   acceptAppointment,
   addScan,
+  addUser,
   bookAppointment,
   cancelAppointment,
   getDoctors,
@@ -16,6 +17,7 @@ import { ProtectRoute } from "../middleware/middleware.js";
 const userRouter = express.Router();
 
 userRouter.get("/", getUsers);
+userRouter.post("/", ProtectRoute, addUser);
 userRouter.get("/doctors", getDoctors);
 userRouter.get("/:id", getOneUser);
 userRouter.get("/doctors/:id", getOneDoctor);

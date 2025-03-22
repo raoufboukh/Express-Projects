@@ -2,15 +2,31 @@ import mongoose from "mongoose";
 
 
 const appointments = new mongoose.Schema({
-    date: {
-        type: Date,
-        required: true
-    },
-    status: {
-        type: String,
-        default: "pending"
-    }
-})
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: Number,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    default: "pending",
+  },
+});
 
 const scanResults = new mongoose.Schema({
     date: {
