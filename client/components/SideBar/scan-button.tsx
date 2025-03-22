@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { enqueueSnackbar } from "notistack";
 
 type ScanButtonProps = {
   item: any;
@@ -9,7 +10,14 @@ type ScanButtonProps = {
   user: { appointments: { status: string }[] };
 };
 
-const ScanButton: React.FC<ScanButtonProps> = ({ item, theme, activeItem, collapsed, setActiveItem, user }) => {
+const ScanButton: React.FC<ScanButtonProps> = ({
+  item,
+  theme,
+  activeItem,
+  collapsed,
+  setActiveItem,
+  user,
+}) => {
   return (
     <Link
       href={item.link}
@@ -19,14 +27,16 @@ const ScanButton: React.FC<ScanButtonProps> = ({ item, theme, activeItem, collap
         activeItem === item.title ? theme.active : theme.menuItem
       } transition-all duration-200`}
       onClick={() => {
-        if (user.appointments && user.appointments.length !== 0
-          && user.appointments[0]?.status === "accepted"
+        if (
+          user.appointments &&
+          user.appointments.length !== 0 &&
+          user.appointments[0]?.status === "accepted"
         ) {
           setActiveItem(item.title);
-        }
-        else {
-          // eslint-disable-next-line no-alert
-          alert("You don't have any appointments scheduled yet");
+        } else {
+          enqueueSnackbar("You need to have an accepted appointment to scan", {
+            variant: "warning",
+          });
         }
       }}
     >
