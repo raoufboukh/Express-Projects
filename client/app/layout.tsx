@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden selection:bg-primary selection:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden selection:bg-primary selection:text-white scrollbar-custom`}
       >
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

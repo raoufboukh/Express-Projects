@@ -53,7 +53,7 @@ function Notifications() {
         <div
           className={`${
             data.length > 2 && "h-96"
-          } grid grid-cols-1 lg:grid-cols-2 gap-2 overflow-y-auto`}
+          } grid grid-cols-1 lg:grid-cols-2 gap-2 overflow-y-auto scrollbar-custom`}
         >
           {data &&
             data.map((item: any) => (

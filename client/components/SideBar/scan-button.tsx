@@ -7,7 +7,7 @@ type ScanButtonProps = {
   activeItem: string;
   collapsed: boolean;
   setActiveItem: (item: string) => void;
-  user: { appointments: { status: string }[] };
+  user: any;
 };
 
 const ScanButton: React.FC<ScanButtonProps> = ({
@@ -28,6 +28,12 @@ const ScanButton: React.FC<ScanButtonProps> = ({
       } transition-all duration-200`}
       onClick={() => {
         if (
+          user.role === "admin" ||
+          user.role === "doctor" ||
+          user.accountType === "premium"
+        ) {
+          setActiveItem(item.title);
+        } else if (
           user.appointments &&
           user.appointments.length !== 0 &&
           user.appointments[0]?.status === "accepted"

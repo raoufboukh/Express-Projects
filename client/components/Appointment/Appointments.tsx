@@ -43,7 +43,7 @@ function Appointments() {
         <div
           className={`${
             user.appointments.length > 2 && "h-96"
-          } grid grid-cols-1 lg:grid-cols-2 gap-2 overflow-y-auto`}
+          } grid grid-cols-1 lg:grid-cols-2 gap-2 overflow-y-auto scrollbar-custom`}
         >
           {user.appointments.map((item: any, i: number) => (
             <div

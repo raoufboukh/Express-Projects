@@ -14,7 +14,7 @@ function Users() {
       {isLoading ? (
         <div className="text-white text-3xl">Chargement...</div>
       ) : data.length !== 0 ? (
-        <div className="flex flex-col gap-2 overflow-y-auto h-96">
+        <div className="flex flex-col gap-2 overflow-y-auto h-96 scrollbar-custom">
           {data.map((item: any, i: number) => (
             <div
               key={i}

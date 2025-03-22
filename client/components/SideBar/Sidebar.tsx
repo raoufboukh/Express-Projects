@@ -108,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto py-4">
+      <div className="flex-1 overflow-y-auto py-4 scrollbar-custom">
         <ul className="space-y-1 px-3">
           {dashboardLinks.map(
             (item) =>
