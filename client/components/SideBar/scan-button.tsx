@@ -19,9 +19,8 @@ const ScanButton: React.FC<ScanButtonProps> = ({
   user,
 }) => {
   return (
-    <Link
-      href={item.link}
-      className={`flex items-center ${
+    <div
+      className={`flex items-center cursor-pointer ${
         collapsed ? "justify-center px-3" : "px-4"
       } py-3 rounded-lg ${
         activeItem === item.title ? theme.active : theme.menuItem
@@ -50,7 +49,7 @@ const ScanButton: React.FC<ScanButtonProps> = ({
         <item.icon />
       </span>
       {!collapsed && <span className="md:block hidden">{item.title}</span>}
-    </Link>
+    </div>
   );
 };
 

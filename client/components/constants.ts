@@ -160,43 +160,36 @@ export const dashboardLinks = [
   },
   {
     title: "Users",
-    link: "",
     icon: User,
     role: ["admin"],
   },
   {
     title: "Doctors",
-    link: "",
     icon: GiDoctorFace,
     role: ["admin"],
   },
   {
     title: "BookAppointments",
-    link: "",
     icon: BookOpen,
     role: ["user", "admin"],
   },
   {
     title: "Appointments",
-    link: "",
     icon: Calendar,
     role: ["user", "admin"],
   },
   {
     title: "Notifications",
-    link: "",
     icon: Inbox,
     role: ["admin", "doctor"],
   },
   {
     title: "Scan",
-    link: "",
     icon: ScanLine,
     role: ["user", "admin"],
   },
   {
     title: "Scans",
-    link: "",
     icon: Scan,
     role: ["user", "admin"],
   },
