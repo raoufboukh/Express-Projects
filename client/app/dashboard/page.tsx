@@ -15,6 +15,7 @@ import Notifications from "@/components/Notification/Notifications";
 import Appointments from "@/components/Appointment/Appointments";
 import Scans from "@/components/Scans/Scans";
 import BookApp from "@/components/Appointment/book-app";
+import Scan from "@/components/Scans/Scan";
 
 type User = {
   username: string;
@@ -89,6 +90,8 @@ function AppSidebar() {
             <Scans />
           ) : activeItem === "BookAppointments" ? (
             <BookApp />
+          ) : activeItem === "Scan" ? (
+            <Scan />
           ) : null}
         </main>
       </div>

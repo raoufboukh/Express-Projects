@@ -75,11 +75,17 @@ export const getOneDoctor = async (req, res) => {
 
 export const addScan = async (req, res) => {
   try {
-    const { date, result, aiAnalysis } = req.body;
-    if (!date) return res.status(400).json({ message: "Date required" });
-    if (!result) return res.status(400).json({ message: "Result required" });
-    if (!aiAnalysis)
-      return res.status(400).json({ message: "AI Analysis required" });
+    const { date, result, aiAnalysis, labId } = req.body;
+    if (!date || !result || !aiAnalysis)
+      return res.status(400).json({
+        message: `${
+          !date
+            ? "Date is required"
+            : !result
+            ? "Result is required"
+            : "AI Analysis is required"
+        }`,
+      });
 
     const user = await User.findByIdAndUpdate(
       req.user._id,
@@ -89,6 +95,7 @@ export const addScan = async (req, res) => {
             date,
             result,
             aiAnalysis,
+            labId,
           },
         },
       },

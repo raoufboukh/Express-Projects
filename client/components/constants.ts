@@ -227,3 +227,24 @@ export const themes = {
     main: "bg-[#F8FAFC]",
   },
 };
+
+export const labs = [
+  {
+    id: 1,
+    title: "Lab 1",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
+  },
+  {
+    id: 2,
+    title: "Lab 2",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
+  },
+  {
+    id: 3,
+    title: "Lab 3",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
+  },
+];
