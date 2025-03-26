@@ -12,7 +12,7 @@
 }
 
 .bg-work {
-  background-image: url('../public/assets/home_clinic3_pic10.jpg');
+  background-image: url('../public/assets/h.JPG');
   background-position: center;
   background-size: 120%;
   background-repeat: no-repeat;
@@ -25,17 +25,17 @@
   background-repeat: no-repeat;
 }
 
-.bg-vid1 {
+/*.bg-vid1 {
   background-image: url('../public/assets/home_clinic3_pic12.jpg');
   background-position: 100% 0;
   background-repeat: no-repeat;
 }
 
-.bg-vid2 {
+/*.bg-vid2 {
   background-image: url('../public/assets/home_clinic3_pic13.jpg');
   background-position: 50% 0%;
   background-repeat: no-repeat;
-}
+}*/
 
 .hover-show {
   opacity: 0;

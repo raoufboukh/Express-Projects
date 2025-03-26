@@ -35,7 +35,7 @@ const Scans = () => {
         </div>
       ) : (
         <div className="text-white bg-gray-800 p-4 rounded-md">
-          Aucune scans
+          No scans
         </div>
       )}
     </div>
