@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -68,9 +69,34 @@ const Work = () => {
           <div className="mt-6"> {/* Space between text and button */}
             <Link href='/contact' className='bg-secondary hover:bg-blue-800 text-white px-6 py-3 rounded-full transition duration-300 inline-block'>
               Contact Us
+=======
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+import TimeWork from "./time-work";
+import VideosWork from "./videos-work";
+
+function Work() {
+  return (
+    <section>
+      <div className="container mx-auto lg:px-20 px-4">
+        <div className="flex items-center justify-center flex-wrap gap-3 md:gap-0 mb-3 lg:mb-0">
+          <div className="bg-work md:bg-[length:(120%)] bg-cover md:min-h-[650px] h-[500px] py-32 basis-full md:basis-2/3 flex flex-col gap-3 justify-center px-10 md:px-20">
+            <h3 className="text-4xl sm:text-6xl leading-[1.1] font-semibold">
+              Great working conditions.
+            </h3>
+            <p className="text-xl sm:text-2xl">Lorem ipsum dolor sit</p>
+            <Link
+              href="/about"
+              className="bg-primary/70 hover:bg-primary transition-all duration-300 cursor-pointer text-black/90 mt-5 rounded-md w-fit px-5 py-2.5"
+            >
+              More
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
             </Link>
           </div>
         </div>
+<<<<<<< HEAD
 
         <div className="bg-secondary text-white p-6 rounded-lg shadow-lg w-full md:w-1/2 relative text-center">
           <FaChevronLeft className="absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer hover:text-blue-300" onClick={prevTestimonial} />
@@ -86,4 +112,13 @@ const Work = () => {
   );
 };
 
+=======
+        <TimeWork />
+        <VideosWork />
+      </div>
+    </section>
+  );
+}
+
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
 export default Work;

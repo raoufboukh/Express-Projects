@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import OurTeam from "@/components/Team/OurTeam";
-import ContactTeam from "@/components/Team/ContactTeam";
+import ContactTeam from "@/components/Team/contact-team";
+import OurTeam from "@/components/Team/our-team";
+import Image from "next/image";
 
-const Team = () => {
+function Team() {
   return (
     <section>
       <div className="pages">
@@ -19,4 +19,4 @@ const Team = () => {
   );
 }
 
-export default Team
+export default Team;

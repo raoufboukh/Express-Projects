@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { getDoctors } from "@/lib/dataFetching";
 import { useQuery } from "@tanstack/react-query";
+import { getDoctors } from "@/lib/data-fetching";
+import { useState } from "react";
+import AddUser from "../Users/AddUser";
 
-const Doctors = () => {
+function Doctors() {
+  const [show, setShow] = useState(false);
   const { data, isLoading } = useQuery({
     queryKey: ["doctors"],
     queryFn: getDoctors,
@@ -12,7 +14,7 @@ const Doctors = () => {
       {isLoading ? (
         <div className="text-white text-3xl">Chargement...</div>
       ) : data.length !== 0 ? (
-        <div className="grid grid-cols-1 gap-2 overflow-y-clip">
+        <div className="flex flex-col gap-2 overflow-y-auto h-96 scrollbar-custom">
           {data.map((item: any, i: number) => (
             <div
               key={i}
@@ -34,8 +36,17 @@ const Doctors = () => {
           Aucun doctor trouvé
         </div>
       )}
+      {!isLoading && (
+        <button
+          className="bg-primary hover:bg-primary/80 block w-fit mx-auto cursor-pointer text-white px-4 py-2 rounded-md mt-4"
+          onClick={() => setShow(!show)}
+        >
+          Add
+        </button>
+      )}
+      {show && <AddUser setShow={setShow} />}
     </div>
   );
-};
+}
 
 export default Doctors;

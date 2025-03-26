@@ -1,18 +1,18 @@
-import Link from "next/link"
-import { linksUser } from "../constants"
-import { useState } from "react";
-import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
-import { logout } from "../../lib/dataFetching";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
+import { logout } from "../../lib/data-fetching";
+import { linksUser } from "../constants";
 
-const LinksUser = () => {
+function LinksUser() {
   const [second, setSecond] = useState(false);
-  
+
   const logoutMutation = useMutation({
     mutationFn: logout,
   });
-  
+
   const handleLogout = () => {
     logoutMutation.mutate();
     setSecond(false);
@@ -21,7 +21,7 @@ const LinksUser = () => {
   return (
     <div className="relative">
       <Image
-        src={"/assets/avatar.png"}
+        src="/assets/avatar.png"
         alt="avatar"
         width={35}
         height={35}
@@ -62,4 +62,4 @@ const LinksUser = () => {
   );
 }
 
-export default LinksUser
+export default LinksUser;

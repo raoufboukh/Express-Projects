@@ -7,32 +7,60 @@
   --color-secondary: #001b37;
 }
 
+@layer utilities {
+  .scrollbar-custom::-webkit-scrollbar {
+    @apply w-1
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    @apply bg-gray-600 rounded-3xl
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-3xl
+  }
+}
+
+
 .bg-hero {
-  background-image: url('../public/assets/home_clinic3_slider_bg.jpg');
+  background-image: url("../public/assets/home_clinic3_slider_bg.jpg");
 }
 
 .bg-work {
+<<<<<<< HEAD
   background-image: url('../public/assets/h.JPG');
+=======
+  background-image: url("../public/assets/home_clinic3_pic10.jpg");
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
   background-position: center;
-  background-size: 120%;
   background-repeat: no-repeat;
 }
 
 .bg-cta {
-  background-image: url('../public/assets/home_clinic3_pic11.jpg');
+  background-image: url("../public/assets/home_clinic3_pic11.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
+<<<<<<< HEAD
 /*.bg-vid1 {
   background-image: url('../public/assets/home_clinic3_pic12.jpg');
+=======
+.bg-vid1 {
+  background-image: url("../public/assets/home_clinic3_pic12.jpg");
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
   background-position: 100% 0;
   background-repeat: no-repeat;
 }
 
+<<<<<<< HEAD
 /*.bg-vid2 {
   background-image: url('../public/assets/home_clinic3_pic13.jpg');
+=======
+.bg-vid2 {
+  background-image: url("../public/assets/home_clinic3_pic13.jpg");
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
   background-position: 50% 0%;
   background-repeat: no-repeat;
 }*/
@@ -51,11 +79,11 @@
 }
 
 .h2 {
-  @apply text-white font-bold text-7xl mt-20
+  @apply text-white font-bold text-7xl mt-20;
 }
 
-.pages{
-  @apply bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-secondary
+.pages {
+  @apply bg-[url(/assets/home_clinic3_pic15.png)] bg-cover bg-center bg-no-repeat py-24 bg-secondary;
 }
 
 :root {

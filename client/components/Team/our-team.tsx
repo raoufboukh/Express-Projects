@@ -1,8 +1,14 @@
 import Image from "next/image";
+<<<<<<< HEAD:client/components/Team/OurTeam.tsx
 import { radiologists, pneumologists } from "../constants";
+=======
 
-const OurTeam = () => {
+import { team } from "../constants";
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c:client/components/Team/our-team.tsx
+
+function OurTeam() {
   return (
+<<<<<<< HEAD:client/components/Team/OurTeam.tsx
     <div className="container mx-auto px-4 lg:px-20 my-20">
 
   <h3 className="text-5xl font-bold text-center mb-10">Meet Our Expert Team</h3>
@@ -18,6 +24,13 @@ const OurTeam = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-20">
         {radiologists.map((doc, i) => (
           <div key={i} className="text-center">
+=======
+    <div>
+      <h3 className="text-5xl font-bold mb-10">Our Family Team</h3>
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
+        {team.map(member => (
+          <div key={member.title}>
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c:client/components/Team/our-team.tsx
             <Image
               src={doc.image}
               alt={doc.name}

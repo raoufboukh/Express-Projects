@@ -31,10 +31,6 @@ export const links = [
     link: "/team",
   },
   {
-    title: "Scan",
-    link: "/scan",
-  },
-  {
     title: "Login",
     link: "/login",
   },
@@ -300,50 +296,91 @@ export const dashboardLinks = [
   },
   {
     title: "Users",
-    link: "",
     icon: User,
     role: ["admin"],
   },
   {
     title: "Doctors",
-    link: "",
     icon: GiDoctorFace,
     role: ["admin"],
   },
   {
     title: "BookAppointments",
-    link: "",
     icon: BookOpen,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Appointments",
-    link: "",
     icon: Calendar,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Notifications",
-    link: "",
     icon: Inbox,
     role: ["admin", "doctor"],
   },
   {
     title: "Scan",
-    link: "",
     icon: ScanLine,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Scans",
-    link: "",
     icon: Scan,
-    role: ["user"],
+    role: ["user", "admin"],
   },
   {
     title: "Logout",
     link: "/",
     icon: LogOut,
     role: ["admin", "doctor", "user"],
+  },
+];
+
+export const themes = {
+  dark: {
+    sidebar: "bg-[#1A1D23] text-white",
+    header: "bg-[#1A1D23] border-b border-[#2A2F3A]",
+    menuItem: "hover:bg-[#2D3139] text-gray-300 hover:text-white",
+    active: "bg-[#2D3139] text-white",
+    button: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    main: "bg-[#F8F9FB] dark:bg-[#121317]",
+  },
+  light: {
+    sidebar: "bg-white text-gray-800 border-r border-gray-200",
+    header: "bg-white border-b border-gray-200",
+    menuItem: "hover:bg-gray-100 text-gray-600 hover:text-gray-900",
+    active: "bg-gray-100 text-indigo-600",
+    button: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    main: "bg-gray-50",
+  },
+  blue: {
+    sidebar: "bg-[#0F172A] text-white",
+    header: "bg-[#0F172A] border-b border-[#1E293B]",
+    menuItem: "hover:bg-[#1E293B] text-blue-300 hover:text-white",
+    active: "bg-blue-700/30 text-white",
+    button: "bg-blue-600 hover:bg-blue-700 text-white",
+    main: "bg-[#F8FAFC]",
+  },
+};
+
+export const labs = [
+  {
+    id: 1,
+    title: "Lab 1",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
+  },
+  {
+    id: 2,
+    title: "Lab 2",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
+  },
+  {
+    id: 3,
+    title: "Lab 3",
+    address: "1234 Main St, New York, NY 10001",
+    phone: "(123) 456-7890",
   },
 ];

@@ -1,16 +1,17 @@
-'use client';
-import Image from "next/image"
-import { links } from "../constants"
-import Link from "next/link"
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+"use client";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { check } from "../../lib/dataFetching";
-import LinksUser from "./LinksUser";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
-const Navbar = () => {
+import { check } from "../../lib/data-fetching";
+import { links } from "../constants";
+import LinksUser from "./links-user";
+
+function Navbar() {
   const [scroll, setScroll] = useState(0);
   const [menu, setMenu] = useState(false);
-  const [data,setData] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,12 +26,13 @@ const Navbar = () => {
       try {
         const ah = await check();
         setData(ah);
-      } catch (err) {
+      }
+      catch (err) {
         console.error("Error during auth check:", err);
       }
     };
     checkAuth();
-  },[data]);
+  }, [data]);
   return (
     <header
       className={`w-full z-50 overflow-x-clip ${
@@ -56,8 +58,8 @@ const Navbar = () => {
         <nav
           className={`absolute lg:relative top-0 lg:block lg:right-0 transition-all duration-500
             bg-gray-900 lg:bg-transparent lg:w-fit lg:h-fit w-52 h-screen ${
-              menu ? "right-0" : "-right-96"
-            }`}
+    menu ? "right-0" : "-right-96"
+    }`}
         >
           <div className="lg:hidden flex justify-end px-3">
             <AiOutlineClose
@@ -67,35 +69,41 @@ const Navbar = () => {
           </div>
           <ul className="lg:flex lg:mt-0 mt-8 items-center gap-10">
             {links.map((link, i) =>
-              i + 1 !== links.length ? (
-                <li key={i}>
-                  <Link
-                    className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
-                    href={link.link}
-                    onClick={() => setMenu(false)}
-                  >
-                    {link.title}
-                  </Link>{" "}
-                </li>
-              ) : data ? (
-                <LinksUser key={i} />
-              ) : (
-                <li key={i}>
-                  <Link
-                    className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
-                    href={link.link}
-                    onClick={() => setMenu(false)}
-                  >
-                    {link.title}
-                  </Link>{" "}
-                </li>
-              )
+              i + 1 !== links.length
+                ? (
+                    <li key={i}>
+                      <Link
+                        className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
+                        href={link.link}
+                        onClick={() => setMenu(false)}
+                      >
+                        {link.title}
+                      </Link>
+                      {" "}
+                    </li>
+                  )
+                : data
+                  ? (
+                      <LinksUser key={i} />
+                    )
+                  : (
+                      <li key={i}>
+                        <Link
+                          className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
+                          href={link.link}
+                          onClick={() => setMenu(false)}
+                        >
+                          {link.title}
+                        </Link>
+                        {" "}
+                      </li>
+                    ),
             )}
           </ul>
         </nav>
       </div>
     </header>
   );
-};
+}
 
-export default Navbar
+export default Navbar;

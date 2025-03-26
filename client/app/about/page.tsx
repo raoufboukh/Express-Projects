@@ -1,4 +1,5 @@
 import Image from "next/image";
+<<<<<<< HEAD
 import React from "react";
 import { about } from "@/components/constants";
 import Link from "next/link";
@@ -6,8 +7,15 @@ import {machines} from "@/components/constants";
 import { motion } from "framer-motion";
 
 
+=======
+import Link from "next/link";
+import React from "react";
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
 
-const About = () => {
+import { about } from "@/components/constants";
+import VideosWork from "@/components/Work/videos-work";
+
+function About() {
   return (
     <section>
       <div className="pages">
@@ -39,6 +47,7 @@ const About = () => {
             </div>
 
             <div className="mt-20">
+<<<<<<< HEAD
               <h3 className="font-bold text-6xl my-4">Our Expert Radiologists</h3>
               <p className="text-gray-800 text-lg leading-relaxed">
               Our team of expert radiologists is dedicated to providing accurate and high-quality diagnostic imaging services. 
@@ -46,6 +55,28 @@ const About = () => {
               , innovation, and patient care, our radiologists work collaboratively to support better healthcare outcomes. </p>
               <Link href={"/team"} className="bg-black text-white block w-fit py-2 px-3 mt-5">
                 Meet Our Team
+=======
+              <Image
+                src="/assets/home_clinic3_pic5.png"
+                alt="about"
+                width={40}
+                height={40}
+              />
+              <h3 className="font-bold text-6xl my-4">
+                Curabitur ut egestas justo molestie
+              </h3>
+              <p className="text-gray-400 leading-relaxed">
+                Sed ultrices nisl velit, eu ornare est ullamcorper a. Nunc quis
+                nibh magna. Proin risus erat, fringilla vel purus sit amet,
+                mattis porta enim. Duis fermentum faucibus est, sed vehicula
+                velit sodales vitae.
+              </p>
+              <Link
+                href="/team"
+                className="bg-black text-white block w-fit py-2 px-3 mt-5"
+              >
+                Our Team
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
               </Link>
             </div>
           </div>
@@ -53,12 +84,29 @@ const About = () => {
 
    <div className="lg:basis-[45%] basis-full">
             <Image
+<<<<<<< HEAD
               src={"/assets/h.JPG"}
               alt="medical imaging"
+=======
+              src="/assets/home_clinic3_pic16.jpg"
+              alt="doctor"
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
               width={1000}
               height={1000}
               className="w-full rounded-lg shadow-md"
             />
+<<<<<<< HEAD
+=======
+            <div className="bg-primary px-8 py-10 w-1/2 text-center">
+              <h3 className="text-4xl font-bold py-3">Book online</h3>
+              <p className="text-xl">Fusce lobortis</p>
+              <Link
+                href="/book"
+                className="bg-black mx-auto text-white px-4 block w-fit py-3 mt-3 rounded-md"
+              >
+                Read more
+              </Link>
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
             </div>
             </div>  
             <div className="flex justify-center items-center mt-16">
@@ -74,6 +122,7 @@ const About = () => {
   </div>
 </div>
 
+<<<<<<< HEAD
        <div className="my-20">
   <h3 className="text-4xl font-bold text-center mb-10 text-[#002D62]">
     Conditions & Technologies Used
@@ -186,4 +235,6 @@ const About = () => {
   );
 };
 
+=======
+>>>>>>> b836dc806465c779d881e38ff25b9f6b7bb45b5c
 export default About;
