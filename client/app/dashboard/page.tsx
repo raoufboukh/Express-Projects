@@ -68,14 +68,14 @@ function AppSidebar() {
               activeTheme === "light" ? "text-black" : "text-white"
             } sm:text-2xl text-lg font-bold`}
           >
-            Bienvenue sur votre dashboard
+            Welcome to your dashboard
           </h1>
         </header>
         <main className="p-6">
           {activeItem === "" ? (
             <div className="bg-white dark:bg-[#1A1D23] rounded-lg shadow-sm p-6">
               <p className="text-gray-600 dark:text-gray-300">
-                Sélectionnez une option dans le menu pour commencer
+                Choose an option in the menu to start.
               </p>
             </div>
           ) : activeItem === "Users" ? (
