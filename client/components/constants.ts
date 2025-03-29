@@ -9,9 +9,12 @@ import {
   User,
 } from "lucide-react";
 import { GiDoctorFace } from "react-icons/gi";
-import { faXRay, faBrain, faLungs, faHeartbeat } from "@fortawesome/free-solid-svg-icons";
-
-
+import {
+  faXRay,
+  faBrain,
+  faLungs,
+  faHeartbeat,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const links = [
   {
@@ -38,27 +41,30 @@ export const links = [
 
 export const services = [
   {
-      image: "/assets/xray.png",
-      title: "X-ray Scan",
-      description: "Quick and painless imaging technique that uses electromagnetic radiation to capture images of bones, lungs, and other dense structures inside the body."
+    image: "/assets/xray.png",
+    title: "X-ray Scan",
+    description:
+      "Quick and painless imaging technique that uses electromagnetic radiation to capture images of bones, lungs, and other dense structures inside the body.",
   },
   {
-      image: "/assets/ctscan.png",
-      title: "CT Scan",
-      description: "Computed tomography (CT) scan provides detailed cross-sectional images of bones, blood vessels, and soft tissues, helping diagnose various conditions, including tumors and internal injuries."
+    image: "/assets/ctscan.png",
+    title: "CT Scan",
+    description:
+      "Computed tomography (CT) scan provides detailed cross-sectional images of bones, blood vessels, and soft tissues, helping diagnose various conditions, including tumors and internal injuries.",
   },
   {
-      image: "/assets/ultrasound.png",
-      title: "Ultrasound",
-      description: "Non-invasive imaging method that uses high-frequency sound waves to visualize organs, tissues, and blood flow, commonly used for pregnancy monitoring and abdominal examinations."
+    image: "/assets/ultrasound.png",
+    title: "Ultrasound",
+    description:
+      "Non-invasive imaging method that uses high-frequency sound waves to visualize organs, tissues, and blood flow, commonly used for pregnancy monitoring and abdominal examinations.",
   },
   {
-      image: "/assets/mri.jpg",
-      title: "MRI",
-      description: "Magnetic Resonance Imaging (MRI) uses strong magnetic fields and radio waves to generate detailed images of organs and soft tissues, ideal for diagnosing brain, spinal cord, and joint conditions."
-  }
+    image: "/assets/mri.jpg",
+    title: "MRI",
+    description:
+      "Magnetic Resonance Imaging (MRI) uses strong magnetic fields and radio waves to generate detailed images of organs and soft tissues, ideal for diagnosing brain, spinal cord, and joint conditions.",
+  },
 ];
-
 
 export const companyFooter = [
   { title: "About Us", link: "/about" },
@@ -73,6 +79,25 @@ export const helpFooter = [
   { title: "Privacy Policy", link: "/privacy-policy" },
   { title: "Terms of Service", link: "/terms" },
 ];
+
+export const testimonials = [
+  {
+    text: "The imaging services were top-notch. The MRI scan was quick, and the results were explained clearly. Highly recommend!",
+    name: "Sarah L.",
+    position: "Patient",
+  },
+  {
+    text: "Great experience with the ultrasound service. The staff was professional, and the process was smooth and stress-free.",
+    name: "Bouraoui J.",
+    position: "Patient",
+  },
+  {
+    text: "I was impressed with the accuracy of my CT scan results. The radiologists were very helpful and answered all my questions.",
+    name: "Bouaziz K.",
+    position: "Patient",
+  },
+];
+
 export const machines = [
   {
     name: "X-ray Machine",
@@ -100,20 +125,32 @@ export const machines = [
   },
 ];
 
-
 export const about = [
   {
-    title: "Proin risus erat, fringilla vel purus",
-    description:
-      "Mauris rhoncus orci in imperdiet placerat. Vestibulum euismod nisl suscipit ligula volutpat, a feugiat urna maximus. Cras massa nibh, tincidunt ut eros a, vulputate consequat odio. Vestibulum vehicula tempor nulla, sed hendrerit urna interdum in.",
+    label: "Expert Radiologists",
+    value: 95,
+    description: "Highly trained professionals ensuring accurate diagnoses.",
+    color: "#FFD700",
   },
   {
-    title: "Proin risus erat, fringilla vel purus",
-    description:
-      "In condimentum maximus tristique. Maecenas non laoreet odio. Fusce lobortis porttitor purus, vel vestibulum libero pharetra vel. Pellentesque lorem augue, fermentum nec nibh et, fringilla sollicitudin orci. Integer pharetra magna non ante blandit lobortis. Sed mollis consequat eleifend. Aliquam consectetur orci eget dictum tristique. Aenean et sodales est, ut vestibulum lorem.",
+    label: "Advanced Technology",
+    value: 90,
+    description: "Modern imaging machines provide high-quality results.",
+    color: "#1E90FF",
+  },
+  {
+    label: "Fast & Reliable",
+    value: 92,
+    description: "AI-powered analysis ensures quick and precise reports.",
+    color: "#FF4500",
+  },
+  {
+    label: "Comprehensive Care",
+    value: 88,
+    description: "Personalized assistance and patient-friendly procedures.",
+    color: "#32CD32",
   },
 ];
-
 
 export const radiologists = [
   {
@@ -176,48 +213,60 @@ export const pneumologists = [
     timing: "Wednesday - Sunday, 9AM - 2PM",
   },
 ];
+
 export const faqs = [
   {
     question: "What services does your laboratory provide?",
-    answer: "We offer various medical imaging services, including X-ray, CT scan, MRI, ultrasound, and lung imaging.",
+    answer:
+      "We offer various medical imaging services, including X-ray, CT scan, MRI, ultrasound, and lung imaging.",
   },
   {
     question: "Are X-rays dangerous?",
-    answer: "X-rays use a low dose of radiation, which is considered safe for diagnostic purposes. However, frequent exposure should be minimized, and precautions are taken, especially for pregnant women and children.",
+    answer:
+      "X-rays use a low dose of radiation, which is considered safe for diagnostic purposes. However, frequent exposure should be minimized, and precautions are taken, especially for pregnant women and children.",
   },
   {
     question: "In which cases is an MRI (IRM) used?",
-    answer: "MRI (IRM) is used to examine soft tissues, the brain, spinal cord, joints, and internal organs without using radiation.",
+    answer:
+      "MRI (IRM) is used to examine soft tissues, the brain, spinal cord, joints, and internal organs without using radiation.",
   },
   {
     question: "What is the difference between a CT scan and an MRI?",
-    answer: "A CT scan uses X-rays to create detailed images of bones, organs, and tissues, while MRI uses magnetic fields and radio waves, making it better suited for soft tissue analysis.",
+    answer:
+      "A CT scan uses X-rays to create detailed images of bones, organs, and tissues, while MRI uses magnetic fields and radio waves, making it better suited for soft tissue analysis.",
   },
   {
     question: "Do I need a doctor's prescription for an imaging test?",
-    answer: "Yes, most imaging tests require a prescription from your healthcare provider, except for certain preventive screenings.",
+    answer:
+      "Yes, most imaging tests require a prescription from your healthcare provider, except for certain preventive screenings.",
   },
   {
     question: "How do I book an appointment?",
-    answer: "You can book an appointment online through our website or call our reception desk for assistance.",
+    answer:
+      "You can book an appointment online through our website or call our reception desk for assistance.",
   },
   {
     question: "How should I prepare for my imaging exam?",
-    answer: "Preparation depends on the type of exam. Some require fasting, while others need contrast injections. Your doctor will provide specific instructions.",
+    answer:
+      "Preparation depends on the type of exam. Some require fasting, while others need contrast injections. Your doctor will provide specific instructions.",
   },
   {
     question: "When is a CT scan necessary?",
-    answer: "A CT scan is commonly used for detecting fractures, tumors, lung diseases, and internal bleeding.",
+    answer:
+      "A CT scan is commonly used for detecting fractures, tumors, lung diseases, and internal bleeding.",
   },
   {
     question: "Are ultrasounds only used for pregnancy?",
-    answer: "No, ultrasounds are used for various diagnostic purposes, including examining the heart, abdomen, blood vessels, and muscles.",
+    answer:
+      "No, ultrasounds are used for various diagnostic purposes, including examining the heart, abdomen, blood vessels, and muscles.",
   },
   {
     question: "When will I receive my results?",
-    answer: "Results are usually available within 24-48 hours. Urgent cases can be prioritized.",
+    answer:
+      "Results are usually available within 24-48 hours. Urgent cases can be prioritized.",
   },
 ];
+
 export const scanSteps = [
   {
     id: 1,
@@ -244,36 +293,47 @@ export const scanSteps = [
       "Your results are securely uploaded to your patient portal. You will receive a detailed report with recommendations.",
   },
 ];
+
 export const servicesDetails = [
   {
     icon: faXRay,
     title: "X-ray Scan",
-    description: "X-rays help detect fractures, infections, and lung diseases by capturing images of dense structures inside the body.",
-    procedure: "A small amount of radiation is passed through the body to create an image.",
-    preparation: "Minimal preparation is required. Remove metal objects before the scan."
+    description:
+      "X-rays help detect fractures, infections, and lung diseases by capturing images of dense structures inside the body.",
+    procedure:
+      "A small amount of radiation is passed through the body to create an image.",
+    preparation:
+      "Minimal preparation is required. Remove metal objects before the scan.",
   },
   {
     icon: faBrain,
     title: "MRI Scan",
-    description: "MRI uses magnetic fields and radio waves to create detailed images of soft tissues, ideal for brain and joint diagnostics.",
-    procedure: "The patient lies in a scanner while magnetic fields generate images.",
-    preparation: "Remove metal objects. Inform the technician of any implants."
+    description:
+      "MRI uses magnetic fields and radio waves to create detailed images of soft tissues, ideal for brain and joint diagnostics.",
+    procedure:
+      "The patient lies in a scanner while magnetic fields generate images.",
+    preparation: "Remove metal objects. Inform the technician of any implants.",
   },
   {
     icon: faLungs,
     title: "CT Scan",
-    description: "CT scans provide cross-sectional images of bones, blood vessels, and organs.",
-    procedure: "The patient lies on a moving table that passes through an X-ray scanner.",
-    preparation: "Fasting may be required if contrast dye is used."
+    description:
+      "CT scans provide cross-sectional images of bones, blood vessels, and organs.",
+    procedure:
+      "The patient lies on a moving table that passes through an X-ray scanner.",
+    preparation: "Fasting may be required if contrast dye is used.",
   },
   {
     icon: faHeartbeat,
     title: "Ultrasound",
-    description: "Ultrasound uses sound waves to visualize internal organs and blood flow.",
-    procedure: "A gel is applied, and a handheld probe captures real-time images.",
-    preparation: "Drink water for a full bladder before pelvic exams."
-  }
+    description:
+      "Ultrasound uses sound waves to visualize internal organs and blood flow.",
+    procedure:
+      "A gel is applied, and a handheld probe captures real-time images.",
+    preparation: "Drink water for a full bladder before pelvic exams.",
+  },
 ];
+
 export const linksUser = [
   {
     title: "Dashboard",

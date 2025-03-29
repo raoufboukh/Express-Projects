@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react"; 
-import { faqs } from "../../components/constants";
+import React, { useState } from "react";
+import { faqs } from "@/components/constants";
 import ContactTeam from "@/components/Team/contact-team";
 
 interface FaqItem {
@@ -28,22 +28,25 @@ const Faq: React.FC = () => {
           {faqs.map((faq: FaqItem, index: number) => (
             <div key={index} className="border border-gray-300 rounded-md mb-4">
               <button
-                className="w-full text-left p-4 flex justify-between items-center bg-gray-100 hover:bg-gray-200"
+                className="w-full text-left p-4 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition-all duration-300 cursor-pointer"
                 onClick={() => toggleFAQ(index)}
               >
                 <span className="text-lg">{faq.question}</span>
-                <span className="text-2xl">{openIndex === index ? "−" : "+"}</span>
+                <span className="text-2xl">
+                  {openIndex === index ? "−" : "+"}
+                </span>
               </button>
               {openIndex === index && (
-                <div className="p-4 bg-white border-t border-gray-300">{faq.answer}</div>
+                <div className="p-4 bg-white border-t border-gray-300">
+                  {faq.answer}
+                </div>
               )}
             </div>
           ))}
         </div>
-      </div> 
-      <ContactTeam/>
+      </div>
+      <ContactTeam />
     </section>
-   
   );
 };
 

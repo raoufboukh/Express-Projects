@@ -9,18 +9,17 @@
 
 @layer utilities {
   .scrollbar-custom::-webkit-scrollbar {
-    @apply w-1
+    @apply w-1;
   }
 
   .scrollbar-custom::-webkit-scrollbar-track {
-    @apply bg-gray-600 rounded-3xl
+    @apply bg-gray-600 rounded-3xl;
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-    @apply bg-primary rounded-3xl
+    @apply bg-primary rounded-3xl;
   }
 }
-
 
 .bg-hero {
   background-image: url("../public/assets/home_clinic3_slider_bg.jpg");
@@ -65,7 +64,7 @@
 }
 
 .h2 {
-  @apply text-white font-bold text-7xl mt-20;
+  @apply text-white font-bold text-6xl sm:text-7xl mt-20;
 }
 
 .pages {

@@ -26,8 +26,7 @@ function Navbar() {
       try {
         const ah = await check();
         setData(ah);
-      }
-      catch (err) {
+      } catch (err) {
         console.error("Error during auth check:", err);
       }
     };
@@ -58,8 +57,8 @@ function Navbar() {
         <nav
           className={`absolute lg:relative top-0 lg:block lg:right-0 transition-all duration-500
             bg-gray-900 lg:bg-transparent lg:w-fit lg:h-fit w-52 h-screen ${
-    menu ? "right-0" : "-right-96"
-    }`}
+              menu ? "right-0" : "-right-96"
+            }`}
         >
           <div className="lg:hidden flex justify-end px-3">
             <AiOutlineClose
@@ -69,35 +68,29 @@ function Navbar() {
           </div>
           <ul className="lg:flex lg:mt-0 mt-8 items-center gap-10">
             {links.map((link, i) =>
-              i + 1 !== links.length
-                ? (
-                    <li key={i}>
-                      <Link
-                        className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
-                        href={link.link}
-                        onClick={() => setMenu(false)}
-                      >
-                        {link.title}
-                      </Link>
-                      {" "}
-                    </li>
-                  )
-                : data
-                  ? (
-                      <LinksUser key={i} />
-                    )
-                  : (
-                      <li key={i}>
-                        <Link
-                          className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
-                          href={link.link}
-                          onClick={() => setMenu(false)}
-                        >
-                          {link.title}
-                        </Link>
-                        {" "}
-                      </li>
-                    ),
+              i + 1 !== links.length ? (
+                <li key={i}>
+                  <Link
+                    className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
+                    href={link.link}
+                    onClick={() => setMenu(false)}
+                  >
+                    {link.title}
+                  </Link>{" "}
+                </li>
+              ) : data ? (
+                <LinksUser key={i} />
+              ) : (
+                <li key={i}>
+                  <Link
+                    className="text-lg font-semibold text-primary/70 hover:text-primary transition-all duration-300 py-3 lg:border-none border-y border-gray-800 block px-5 lg:px-0 lg:my-0"
+                    href={link.link}
+                    onClick={() => setMenu(false)}
+                  >
+                    {link.title}
+                  </Link>{" "}
+                </li>
+              )
             )}
           </ul>
         </nav>

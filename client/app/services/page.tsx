@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { scanSteps, servicesDetails } from "@/components/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 const ServicesDetails: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const ServicesDetails: React.FC = () => {
           imaging.
         </p>
 
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {scanSteps.map((step) => (
             <div
               key={step.id}
@@ -45,7 +45,7 @@ const ServicesDetails: React.FC = () => {
         <h2 className="text-4xl font-bold text-center mb-10 text-[#002D62]">
           Our Services
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {servicesDetails.map((service, index) => (
             <div
               key={index}
@@ -84,12 +84,12 @@ const ServicesDetails: React.FC = () => {
             Select a date and time that works for you. Our team is ready to
             assist you.
           </p>
-          <a
+          <Link
             href="/dashboard"
             className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
           >
             Book Now
-          </a>
+          </Link>
         </div>
       </div>
     </section>
