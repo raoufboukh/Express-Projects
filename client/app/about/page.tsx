@@ -1,8 +1,23 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { about, machines } from "@/components/constants";
+import { check } from "@/lib/data-fetching";
+import { useEffect, useState } from "react";
 
 function About() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const ah = await check();
+        setData(ah);
+      } catch (err) {
+        console.error("Error during auth check:", err);
+      }
+    };
+    checkAuth();
+  }, [data, setData]);
   return (
     <section>
       <div className="pages">
@@ -71,7 +86,7 @@ function About() {
             <h3 className="text-4xl font-bold py-3 text-white">Book Online</h3>
             <p className="text-xl text-white">Easy & Quick Appointments</p>
             <Link
-              href={"/dashboard"}
+              href={!data ? "/login" : "/dashboard"}
               className="bg-black text-white px-6 py-3 mt-5 rounded-md inline-block hover:bg-gray-800 transition"
             >
               Book Now

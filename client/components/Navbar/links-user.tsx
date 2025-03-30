@@ -36,13 +36,12 @@ function LinksUser() {
         {linksUser.map((link, i) =>
           link.title === "Logout" ? (
             <li key={i}>
-              <Link
-                className="block size-full text-gray-500 hover:text-gray-800 transition-all duration-300"
-                href={link.link}
+              <p
+                className="block size-full text-gray-500 hover:text-gray-800 transition-all duration-300 cursor-pointer"
                 onClick={handleLogout}
               >
                 {link.title}
-              </Link>
+              </p>
             </li>
           ) : (
             <li key={i}>

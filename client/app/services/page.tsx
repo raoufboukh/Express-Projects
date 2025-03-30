@@ -1,11 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { scanSteps, servicesDetails } from "@/components/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { check } from "@/lib/data-fetching";
 
-const ServicesDetails: React.FC = () => {
+const ServicesDetails = () => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const ah = await check();
+        setData(ah);
+      } catch (err) {
+        console.error("Error during auth check:", err);
+      }
+    };
+    checkAuth();
+  }, [data, setData]);
   return (
     <section>
       <div className="pages">
@@ -85,7 +98,7 @@ const ServicesDetails: React.FC = () => {
             assist you.
           </p>
           <Link
-            href="/dashboard"
+            href={`${data ? "/dashboard" : "/login"}`}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
           >
             Book Now

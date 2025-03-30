@@ -338,12 +338,10 @@ export const linksUser = [
   {
     title: "Dashboard",
     link: "/dashboard",
-    role: ["user", "admin", "doctor"],
   },
   {
     title: "Logout",
     link: "",
-    role: ["user", "admin", "doctor"],
   },
 ];
 
