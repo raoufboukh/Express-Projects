@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 import { services } from "../constants";
 
@@ -11,7 +10,7 @@ function Services() {
         <h2 className="text-6xl font-bold my-20 text-center">
           Services Takes good care of you
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-5 mb-10">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 mb-10">
           {services.map((service, i) => (
             <div key={i} className="flex flex-col items-center text-center">
               <Image
@@ -28,7 +27,7 @@ function Services() {
         </div>
         <Link
           href="/services"
-          className="block w-fit mx-auto px-20 my-20 py-2 rounded-full transition duration-300 bg-secondary text-white"
+          className="block w-fit mx-auto px-20 my-20 py-2 rounded-full transition-all duration-300 bg-secondary hover:bg-secondary/90 text-white"
         >
           View All
         </Link>

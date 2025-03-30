@@ -101,27 +101,42 @@ export const testimonials = [
 export const machines = [
   {
     name: "X-ray Machine",
-    image: "assets/xraymachine.png",
+    image: "/assets/xraymachine.png",
     description:
       "First introduced: 2025. X-ray machines use electromagnetic radiation to capture images of bones and internal structures. They are widely used to detect fractures, infections, lung conditions like pneumonia, and certain tumors by passing X-rays through the body and capturing the resulting image on a detector.",
   },
   {
     name: "CT Scan Machine",
-    image: "assets/ctscanmachine.png",
+    image: "/assets/ctscanmachine.png",
     description:
       "First introduced: 2024. A CT scanner (Computed Tomography) uses X-ray beams and computer processing to create detailed cross-sectional images of the body. It is useful for diagnosing tumors, internal bleeding, fractures, and diseases by rotating around the patient and reconstructing 3D images from multiple angles.",
   },
   {
     name: "MRI Machine",
-    image: "assets/irm.jpg",
+    image: "/assets/irm.jpg",
     description:
       "First introduced: 2021. MRI (Magnetic Resonance Imaging) uses strong magnetic fields and radio waves to generate highly detailed images of soft tissues, the brain, muscles, and internal organs. It is particularly effective in detecting brain disorders, spinal cord injuries, and tumors without using radiation.",
   },
   {
     name: "Ultrasound Machine",
-    image: "assets/ultrasoundmachine.jpg",
+    image: "/assets/ultrasoundmachine.jpg",
     description:
       "First introduced: 2024. Ultrasound machines use high-frequency sound waves to create images of internal body structures. They are commonly used for monitoring pregnancies, diagnosing heart conditions, liver diseases, and detecting abnormalities in soft tissues by analyzing the echoes from the sound waves.",
+  },
+];
+
+export const aboutInfo = [
+  {
+    title: "Beclinic",
+    paragraph1: "Localisation",
+    paragraph2: "Constantine, Algeria",
+    image: "/assets/localisation-icon.png",
+  },
+  {
+    title: "Ultrasound",
+    paragraph1: "Irm",
+    paragraph2: "Scanner",
+    image: "/assets/call-icon.png",
   },
 ];
 

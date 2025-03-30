@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { about, machines } from "@/components/constants";
+import { aboutInfo, machines } from "@/components/constants";
 import { check } from "@/lib/data-fetching";
 import { useEffect, useState } from "react";
+import Stats from "@/components/about/Stats";
 
 function About() {
   const [data, setData] = useState(null);
@@ -64,7 +65,7 @@ function About() {
               </p>
               <Link
                 href={"/team"}
-                className="bg-black text-white block w-fit py-2 px-3 mt-5"
+                className="bg-black text-white block w-fit py-2 px-3 mt-5 transition-all duration-300 hover:bg-gray-800 rounded-md"
               >
                 Meet Our Team
               </Link>
@@ -87,7 +88,7 @@ function About() {
             <p className="text-xl text-white">Easy & Quick Appointments</p>
             <Link
               href={!data ? "/login" : "/dashboard"}
-              className="bg-black text-white px-6 py-3 mt-5 rounded-md inline-block hover:bg-gray-800 transition"
+              className="bg-black text-white px-6 py-3 mt-5 rounded-md inline-block hover:bg-gray-800 transition-all duration-300"
             >
               Book Now
             </Link>
@@ -108,13 +109,14 @@ function About() {
                 }`}
               >
                 <div className="w-full md:w-1/3 flex justify-center">
-                  <img
+                  <Image
+                    width={300}
+                    height={300}
                     src={machine.image}
                     alt={machine.name}
-                    className="w-full h-auto max-h-[250px] object-cover rounded-lg shadow-md"
+                    className="w-full h-auto max-h-[250px] object-cover rounded-lg shadow-lg"
                   />
                 </div>
-
                 <div className="w-full md:w-2/3 text-center md:text-left">
                   <h4 className="text-2xl font-semibold text-[#002D62]">
                     {machine.name}
@@ -128,102 +130,29 @@ function About() {
           </div>
         </div>
 
-        <div className="container mx-auto lg:px-20 px-4">
-          <div className="bg-[#0A1F44] text-white rounded-lg p-10 shadow-md flex flex-col items-center">
-            <h3 className="text-4xl font-bold mb-6 text-center">
-              Why Choose Us?
-            </h3>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-              {about.map(({ label, value, description, color }, index) => {
-                const radius = 35;
-                const strokeWidth = 6;
-                const circumference = 2 * Math.PI * radius;
-                const strokeDashoffset =
-                  circumference - (value / 100) * circumference;
-
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center text-center"
-                  >
-                    <svg width="90" height="90">
-                      <circle
-                        cx="45"
-                        cy="45"
-                        r={radius}
-                        stroke="rgba(255,255,255,0.3)"
-                        strokeWidth={strokeWidth}
-                        fill="none"
-                      />
-
-                      <circle
-                        cx="45"
-                        cy="45"
-                        r={radius}
-                        stroke={color}
-                        strokeWidth={strokeWidth}
-                        fill="none"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={strokeDashoffset}
-                        strokeLinecap="round"
-                        transform="rotate(-90 45 45)"
-                      />
-                      <text
-                        x="50%"
-                        y="50%"
-                        textAnchor="middle"
-                        dy=".3em"
-                        fontSize="16px"
-                        fill={color}
-                        fontWeight="bold"
-                      >
-                        {value}%
-                      </text>
-                    </svg>
-                    <p className="mt-2 font-semibold">{label}</p>
-                    <p className="text-sm opacity-75">{description}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <Stats />
         <div className="container mx-auto lg:px-20 px-4 my-20">
           <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-            <div className="bg-white shadow-lg rounded-xl p-8 text-center w-full md:w-1/3">
-              <div className="flex justify-center mb-4">
-                <Image
-                  src="/assets/localisation-icon.png"
-                  alt="Location"
-                  width={90}
-                  height={90}
-                />
+            {aboutInfo.map((info, i) => (
+              <div
+                key={i}
+                className="bg-white shadow-lg rounded-xl p-8 text-center w-full md:w-1/3"
+              >
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src={info.image}
+                    alt={info.title}
+                    width={90}
+                    height={90}
+                  />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">{info.title}</h3>
+                  <p className="text-gray-600">{info.paragraph1}</p>
+                  <p className="text-gray-600">{info.paragraph2}</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold">Beclinic</h3>
-              <p className="text-gray-600">Localisation</p>
-              <p className="text-gray-600">Loc</p>
-            </div>
-
-            <div className="bg-white shadow-lg rounded-xl p-8 text-center w-full md:w-1/3">
-              <div className="flex justify-center mb-4">
-                <Image
-                  src="/assets/call-icon.png"
-                  alt="Phone"
-                  width={90}
-                  height={90}
-                />
-              </div>
-              <p className="text-lg font-bold text-black">
-                Ultra-Sound : <span className="font-normal"></span>
-              </p>
-              <p className="text-lg font-bold text-black">
-                IRM : <span className="font-normal"></span>
-              </p>
-              <p className="text-lg font-bold text-black">
-                SCANNER : <span className="font-normal"></span>
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </div>
