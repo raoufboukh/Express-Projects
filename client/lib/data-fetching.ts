@@ -53,7 +53,10 @@ export const addUser = async (info: any) => {
 export async function deleteUser(id: string, role: string) {
   try {
     const { data } = await axiosInstance.delete(`/users/${id}`);
-    enqueueSnackbar(`${role} deleted successfully!`, { variant: "success" });
+    enqueueSnackbar(
+      `${role.charAt(0).toUpperCase() + role.slice(1)} deleted successfully!`,
+      { variant: "success" }
+    );
     return data;
   } catch (error) {
     console.error("Delete user failed:", error);
