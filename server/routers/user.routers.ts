@@ -5,6 +5,7 @@ import {
   addUser,
   bookAppointment,
   cancelAppointment,
+  deleteUser,
   getDoctors,
   getOneDoctor,
   getOneUser,
@@ -24,6 +25,7 @@ userRouter.get("/doctors/:id", getOneDoctor);
 userRouter.post("/scan", ProtectRoute, addScan);
 userRouter.post("/appointment", ProtectRoute, bookAppointment);
 userRouter.delete("/appointment/:id", ProtectRoute, cancelAppointment);
+userRouter.delete("/:id", ProtectRoute, deleteUser);
 userRouter.put("/account-type", ProtectRoute, updateAccountType);
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);
 userRouter.put("/acceptNotification/:id", ProtectRoute, acceptAppointment);

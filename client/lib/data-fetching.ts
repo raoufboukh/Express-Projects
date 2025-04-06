@@ -37,13 +37,29 @@ export async function register(
 export const addUser = async (info: any) => {
   try {
     const { data } = await axiosInstance.post("/users", info);
-    enqueueSnackbar("User added successfully!", { variant: "success" });
+    enqueueSnackbar(
+      `${
+        info.role.charAt(0).toUpperCase() + info.role.slice(1)
+      } added successfully!`,
+      { variant: "success" }
+    );
     return data;
   } catch (error) {
     console.error("Add user failed:", error);
     throw error;
   }
 };
+
+export async function deleteUser(id: string, role: string) {
+  try {
+    const { data } = await axiosInstance.delete(`/users/${id}`);
+    enqueueSnackbar(`${role} deleted successfully!`, { variant: "success" });
+    return data;
+  } catch (error) {
+    console.error("Delete user failed:", error);
+    throw error;
+  }
+}
 
 export async function logout() {
   try {

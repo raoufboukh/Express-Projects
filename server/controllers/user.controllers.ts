@@ -55,6 +55,17 @@ export const addUser = async (req: any, res: any) => {
   }
 };
 
+export const deleteUser = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "User ID required" });
+    await User.findByIdAndDelete(id);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getDoctors = async (req: any, res: any) => {
   try {
     const doctors = await User.find({ role: "doctor" }).select("-password");
