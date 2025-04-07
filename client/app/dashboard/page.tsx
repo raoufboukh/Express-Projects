@@ -86,7 +86,7 @@ function AppSidebar() {
             <Notifications />
           ) : activeItem === "Appointments" ? (
             <Appointments />
-          ) : activeItem === "Scans" ? (
+          ) : activeItem === "Results Scans" ? (
             <Scans />
           ) : activeItem === "BookAppointments" ? (
             <BookApp />

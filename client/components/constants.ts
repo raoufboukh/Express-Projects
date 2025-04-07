@@ -398,7 +398,7 @@ export const dashboardLinks = [
     role: ["user", "admin"],
   },
   {
-    title: "Scans",
+    title: "Results Scans",
     icon: Scan,
     role: ["user", "admin"],
   },
