@@ -10,6 +10,7 @@ import {
   getOneDoctor,
   getOneUser,
   getUsers,
+  modifyAppointment,
   rejectAppointment,
   updateAccountType,
 } from "../controllers/user.controllers.ts";
@@ -26,6 +27,7 @@ userRouter.post("/scan", ProtectRoute, addScan);
 userRouter.post("/appointment", ProtectRoute, bookAppointment);
 userRouter.delete("/appointment/:id", ProtectRoute, cancelAppointment);
 userRouter.delete("/:id", ProtectRoute, deleteUser);
+userRouter.put("/update/:id", ProtectRoute, modifyAppointment);
 userRouter.put("/account-type", ProtectRoute, updateAccountType);
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);
 userRouter.put("/acceptNotification/:id", ProtectRoute, acceptAppointment);

@@ -97,8 +97,7 @@ export const addScan = async (req: any, res: any) => {
             : "AI Analysis is required"
         }`,
       });
-
-    const user = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       req.user._id,
       {
         $push: {
@@ -152,7 +151,7 @@ export const bookAppointment = async (req: any, res: any) => {
     const user = await User.findByIdAndUpdate(
       req.user._id,
       {
-        $push: {
+        $set: {
           appointments: {
             firstName,
             lastName,
@@ -193,6 +192,74 @@ export const bookAppointment = async (req: any, res: any) => {
   }
 };
 
+export const modifyAppointment = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const { firstName, lastName, number, time, date, message } = req.body;
+    if (!date || !firstName || !lastName || !number || !time)
+      return res.status(400).json({
+        message: `${
+          !firstName
+            ? "FirstName is required"
+            : !lastName
+            ? "LastName is required"
+            : !number
+            ? "Number is required"
+            : !time
+            ? "Time is required"
+            : !date
+            ? "Date is required"
+            : "Message is required"
+        }`,
+      });
+    const appointmentId = new mongoose.Types.ObjectId(id);
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(400).json({ message: "Aucun Admin trouve" });
+    await User.findOneAndUpdate(
+      {
+        _id: req.user._id,
+        "appointments._id": appointmentId,
+      },
+      {
+        $set: {
+          appointments: {
+            _id: appointmentId,
+            firstName,
+            lastName,
+            number,
+            time,
+            date,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    admins.forEach(async (admin: any) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $set: {
+          notifications: {
+            message: message,
+            appointment: {
+              _id: appointmentId,
+              firstName,
+              lastName,
+              number,
+              time,
+              date,
+            },
+            senderId: req.user._id,
+          },
+        },
+      });
+    });
+    res.status(200).json({ message: "Appointment modified success" });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 export const cancelAppointment = async (req: any, res: any) => {
   try {
     const { id } = req.params;
@@ -219,7 +286,7 @@ export const cancelAppointment = async (req: any, res: any) => {
     console.log("Updated User Appointments:", user.appointments);
     await Promise.all(
       admins.map(async (admin) => {
-        const updatedAdmin = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           admin._id,
           {
             $pull: {

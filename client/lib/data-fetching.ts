@@ -151,6 +151,20 @@ export async function bookAppointment(data: any) {
   }
 }
 
+export async function modifyAppointment(id: string, data: any) {
+  try {
+    console.log(data);
+    const response = await axiosInstance.put(`/users/update/${id}`, data);
+    enqueueSnackbar("Appointment modified successfully!", {
+      variant: "success",
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Modify appointment failed:", error);
+    throw error;
+  }
+}
+
 export async function cancelAppointment(id: string) {
   try {
     const response = await axiosInstance.delete(`/users/appointment/${id}`);
