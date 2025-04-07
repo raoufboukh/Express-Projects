@@ -2,41 +2,41 @@ import { bookAppointment } from "@/lib/data-fetching";
 import { useMutation } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
+import { DatePickerDemo } from "./Date";
 
 const Form = () => {
-    const [Form, setForm] = useState({
-        firstName: "",
-        lastName: "",
-        number: "",
-        time: "",
-        date: new Date(),
-    });
-    const { mutate, isPending } = useMutation({
-        mutationKey: ["bookAppointment"],
-        mutationFn: () => {
-            if (Form) {
-                return bookAppointment(Form);
-            }
-            throw new Error("All fields are required");
-        },
-    })
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if(!Form){
-            enqueueSnackbar("All fields are required", {
-                variant: "error",
-            });
-        }else{
-            mutate();
-        }
-    }  
+  const [Form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    number: "",
+    time: "",
+    date: new Date(),
+  });
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["bookAppointment"],
+    mutationFn: () => {
+      if (Form) {
+        return bookAppointment(Form);
+      }
+      throw new Error("All fields are required");
+    },
+  });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!Form) {
+      enqueueSnackbar("All fields are required", {
+        variant: "error",
+      });
+    } else {
+      mutate();
+    }
+  };
   return (
     <form action="" className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <label htmlFor="user" className="w-fit">FirstName</label>
+        <label htmlFor="user" className="w-fit">
+          FirstName
+        </label>
         <input
           value={Form.firstName}
           onChange={(e) => setForm({ ...Form, firstName: e.target.value })}
@@ -46,7 +46,9 @@ const Form = () => {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="em" className="w-fit">LastName</label>
+        <label htmlFor="em" className="w-fit">
+          LastName
+        </label>
         <input
           value={Form.lastName}
           onChange={(e) => setForm({ ...Form, lastName: e.target.value })}
@@ -56,7 +58,9 @@ const Form = () => {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="pass" className="w-fit">Number</label>
+        <label htmlFor="pass" className="w-fit">
+          Number
+        </label>
         <input
           value={Form.number}
           onChange={(e) => setForm({ ...Form, number: e.target.value })}
@@ -66,7 +70,9 @@ const Form = () => {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="role" className="w-fit">Time</label>
+        <label htmlFor="role" className="w-fit">
+          Time
+        </label>
         <input
           value={Form.time}
           onChange={(e) => setForm({ ...Form, time: e.target.value })}
@@ -77,27 +83,7 @@ const Form = () => {
         />
       </div>
       <div className="mt-5 mx-auto w-fit">
-        <DatePicker
-          selected={Form.date}
-          onChange={(date: Date | null) => {
-            if (date) {
-              const newDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate(),
-                12,
-                0,
-                0
-              );
-              if (newDate > new Date()) setForm({...Form, date: newDate});
-              else
-                enqueueSnackbar("You can't book an appointment in the past", {
-                  variant: "error",
-                });
-            }
-          }}
-          inline
-        />
+        <DatePickerDemo date={Form.date} setInfo={setForm} />
       </div>
       <div>
         <button
@@ -106,11 +92,11 @@ const Form = () => {
           onClick={handleSubmit}
           disabled={isPending}
         >
-            {isPending ? "Booking..." : "Book"}
+          {isPending ? "Booking..." : "Book"}
         </button>
       </div>
     </form>
   );
-}
+};
 
-export default Form
+export default Form;
