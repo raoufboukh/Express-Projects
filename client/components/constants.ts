@@ -34,6 +34,10 @@ export const links = [
     link: "/team",
   },
   {
+    title: "Pricing",
+    link: "/pricing",
+  },
+  {
     title: "Login",
     link: "/login",
   },
@@ -455,5 +459,50 @@ export const labs = [
     title: "Lab 3",
     address: "1234 Main St, New York, NY 10001",
     phone: "(123) 456-7890",
+  },
+];
+
+export const pricingPlans = [
+  {
+    title: "Monthly Plan",
+    color: "text-yellow-500",
+    description: "Best for individuals",
+    price: "2,000 DZD",
+    features: [
+      "AI scan analysis",
+      "Upload scans anytime",
+      "No need to visit the lab",
+      "Book more appointments if you need",
+    ],
+    duree: "month",
+  },
+  {
+    title: "Yearly Plan",
+    color: "text-purple-500",
+    description: "Save with an annual subscription",
+    price: "16,000 DZD",
+    features: [
+      "AI scan analysis",
+      "Upload scans anytime",
+      "No need to visit the lab",
+      "Book more appointments if you need",
+      "2 Months Free",
+    ],
+    duree: "year",
+  },
+  {
+    title: "Team Plan",
+    color: "text-red-500",
+    description: "Share with friends & save",
+    price: "27,000 DZD",
+    features: [
+      "AI scan analysis",
+      "Upload scans anytime",
+      "No need to visit the lab",
+      "Book more appointments if you need",
+
+      "Includes 3 users",
+    ],
+    duree: "year",
   },
 ];

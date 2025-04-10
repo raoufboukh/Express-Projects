@@ -68,7 +68,17 @@ function Navbar() {
           </div>
           <ul className="lg:flex lg:mt-0 mt-8 items-center gap-10">
             {links.map((link, i) =>
-              i + 1 !== links.length ? (
+              link.title === "Pricing" ? (
+                <li key={i} className={!data ? "hidden" : ""}>
+                  <Link
+                    className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
+                    href={link.link}
+                    onClick={() => setMenu(false)}
+                  >
+                    {link.title}
+                  </Link>{" "}
+                </li>
+              ) : i + 1 !== links.length ? (
                 <li key={i}>
                   <Link
                     className="text-lg font-semibold text-white/70 hover:text-white transition-all duration-300 py-3 block px-5 lg:border-none border-t border-gray-800 lg:px-0 lg:my-0"
