@@ -181,7 +181,7 @@ export async function cancelAppointment(id: string) {
 export async function updateAccountType() {
   try {
     const response = await axiosInstance.put(`/users/account-type`);
-    enqueueSnackbar("Account type updated successfully!", {
+    enqueueSnackbar("Account type updated send to admin!", {
       variant: "success",
     });
     return response.data;
@@ -204,6 +204,19 @@ export async function acceptNotification(id: string) {
   }
 }
 
+export const acceptAccountType = async (id: string) => {
+  try {
+    const response = await axiosInstance.put(`/users/acceptAccountType/${id}`);
+    enqueueSnackbar("Account type accepted successfully!", {
+      variant: "success",
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Accept account type failed:", error);
+    throw error;
+  }
+};
+
 export async function rejectNotification(id: string) {
   try {
     const response = await axiosInstance.put(`/users/rejectNotification/${id}`);
@@ -216,3 +229,16 @@ export async function rejectNotification(id: string) {
     throw error;
   }
 }
+
+export const rejectAccountType = async (id: string) => {
+  try {
+    const response = await axiosInstance.put(`/users/rejectAccountType/${id}`);
+    enqueueSnackbar("Account type rejected successfully!", {
+      variant: "success",
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Reject account type failed:", error);
+    throw error;
+  }
+};

@@ -14,9 +14,6 @@ const Plans = () => {
       queryClient.invalidateQueries({ queryKey: ["pricing"] });
       const updatedUserData = await check();
       setUser(updatedUserData);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
     },
   });
   const router = useRouter();
@@ -97,13 +94,19 @@ const Plans = () => {
                 </p>
                 <button
                   className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-                  disabled={isPending || user.accountType === "premium"}
+                  disabled={
+                    isPending ||
+                    user.accountType === "premium" ||
+                    user.statusType === "pending"
+                  }
                   onClick={() => mutate()}
                 >
                   {isPending
                     ? "Loading..."
                     : user.accountType === "premium"
                     ? "You have premium account"
+                    : user.statusType === "pending"
+                    ? "Pending..."
                     : "Upgrade Now"}
                 </button>
               </div>
