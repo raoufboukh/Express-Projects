@@ -1,6 +1,7 @@
 import express from "express";
 import {
   acceptAppointment,
+  acceptNotification,
   addScan,
   addUser,
   bookAppointment,
@@ -12,6 +13,7 @@ import {
   getUsers,
   modifyAppointment,
   rejectAppointment,
+  rejectNotification,
   updateAccountType,
 } from "../controllers/user.controllers.ts";
 import { checkPrimaryExpire, ProtectRoute } from "../middleware/middleware.ts";
@@ -41,5 +43,17 @@ userRouter.put(
 );
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);
 userRouter.put("/acceptNotification/:id", ProtectRoute, acceptAppointment);
+userRouter.put(
+  "/acceptAccountType/:id",
+  ProtectRoute,
+  checkPrimaryExpire,
+  acceptNotification
+);
+userRouter.put(
+  "/rejectAccountType/:id",
+  ProtectRoute,
+  checkPrimaryExpire,
+  rejectNotification
+);
 
 export default userRouter;

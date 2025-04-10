@@ -307,17 +307,104 @@ export const cancelAppointment = async (req: any, res: any) => {
 
 export const updateAccountType = async (req: any, res: any) => {
   try {
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate() + 30);
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(404).json({ message: "No admins found" });
     await User.findByIdAndUpdate(
       req.user._id,
       {
-        accountType: "premium",
-        accountTypeExpire: expiry,
+        $set: {
+          statusType: "pending",
+        },
       },
       { new: true }
     );
-    res.status(200).json({ message: "Updated Account Successeful" });
+    admins.forEach(async (admin) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $push: {
+          notifications: {
+            message: `Update account type for premium from ${req.user.username}`,
+            appointment: {},
+            senderId: req.user._id,
+          },
+        },
+      });
+    });
+    res.status(200).json({ message: "Updated Account Send to admins" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const acceptNotification = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "Notification ID required" });
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(404).json({ message: "No admins found" });
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+    const notification = await User.findOne(
+      { _id: req.user._id, "notifications._id": id },
+      { "notifications.$": 1 }
+    );
+    if (!notification || !notification.notifications[0])
+      return res.status(404).json({ message: "Notification not found" });
+    const senderId = notification.notifications[0].senderId;
+    await User.findByIdAndUpdate(
+      senderId,
+      {
+        $set: {
+          statusType: "accepted",
+          accountTypeExpire: expiry,
+          accountType: "premium",
+        },
+      },
+      { new: true }
+    );
+    admins.forEach(async (admin) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $pull: {
+          notifications: { _id: id },
+        },
+      });
+    });
+    res.status(200).json({
+      message: "Account type updated successfully",
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const rejectNotification = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "Notification ID required" });
+    const admins = await User.find({ role: "admin" });
+    if (admins.length === 0)
+      return res.status(404).json({ message: "No admins found" });
+    const notification = await User.findOne(
+      { _id: req.user._id, "notifications._id": id },
+      { "notifications.$": 1 }
+    );
+    if (!notification || !notification.notifications[0])
+      return res.status(404).json({ message: "Notification not found" });
+    const senderId = notification.notifications[0].senderId;
+    await User.findByIdAndUpdate(
+      senderId,
+      {
+        $set: {
+          accountTypeExpire: null,
+          accountType: "basic",
+          statusType: null,
+        },
+      },
+      { new: true }
+    );
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

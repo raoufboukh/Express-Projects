@@ -87,6 +87,10 @@ const user = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    statusType: {
+      type: String,
+      default: null,
+    },
     scanResults: {
       type: [scanResults],
     },
