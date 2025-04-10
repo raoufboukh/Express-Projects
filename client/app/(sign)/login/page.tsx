@@ -34,7 +34,7 @@ function Login() {
     onSuccess: () => {
       setTimeout(() => {
         router.push("/dashboard");
-      }, 100);
+      }, 200);
     },
     onError: (err) => {
       console.error("Login failed", err);

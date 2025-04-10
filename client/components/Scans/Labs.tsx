@@ -1,12 +1,30 @@
-import { labs } from '../constants';
+"use client";
+import { useEffect, useState } from "react";
+import { labs } from "../constants";
+import { check } from "@/lib/data-fetching";
 
 interface LabsProps {
-    id: number;
-    setId: (id: number) => void;
+  id: number;
+  setId: (id: number) => void;
 }
 
-
-const Labs:React.FC<LabsProps> = ({id,setId}) => {
+const Labs: React.FC<LabsProps> = ({ id, setId }) => {
+  const [user, setUser] = useState<any>({});
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const data = await check();
+        if (!data) {
+          setUser({});
+        } else {
+          setUser(data);
+        }
+      } catch (error) {
+        console.error("Error during auth check:", error);
+      }
+    };
+    checkAuth();
+  }, []);
   return (
     <div
       className={`grid lg:grid-cols-2 gap-4 lg:h-fit h-96 overflow-y-auto scrollbar-custom`}
@@ -18,7 +36,7 @@ const Labs:React.FC<LabsProps> = ({id,setId}) => {
             id === lab.id && "border border-gray-300"
           } cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed bg-gray-800 p-4 rounded-md shadow-md relative `}
           onClick={() => setId(lab.id)}
-          disabled={lab.id > 1}
+          disabled={lab.id > 1 && user.accountType !== "premium"}
         >
           <div className="absolute top-2 left-2 size-4 rounded-full bg-white flex items-center justify-center">
             <span
@@ -43,6 +61,6 @@ const Labs:React.FC<LabsProps> = ({id,setId}) => {
       ))}
     </div>
   );
-}
+};
 
-export default Labs
+export default Labs;
