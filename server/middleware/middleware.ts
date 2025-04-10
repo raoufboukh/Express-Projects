@@ -29,3 +29,27 @@ export const ProtectRoute = async (req: any, res: any, next: any) => {
     });
   }
 };
+
+export const checkPrimaryExpire = async (req: any, res: any, next: any) => {
+  try {
+    if (
+      req.user &&
+      req.user.accountType === "premium" &&
+      req.user.accountTypeExpire
+    ) {
+      const currentDate = new Date();
+      const expirationDate = new Date(req.user.accountTypeExpire);
+      if (expirationDate < currentDate) {
+        req.user.accountType = "basic";
+        req.user.accountTypeExpire = null;
+        await req.user.save();
+      }
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    });
+  }
+};

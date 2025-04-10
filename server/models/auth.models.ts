@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const appointments = new mongoose.Schema({
   firstName: {
     type: String,
@@ -29,19 +28,19 @@ const appointments = new mongoose.Schema({
 });
 
 const scanResults = new mongoose.Schema({
-    date: {
-        type: Date,
-        required: true
-    },
-    result: {
-        type: String,
-        required: true
-    },
-    aiAnalysis: {
-        type: String,
-        required: true
-    }
-})
+  date: {
+    type: Date,
+    required: true,
+  },
+  result: {
+    type: String,
+    required: true,
+  },
+  aiAnalysis: {
+    type: String,
+    required: true,
+  },
+});
 
 const NotificationSchema = new mongoose.Schema({
   message: {
@@ -52,45 +51,50 @@ const NotificationSchema = new mongoose.Schema({
   },
   senderId: {
     type: String,
-  }
+  },
 });
 
-const user = new mongoose.Schema({
+const user = new mongoose.Schema(
+  {
     username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     role: {
-        type: String,
-        default: "user"
+      type: String,
+      default: "user",
     },
     appointments: {
-        type: [appointments],
+      type: [appointments],
     },
     accountType: {
-        type: String,
-        default: "basic"
+      type: String,
+      default: "basic",
+    },
+    accountTypeExpire: {
+      type: Date,
+      default: null,
     },
     scanResults: {
-        type: [scanResults],
+      type: [scanResults],
     },
     notifications: {
-        type: [NotificationSchema],
-    }
-
-}, {timestamps: true})
-
+      type: [NotificationSchema],
+    },
+  },
+  { timestamps: true }
+);
 
 export const User = mongoose.model("User", user);
