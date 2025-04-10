@@ -1,14 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { pricingPlans } from "./constants";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { check, updateAccountType } from "@/lib/data-fetching";
 import { useRouter } from "next/navigation";
 
 const Plans = () => {
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationKey: ["pricing"],
     mutationFn: updateAccountType,
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["pricing"] });
+      const updatedUserData = await check();
+      setUser(updatedUserData);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    },
   });
   const router = useRouter();
   const [user, setUser] = useState<any>({});
@@ -52,7 +61,7 @@ const Plans = () => {
                   <span className="text-gray-500 text-base">/{plan.duree}</span>
                 </p>
                 <button
-                  className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70"
+                  className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   disabled={isPending || user.accountType === "premium"}
                   onClick={() => mutate()}
                 >
@@ -87,7 +96,7 @@ const Plans = () => {
                   <span className="text-gray-500 text-base">/{plan.duree}</span>
                 </p>
                 <button
-                  className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70"
+                  className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   disabled={isPending || user.accountType === "premium"}
                   onClick={() => mutate()}
                 >
