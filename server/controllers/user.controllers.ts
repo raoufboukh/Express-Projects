@@ -307,18 +307,16 @@ export const cancelAppointment = async (req: any, res: any) => {
 
 export const updateAccountType = async (req: any, res: any) => {
   try {
-    const user = await User.findByIdAndUpdate(
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+    await User.findByIdAndUpdate(
       req.user._id,
       {
         accountType: "premium",
+        accountTypeExpire: expiry,
       },
       { new: true }
     );
-    setTimeout(async () => {
-      await User.findByIdAndUpdate(req.user._id, {
-        accountType: "basic",
-      });
-    }, 30 * 24 * 60 * 60 * 1000);
     res.status(200).json({ message: "Updated Account Successeful" });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
