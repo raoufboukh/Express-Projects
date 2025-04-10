@@ -25,7 +25,7 @@ type User = {
   notifications: any[];
   appointments: any[];
   scans: any[];
-  typeAccount: string;
+  accountType: string;
 };
 
 function AppSidebar() {
@@ -42,6 +42,11 @@ function AppSidebar() {
           router.push("/");
         }
         setUser(data);
+        if (data.accountType === "premium") {
+          setActiveTheme("blue");
+        } else {
+          setActiveTheme("dark");
+        }
       } catch (err) {
         console.error("Error during auth check:", err);
       }

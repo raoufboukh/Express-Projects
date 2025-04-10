@@ -6,15 +6,27 @@ type ButtonLinkProps = {
   activeItem: string;
   collapsed: boolean;
   setActiveItem: (item: string) => void;
+  user: any;
 };
 
-const ButtonLink: React.FC<ButtonLinkProps> = ({ item, theme, activeItem, collapsed, setActiveItem }) => {
+const ButtonLink: React.FC<ButtonLinkProps> = ({
+  item,
+  theme,
+  activeItem,
+  collapsed,
+  setActiveItem,
+  user,
+}) => {
   return !item.link ? (
     <div
       className={`flex items-center cursor-pointer ${
         collapsed ? "justify-center px-3" : "px-4"
       } py-3 rounded-lg ${
-        activeItem === item.title ? theme.active : theme.menuItem
+        user.accountType === "basic" && activeItem === item.title
+          ? theme.active
+          : user.accountType === "premium" && activeItem === item.title
+          ? theme.premiumActive
+          : theme.menuItem
       } transition-all duration-200`}
       onClick={() => setActiveItem(item.title)}
     >
@@ -29,7 +41,11 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({ item, theme, activeItem, collap
         className={`flex items-center cursor-pointer ${
           collapsed ? "justify-center px-3" : "px-4"
         } py-3 rounded-lg ${
-          activeItem === item.title ? theme.active : theme.menuItem
+          user.accountType === "basic" && activeItem === item.title
+            ? theme.active
+            : user.accountType === "premium" && activeItem === item.title
+            ? theme.premiumActive
+            : theme.menuItem
         } transition-all duration-200`}
         onClick={() => setActiveItem(item.title)}
       >

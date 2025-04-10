@@ -23,7 +23,11 @@ const ScanButton: React.FC<ScanButtonProps> = ({
       className={`flex items-center cursor-pointer ${
         collapsed ? "justify-center px-3" : "px-4"
       } py-3 rounded-lg ${
-        activeItem === item.title ? theme.active : theme.menuItem
+        user.accountType === "basic" && activeItem === item.title
+          ? theme.active
+          : user.accountType === "premium" && activeItem === item.title
+          ? theme.premiumActive
+          : theme.menuItem
       } transition-all duration-200`}
       onClick={() => {
         if (

@@ -76,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
 
-      {!collapsed && (
+      {!collapsed && user?.accountType === "premium" && (
         <div className="px-4 py-3">
           <div className="flex space-x-2">
             <button
@@ -84,15 +84,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => setActiveTheme("dark")}
               className={`md:size-6 size-3 rounded-full bg-[#1A1D23] border ${
                 activeTheme === "dark" ? "border-white" : "border-transparent"
-              } cursor-pointer`}
-            />
-            <button
-              type="button"
-              onClick={() => setActiveTheme("light")}
-              className={`md:size-6 size-3 rounded-full bg-white border ${
-                activeTheme === "light"
-                  ? "border-indigo-600"
-                  : "border-gray-300"
               } cursor-pointer`}
             />
             <button
@@ -136,6 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     collapsed={collapsed}
                     setActiveItem={setActiveItem}
                     activeItem={activeItem}
+                    user={user}
                   />
                 </li>
               ))
