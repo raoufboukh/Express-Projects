@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 import { check, register } from "@/lib/data-fetching";
+import { FaArrowLeft } from "react-icons/fa6";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -22,8 +23,7 @@ function Register() {
         if (data) {
           router.push("/");
         }
-      }
-      catch (err) {
+      } catch (err) {
         console.error("Error during auth check:", err);
       }
     };
@@ -33,7 +33,9 @@ function Register() {
   const { mutate, error, isPending } = useMutation({
     mutationFn: () => register(username, email, password),
     onSuccess: () => {
-      router.push("/dashboard");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 100);
     },
     onError: (err) => {
       console.error("Login failed", err);
@@ -44,7 +46,11 @@ function Register() {
     mutate();
   };
   return (
-    <div className="bg-black h-screen pb-5 flex justify-center items-center">
+    <div className="bg-black h-screen pb-5 flex justify-center items-center relative">
+      <FaArrowLeft
+        className="absolute top-5 left-5 text-lg cursor-pointer text-white"
+        onClick={() => router.back()}
+      />
       <div className="bg-white p-8 rounded-md shadow-lg shadow-white">
         <div className="flex justify-center">
           <Image
@@ -70,7 +76,7 @@ function Register() {
               id="username"
               className="w-full p-2 border border-gray-200 rounded-md"
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="my-4">
@@ -82,7 +88,7 @@ function Register() {
               id="email"
               className="w-full p-2 border border-gray-200 rounded-md"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="my-4">
@@ -95,7 +101,7 @@ function Register() {
                 id="password"
                 className="w-full p-2 border border-gray-200 rounded-md"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <LuEyeClosed
@@ -123,8 +129,7 @@ function Register() {
           </div>
         </form>
         <p>
-          Already have an account?
-          {" "}
+          Already have an account?{" "}
           <Link href="/login" className="text-blue-600">
             login
           </Link>

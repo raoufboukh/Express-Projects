@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 import { check, login } from "@/lib/data-fetching";
+import { FaArrowLeft } from "react-icons/fa6";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,8 +22,7 @@ function Login() {
         if (data) {
           router.push("/");
         }
-      }
-      catch (err) {
+      } catch (err) {
         console.error("Error during auth check:", err);
       }
     };
@@ -32,13 +32,15 @@ function Login() {
   const { mutate, isPending } = useMutation({
     mutationFn: () => login(email, password),
     onSuccess: () => {
-      router.push("/dashboard");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 100);
     },
     onError: (err) => {
       console.error("Login failed", err);
       setErrorMessage(
-        err.message
-        || "Erreur de connexion. Veuillez vérifier vos identifiants.",
+        err.message ||
+          "Erreur de connexion. Veuillez vérifier vos identifiants."
       );
     },
   });
@@ -53,15 +55,18 @@ function Login() {
 
     try {
       mutate();
-    }
-    catch (err) {
+    } catch (err) {
       console.error("Error during form submission:", err);
       setErrorMessage("Une erreur s'est produite. Veuillez réessayer.");
     }
   };
 
   return (
-    <div className="bg-black h-screen flex justify-center items-center">
+    <div className="bg-black h-screen flex justify-center items-center relative">
+      <FaArrowLeft
+        className="absolute top-5 left-5 text-lg cursor-pointer text-white"
+        onClick={() => router.back()}
+      />
       <div className="bg-white p-8 rounded-md shadow-lg shadow-white">
         <div className="flex justify-center">
           <Image
@@ -87,7 +92,7 @@ function Login() {
               id="email"
               className="w-full p-2 border border-gray-200 rounded-md"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -101,7 +106,7 @@ function Login() {
                 id="password"
                 className="w-full p-2 border border-gray-200 rounded-md"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <LuEyeClosed
@@ -129,8 +134,7 @@ function Login() {
           </div>
         </form>
         <p>
-          Don&apos;t have an account?
-          {" "}
+          Don&apos;t have an account?{" "}
           <Link href="/register" className="text-blue-600">
             Register
           </Link>
