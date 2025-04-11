@@ -141,7 +141,6 @@ export async function addScan(data: any) {
 
 export async function bookAppointment(data: any) {
   try {
-    console.log(data);
     const response = await axiosInstance.post("/users/appointment", data);
     enqueueSnackbar("Appointment booked successfully!", { variant: "success" });
     return response.data;
@@ -153,7 +152,6 @@ export async function bookAppointment(data: any) {
 
 export async function modifyAppointment(id: string, data: any) {
   try {
-    console.log(data);
     const response = await axiosInstance.put(`/users/update/${id}`, data);
     enqueueSnackbar("Appointment modified successfully!", {
       variant: "success",

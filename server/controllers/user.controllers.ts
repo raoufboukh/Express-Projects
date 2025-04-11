@@ -248,6 +248,7 @@ export const modifyAppointment = async (req: any, res: any) => {
               number,
               time,
               date,
+              status: "pending",
             },
             senderId: req.user._id,
           },

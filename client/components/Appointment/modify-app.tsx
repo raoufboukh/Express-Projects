@@ -3,14 +3,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { DatePickerDemo } from "./Date";
+import { enqueueSnackbar } from "notistack";
 
 interface ModifyProps {
   id: string;
   setShow: (show: boolean) => void;
   data: any;
+  fetchUserData: () => void;
 }
 
-const Modify: React.FC<ModifyProps> = ({ id, setShow, data }) => {
+const Modify: React.FC<ModifyProps> = ({
+  id,
+  setShow,
+  data,
+  fetchUserData,
+}) => {
   const [info, setInfo] = useState({
     firstName: data.firstName,
     lastName: data.lastName,
@@ -25,13 +32,20 @@ const Modify: React.FC<ModifyProps> = ({ id, setShow, data }) => {
     mutationFn: ({ id, data }: { id: string; data: any }) =>
       modifyAppointment(id, data),
     onSuccess: () => {
-      setShow(false);
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      fetchUserData();
+      setShow(false);
     },
   });
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (info.message.length < 10) {
+      enqueueSnackbar("Message must be at least 10 characters", {
+        variant: "error",
+      });
+      return;
+    }
     mutate({ id, data: info });
   };
   return (

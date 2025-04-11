@@ -121,6 +121,7 @@ function Appointments() {
                     date: item.date,
                     time: item.time,
                   }}
+                  fetchUserData={fetchUserData}
                 />
               )}
             </div>
