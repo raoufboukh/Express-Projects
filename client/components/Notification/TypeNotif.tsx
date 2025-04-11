@@ -1,5 +1,5 @@
 import { acceptAccountType, rejectAccountType } from "@/lib/data-fetching";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 }
 
 const TypeNotification = ({ item, fetchUserData }: Props) => {
+  const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
   const [id, setId] = useState("");
   const { mutate, isPending } = useMutation({
@@ -20,6 +21,12 @@ const TypeNotification = ({ item, fetchUserData }: Props) => {
       }
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["notifications"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["appointments"],
+      });
       fetchUserData();
       setId("");
     },

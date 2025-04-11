@@ -1,12 +1,13 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { cancelAppointment, check } from "@/lib/data-fetching";
 import Modify from "./modify-app";
 
 function Appointments() {
+  const queryClient = useQueryClient();
   const [id, setId] = useState("");
   const [user, setUser] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +32,12 @@ function Appointments() {
     mutationKey: ["appointments"],
     mutationFn: () => cancelAppointment(id),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["appointments"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications"],
+      });
       fetchUserData();
       setId("");
     },

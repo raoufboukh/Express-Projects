@@ -1,10 +1,11 @@
 import { bookAppointment } from "@/lib/data-fetching";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import { DatePickerDemo } from "./Date";
 
 const Form = () => {
+  const queryClient = useQueryClient();
   const [Form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -19,6 +20,21 @@ const Form = () => {
         return bookAppointment(Form);
       }
       throw new Error("All fields are required");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["appointments"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["notifications"],
+      });
+      setForm({
+        firstName: "",
+        lastName: "",
+        number: "",
+        time: "",
+        date: new Date(),
+      });
     },
   });
   const handleSubmit = (e: React.FormEvent) => {

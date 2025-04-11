@@ -27,6 +27,7 @@ const Modify: React.FC<ModifyProps> = ({ id, setShow, data }) => {
     onSuccess: () => {
       setShow(false);
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
   const handleSubmit = (e: any) => {
