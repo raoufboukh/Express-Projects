@@ -7,6 +7,7 @@ import { dashboardLinks, themes } from "../constants";
 import Logout from "./Logout";
 import ScanButton from "./scan-button";
 import ButtonLink from "./button-link";
+import NotificationAppointments from "./NotificationAppointments";
 
 type SidebarProps = {
   activeItem: string;
@@ -14,6 +15,7 @@ type SidebarProps = {
   activeTheme: string;
   setActiveTheme: (theme: string) => void;
   user: any;
+  setUser: (user: any) => void;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -22,6 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeTheme,
   setActiveTheme,
   user,
+  setUser,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
   const theme = themes[activeTheme as keyof typeof themes];
@@ -117,6 +120,19 @@ const Sidebar: React.FC<SidebarProps> = ({
                     setActiveItem={setActiveItem}
                     activeItem={activeItem}
                     user={user}
+                  />
+                </li>
+              ) : item.title === "Notifications" ||
+                item.title === "Appointments" ? (
+                <li key={item.title}>
+                  <NotificationAppointments
+                    item={item}
+                    theme={theme}
+                    activeItem={activeItem}
+                    collapsed={collapsed}
+                    setActiveItem={setActiveItem}
+                    user={user}
+                    setUser={setUser}
                   />
                 </li>
               ) : (

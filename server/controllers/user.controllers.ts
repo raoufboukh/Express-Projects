@@ -151,7 +151,7 @@ export const bookAppointment = async (req: any, res: any) => {
     const user = await User.findByIdAndUpdate(
       req.user._id,
       {
-        $set: {
+        $push: {
           appointments: {
             firstName,
             lastName,

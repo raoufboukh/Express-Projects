@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NotificationAppointments from "./NotificationAppointments";
 
 type ButtonLinkProps = {
   item: any;

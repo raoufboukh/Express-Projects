@@ -64,6 +64,7 @@ function AppSidebar() {
         activeTheme={activeTheme}
         setActiveTheme={setActiveTheme}
         user={user}
+        setUser={setUser}
       />
 
       <div className={`flex-1 ${theme.main} overflow-y-auto`}>
