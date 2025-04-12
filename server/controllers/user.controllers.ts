@@ -284,7 +284,6 @@ export const cancelAppointment = async (req: any, res: any) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("Updated User Appointments:", user.appointments);
     await Promise.all(
       admins.map(async (admin) => {
         await User.findByIdAndUpdate(
