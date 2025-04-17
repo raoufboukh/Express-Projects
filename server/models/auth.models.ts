@@ -40,6 +40,21 @@ const scanResults = new mongoose.Schema({
     type: String,
     required: true,
   },
+  labId: {
+    type: String,
+    required: true,
+  },
+});
+
+const Result = new mongoose.Schema({
+  date: {
+    type: Date,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
 });
 
 const NotificationSchema = new mongoose.Schema({
@@ -93,6 +108,9 @@ const user = new mongoose.Schema(
     },
     scanResults: {
       type: [scanResults],
+    },
+    results: {
+      type: [Result],
     },
     notifications: {
       type: [NotificationSchema],

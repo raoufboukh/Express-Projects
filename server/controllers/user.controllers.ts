@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "../models/auth.models.ts";
 import bcrypt from "bcrypt";
+import cloudinary from "lib/cloudinary.ts";
 
 export const getUsers = async (req: any, res: any) => {
   try {
@@ -112,6 +113,35 @@ export const addScan = async (req: any, res: any) => {
       { new: true }
     );
     res.status(200).json({ message: "Add Scan Successeful" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addResult = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "Result ID required" });
+    const { image } = req.body;
+    if (!image)
+      return res.status(400).json({
+        message: `${"Image is required"}`,
+      });
+    const cloudImage = await cloudinary.uploader.upload(image);
+    const imageUrl = cloudImage.secure_url;
+    await User.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          results: {
+            date: new Date(),
+            image: imageUrl,
+          },
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json({ message: "Add Result Successeful" });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

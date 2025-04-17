@@ -2,6 +2,7 @@ import express from "express";
 import {
   acceptAppointment,
   acceptNotification,
+  addResult,
   addScan,
   addUser,
   bookAppointment,
@@ -32,6 +33,7 @@ userRouter.post(
   checkPrimaryExpire,
   bookAppointment
 );
+userRouter.post("/add-result/:id", ProtectRoute, addResult);
 userRouter.delete("/appointment/:id", ProtectRoute, cancelAppointment);
 userRouter.delete("/:id", ProtectRoute, deleteUser);
 userRouter.put("/update/:id", ProtectRoute, modifyAppointment);
