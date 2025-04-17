@@ -97,7 +97,11 @@ function Appointments() {
                     setId(item._id);
                     mutate();
                   }}
-                  disabled={item.status === "accepted" || isPending}
+                  disabled={
+                    (item.status === "accepted" &&
+                      new Date() <= new Date(item.date)) ||
+                    isPending
+                  }
                 >
                   {isPending && id === item._id
                     ? "Annulation..."

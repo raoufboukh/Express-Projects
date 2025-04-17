@@ -17,7 +17,7 @@ const UploadFile = ({ file, setFile, setId, id, item }: UploadFileProps) => {
       setFile(null);
     },
     onError: (error) => {
-      enqueueSnackbar("Error uploading file", { variant: "error" });
+      enqueueSnackbar(`Error uploading file ${error}`, { variant: "error" });
     },
   });
   return (
