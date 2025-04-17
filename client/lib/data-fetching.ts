@@ -139,6 +139,17 @@ export async function addScan(data: any) {
   }
 }
 
+export async function addResult(id: string, image: any) {
+  try {
+    const response = await axiosInstance.post(`/users/add-result/${id}`, image);
+    enqueueSnackbar("File added successfully!", { variant: "success" });
+    return response.data;
+  } catch (error) {
+    console.error("Add result failed:", error);
+    throw error;
+  }
+}
+
 export async function bookAppointment(data: any) {
   try {
     const response = await axiosInstance.post("/users/appointment", data);

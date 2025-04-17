@@ -123,7 +123,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                   />
                 </li>
               ) : item.title === "Notifications" ||
-                item.title === "Appointments" ? (
+                item.title === "Appointments" ||
+                item.title === "Results Scans" ? (
                 <li key={item.title}>
                   <NotificationAppointments
                     item={item}
