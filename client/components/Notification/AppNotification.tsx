@@ -1,4 +1,8 @@
-import { acceptNotification, rejectNotification } from "@/lib/data-fetching";
+import {
+  acceptNotification,
+  deleteNotification,
+  rejectNotification,
+} from "@/lib/data-fetching";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -16,8 +20,10 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
     mutationFn: () => {
       if (message === "Accepter") {
         return acceptNotification(id);
-      } else {
+      } else if (message === "Refuser") {
         return rejectNotification(id);
+      } else {
+        return deleteNotification(id);
       }
     },
     onSuccess: () => {
@@ -61,31 +67,49 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
           <span className="text-gray-300">date: </span>
           {item.appointment.date.slice(0, 10)}
         </p>
-        <div className="flex justify-between mt-5">
-          <button
-            type="button"
-            className="bg-primary text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-primary/80 disabled:opacity-50"
-            onClick={() => {
-              setId(item._id);
-              setMessage("Accepter");
-              mutate();
-            }}
-            disabled={isPending}
-          >
-            Accepter
-          </button>
-          <button
-            type="button"
-            className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-red-500/80"
-            onClick={() => {
-              setId(item._id);
-              setMessage("Refuser");
-              mutate();
-            }}
-            disabled={isPending}
-          >
-            Refuser
-          </button>
+        <div className="">
+          {item.appointment.status === "pending" ? (
+            <div className="flex justify-between mt-5">
+              <button
+                type="button"
+                className="bg-primary text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-primary/80 disabled:opacity-50"
+                onClick={() => {
+                  setId(item._id);
+                  setMessage("Accepter");
+                  mutate();
+                }}
+                disabled={isPending}
+              >
+                Accepter
+              </button>
+              <button
+                type="button"
+                className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-red-500/80"
+                onClick={() => {
+                  setId(item._id);
+                  setMessage("Refuser");
+                  mutate();
+                }}
+                disabled={isPending}
+              >
+                Refuser
+              </button>
+            </div>
+          ) : (
+            <div>
+              <p className="text-green-500">{item.appointment.status}</p>
+              <button
+                className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 block w-fit mx-auto hover:bg-red-500/80"
+                onClick={() => {
+                  setId(item._id);
+                  setMessage("Delete");
+                  mutate();
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

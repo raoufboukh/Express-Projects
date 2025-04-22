@@ -256,3 +256,17 @@ export const rejectAccountType = async (id: string) => {
     throw error;
   }
 };
+
+export const deleteNotification = async (id: string) => {
+  try {
+    console.log("Deleting notification:", id);
+    const response = await axiosInstance.put(`/users/deleteNotification/${id}`);
+    enqueueSnackbar("Notification deleted successfully!", {
+      variant: "success",
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Delete notification failed:", error);
+    throw error;
+  }
+};

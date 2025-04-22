@@ -554,3 +554,23 @@ export const acceptAppointment = async (req: any, res: any) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteNotification = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ message: "Notification ID required" });
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: {
+          notifications: { _id: id },
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json({ message: "Notification deleted" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

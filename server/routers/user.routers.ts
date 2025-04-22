@@ -7,6 +7,7 @@ import {
   addUser,
   bookAppointment,
   cancelAppointment,
+  deleteNotification,
   deleteUser,
   getDoctors,
   getOneDoctor,
@@ -57,5 +58,6 @@ userRouter.put(
   checkPrimaryExpire,
   rejectNotification
 );
+userRouter.put("/deleteNotification/:id", ProtectRoute, deleteNotification);
 
 export default userRouter;
