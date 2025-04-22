@@ -8,11 +8,14 @@ import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 import { check, register } from "@/lib/data-fetching";
 import { FaArrowLeft } from "react-icons/fa6";
+import { communes, wilayas } from "@/components/constants";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [region, setRegion] = useState(wilayas[0]);
+  const [commune, setCommune] = useState("");
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -31,7 +34,7 @@ function Register() {
   });
 
   const { mutate, error, isPending } = useMutation({
-    mutationFn: () => register(username, email, password),
+    mutationFn: () => register(username, email, password, region, commune),
     onSuccess: () => {
       setTimeout(() => {
         router.push("/dashboard");
@@ -51,7 +54,7 @@ function Register() {
         className="absolute top-5 left-5 text-lg cursor-pointer text-white"
         onClick={() => router.back()}
       />
-      <div className="bg-white p-8 rounded-md shadow-lg shadow-white">
+      <div className="bg-white px-8 py-6 rounded-md shadow-lg shadow-white">
         <div className="flex justify-center">
           <Image
             src="/assets/Home_clinic3_pic9.png"
@@ -67,7 +70,7 @@ function Register() {
           {error && <p className="text-red-500">Erreur de connexion</p>}
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="my-4">
+          <div className="my-2">
             <label htmlFor="username" className="block text-gray-400">
               Username
             </label>
@@ -79,7 +82,7 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="my-4">
+          <div className="my-2">
             <label htmlFor="email" className="block text-gray-400">
               Email
             </label>
@@ -91,7 +94,7 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="my-4">
+          <div className="my-2">
             <label htmlFor="password" className="block text-gray-400">
               Password
             </label>
@@ -118,10 +121,48 @@ function Register() {
               />
             </div>
           </div>
-          <div className="my-4">
+          <div className="my-2">
+            <label htmlFor="reg" className="block text-gray-400">
+              Region
+            </label>
+            <select
+              id="reg"
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              className="w-full p-2 border border-gray-200 rounded-md"
+            >
+              {wilayas.map((wilaya, i) => (
+                <option key={i} value={wilaya}>
+                  {i + 1}-{wilaya}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="my-2">
+            <label htmlFor="com" className="block text-gray-400">
+              Commune
+            </label>
+            <select
+              id="com"
+              value={commune}
+              onChange={(e) => setCommune(e.target.value)}
+              className="w-full p-2  border border-gray-200 rounded-md"
+            >
+              {communes.map(
+                (com) =>
+                  com.wilaya_name === region &&
+                  com.communes.map((com, i) => (
+                    <option key={i} value={com}>
+                      {i + 1}-{com}
+                    </option>
+                  ))
+              )}
+            </select>
+          </div>
+          <div className="my-2">
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white p-2 rounded-md"
+              className="w-full bg-blue-600 text-white p-2 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-auto"
               disabled={isPending}
             >
               {isPending ? "Loading..." : "Register"}

@@ -18,13 +18,17 @@ export async function login(email: string, password: string) {
 export async function register(
   username: string,
   email: string,
-  password: string
+  password: string,
+  region: string,
+  commune: string
 ) {
   try {
     const { data } = await axiosInstance.post("/auth/register", {
       username,
       email,
       password,
+      region,
+      commune,
     });
     enqueueSnackbar("Account created successfully!", { variant: "success" });
     return data;
@@ -36,6 +40,7 @@ export async function register(
 
 export const addUser = async (info: any) => {
   try {
+    console.log("Adding user:", info);
     const { data } = await axiosInstance.post("/users", info);
     enqueueSnackbar(
       `${

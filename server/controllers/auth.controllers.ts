@@ -4,15 +4,19 @@ import bcrypt from "bcrypt";
 
 export const register = async (req: any, res: any) => {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password)
+    const { username, email, password, region, commune } = req.body;
+    if (!username || !email || !password || !region || !commune)
       return res.status(400).json({
         message: `${
           !username
             ? "username is required"
             : !email
             ? "email is required"
-            : "password is required"
+            : !password
+            ? "password is required"
+            : !region
+            ? "region is required"
+            : "commune is required"
         }`,
       });
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
@@ -25,7 +29,13 @@ export const register = async (req: any, res: any) => {
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
     const hashedPass = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, password: hashedPass });
+    const user = new User({
+      username,
+      email,
+      password: hashedPass,
+      region,
+      commune,
+    });
     if (user) {
       generateToken(user._id, res);
       await user.save();
