@@ -12,6 +12,7 @@ const Form = () => {
     number: "",
     time: "",
     date: new Date(),
+    message: "",
   });
   const { mutate, isPending } = useMutation({
     mutationKey: ["bookAppointment"],
@@ -34,6 +35,7 @@ const Form = () => {
         number: "",
         time: "",
         date: new Date(),
+        message: "",
       });
     },
   });
@@ -100,6 +102,18 @@ const Form = () => {
       </div>
       <div className="mt-5 mx-auto w-fit">
         <DatePickerDemo date={Form.date} setInfo={setForm} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="role" className="w-fit">
+          Message
+        </label>
+        <textarea
+          value={Form.message}
+          onChange={(e) => setForm({ ...Form, message: e.target.value })}
+          className="border border-gray-300 rounded-md px-2 py-1"
+          name="role"
+          id="role"
+        />
       </div>
       <div>
         <button

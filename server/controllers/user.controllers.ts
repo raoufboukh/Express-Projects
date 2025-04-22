@@ -23,8 +23,8 @@ export const getOneUser = async (req: any, res: any) => {
 
 export const addUser = async (req: any, res: any) => {
   try {
-    const { username, email, password, role } = req.body;
-    if (!username || !email || !password || !role)
+    const { username, email, password, role, region, commune } = req.body;
+    if (!username || !email || !password || !role || !region || !commune)
       return res.status(400).json({
         message: `${
           !username
@@ -33,7 +33,11 @@ export const addUser = async (req: any, res: any) => {
             ? "email is required"
             : !password
             ? "password is required"
-            : "role is required"
+            : !role
+            ? "role is required"
+            : !region
+            ? "region is required"
+            : "commune is required"
         }`,
       });
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
@@ -46,7 +50,14 @@ export const addUser = async (req: any, res: any) => {
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
     const hashedPass = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, password: hashedPass, role });
+    const user = new User({
+      username,
+      email,
+      password: hashedPass,
+      role,
+      region,
+      commune,
+    });
     if (user) {
       await user.save();
     }
@@ -149,8 +160,8 @@ export const addResult = async (req: any, res: any) => {
 
 export const bookAppointment = async (req: any, res: any) => {
   try {
-    const { firstName, lastName, number, time, date } = req.body;
-    if (!date || !firstName || !lastName || !number || !time)
+    const { firstName, lastName, number, time, date, message } = req.body;
+    if (!date || !firstName || !lastName || !number || !time || !message)
       return res.status(400).json({
         message: `${
           !firstName
@@ -161,7 +172,9 @@ export const bookAppointment = async (req: any, res: any) => {
             ? "Number is required"
             : !time
             ? "Time is required"
-            : "Date is required"
+            : !date
+            ? "Date is required"
+            : "Message is required"
         }`,
       });
 
@@ -188,6 +201,7 @@ export const bookAppointment = async (req: any, res: any) => {
             number,
             time,
             date,
+            message,
           },
         },
       },
@@ -198,7 +212,9 @@ export const bookAppointment = async (req: any, res: any) => {
       await User.findByIdAndUpdate(admin._id, {
         $push: {
           notifications: {
-            message: `book appointment from ${
+            message: `${
+              message.charAt(0).toUpperCase() + message.slice(1)
+            } from ${
               user &&
               user.username.charAt(0).toUpperCase() + user.username.slice(1)
             }`,
@@ -210,6 +226,9 @@ export const bookAppointment = async (req: any, res: any) => {
               number,
               time,
               date,
+              status:
+                user?.appointments[user.appointments.toObject().length - 1]
+                  .status,
             },
             senderId: user?._id,
           },
@@ -504,7 +523,7 @@ export const acceptAppointment = async (req: any, res: any) => {
 
     const senderId = notification.notifications[0].senderId;
     const appointmentId = notification.notifications[0].appointment._id;
-    const userSender = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       {
         _id: senderId,
         "appointments._id": appointmentId,
@@ -516,20 +535,20 @@ export const acceptAppointment = async (req: any, res: any) => {
       },
       { new: true }
     );
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
+    await User.findOneAndUpdate(
       {
-        $pull: {
-          notifications: {
-            _id: id,
-          },
+        _id: req.user._id,
+        "notifications._id": id,
+      },
+      {
+        $set: {
+          "notifications.$.appointment.status": "accepted",
         },
       },
       { new: true }
     );
     res.status(200).json({
-      notifications: user?.notifications,
-      appointments: userSender?.appointments,
+      message: "Appointment accept",
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

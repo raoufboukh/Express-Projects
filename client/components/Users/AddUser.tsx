@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addUser } from "@/lib/data-fetching";
 import { IoMdClose } from "react-icons/io";
+import { communes, wilayas } from "../constants";
 
 function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("doctor");
+  const [region, setRegion] = useState(wilayas[0]);
+  const [commune, setCommune] = useState(communes[0].communes[0]);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -21,7 +24,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ username, email, password, role });
+    mutation.mutate({ username, email, password, role, region, commune });
   };
 
   return (
@@ -32,8 +35,8 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
           onClick={() => setShow(false)}
         />
         <h2 className="text-3xl text-center">Create New User!</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-5">
-          <div className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-5">
+          <div className="flex flex-col gap-1">
             <label htmlFor="user">Username</label>
             <input
               className="border border-gray-300 rounded-md px-2 py-1"
@@ -43,7 +46,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               value={username}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="em">Email</label>
             <input
               className="border border-gray-300 rounded-md px-2 py-1"
@@ -53,7 +56,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               value={email}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="pass">Password</label>
             <input
               className="border border-gray-300 rounded-md px-2 py-1"
@@ -63,7 +66,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               value={password}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="role">Role</label>
             <select
               className="border border-gray-300 rounded-md px-2 py-1"
@@ -76,8 +79,50 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               <option value="user">User</option>
             </select>
           </div>
+          <div className="">
+            <label htmlFor="reg" className="block mb-1">
+              Region
+            </label>
+            <select
+              id="reg"
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              className="w-full p-2 border border-gray-200 rounded-md"
+            >
+              {wilayas.map((wilaya, i) => (
+                <option key={i} value={wilaya}>
+                  {i + 1}-{wilaya}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="">
+            <label htmlFor="com" className="block mb-1">
+              Commune
+            </label>
+            <select
+              id="com"
+              value={commune}
+              onChange={(e) => setCommune(e.target.value)}
+              className="w-full p-2  border border-gray-200 rounded-md"
+            >
+              {communes.map(
+                (com) =>
+                  com.wilaya_name === region &&
+                  com.communes.map((com, i) => (
+                    <option key={i} value={com}>
+                      {i + 1}-{com}
+                    </option>
+                  ))
+              )}
+            </select>
+          </div>
           <div>
-            <button type="submit" disabled={mutation.isPending} className="bg-primary text-white p-2 rounded-md cursor-pointer">
+            <button
+              type="submit"
+              disabled={mutation.isPending}
+              className="bg-primary text-white p-2 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-auto block w-fit mx-auto"
+            >
               {mutation.isPending ? "Creating..." : "Create"}
             </button>
           </div>

@@ -115,6 +115,14 @@ const user = new mongoose.Schema(
     notifications: {
       type: [NotificationSchema],
     },
+    region: {
+      type: String,
+      required: true,
+    },
+    commune: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -87,7 +87,7 @@ function AppSidebar() {
           ) : activeItem === "Users" ? (
             <Users />
           ) : activeItem === "Doctors" ? (
-            <Doctors />
+            <Doctors user={user} />
           ) : activeItem === "Notifications" ? (
             <Notifications />
           ) : activeItem === "Appointments" ? (
