@@ -5,7 +5,7 @@ import AddUser from "./AddUser";
 import { enqueueSnackbar } from "notistack";
 import UploadFile from "./UploadFile";
 
-function Users() {
+function Users({ info }: any) {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [id, setId] = useState<string>("");
@@ -98,6 +98,7 @@ function Users() {
                 <button
                   className="cursor-pointer bg-blue-500 text-white px-3 rounded-md py-2 disabled:opacity-65 disabled:cursor-not-allowed"
                   disabled={
+                    item.appointments.length === 0 ||
                     Date.now() <
                       new Date(item.appointments[0].date).getTime() ||
                     item.appointments[0].status === "pending" ||
@@ -110,16 +111,18 @@ function Users() {
                 >
                   Upload
                 </button>
-                <button
-                  className="cursor-pointer bg-red-500 text-white px-3 rounded-md py-2"
-                  onClick={() => {
-                    setId(item._id);
-                    setRole(item.role);
-                    mutate();
-                  }}
-                >
-                  Delete
-                </button>
+                {info && info.role === "admin" && (
+                  <button
+                    className="cursor-pointer bg-red-500 text-white px-3 rounded-md py-2"
+                    onClick={() => {
+                      setId(item._id);
+                      setRole(item.role);
+                      mutate();
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           ))}
@@ -129,7 +132,7 @@ function Users() {
           Aucun utilisateur trouvé
         </div>
       )}
-      {!isLoading && (
+      {!isLoading && info && info.role === "admin" && (
         <button
           className="bg-primary hover:bg-primary/80 block w-fit mx-auto cursor-pointer text-white px-4 py-2 rounded-md mt-4"
           onClick={() => setShow(!show)}

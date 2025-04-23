@@ -374,12 +374,12 @@ export const dashboardLinks = [
   {
     title: "Users",
     icon: User,
-    role: ["admin"],
+    role: ["admin", "doctor"],
   },
   {
     title: "Doctors",
     icon: GiDoctorFace,
-    role: ["admin"],
+    role: ["admin", "user"],
   },
   {
     title: "BookAppointments",

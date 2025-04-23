@@ -85,7 +85,7 @@ function AppSidebar() {
               </p>
             </div>
           ) : activeItem === "Users" ? (
-            <Users />
+            <Users info={user} />
           ) : activeItem === "Doctors" ? (
             <Doctors user={user} />
           ) : activeItem === "Notifications" ? (
