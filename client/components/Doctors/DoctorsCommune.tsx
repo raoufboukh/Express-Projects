@@ -1,6 +1,4 @@
-import React from "react";
-
-const DoctorsCommune = ({ user, item }: any) => {
+const DoctorsCommune = ({ user, item, i }: any) => {
   return (
     user.commune == item.commune && (
       <div className="text-white bg-gray-800 p-4 rounded-md shadow-md flex md:justify-between justify-center gap-5 flex-wrap sm:px-10 sm:text-base text-sm">
@@ -12,6 +10,10 @@ const DoctorsCommune = ({ user, item }: any) => {
           <p>
             <span className="text-gray-300">Email: </span>
             {item.email}
+          </p>
+          <p>
+            <span className="text-gray-300">Time: </span>
+            {i % 2 !== 0 ? "20:00 - 08:00" : "08:00 - 20:00"}
           </p>
         </div>
       </div>

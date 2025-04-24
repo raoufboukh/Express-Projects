@@ -36,9 +36,15 @@ function Doctors({ user }: any) {
           <div className="flex flex-col gap-2 overflow-y-auto h-96 scrollbar-custom">
             {data.map((item: any, i: number) =>
               user.role !== "admin" ? (
-                <DoctorsCommune item={item} user={user} />
+                <DoctorsCommune i={i} key={i} item={item} user={user} />
               ) : (
-                <ListDoctors item={item} user={user} mutate={mutate} key={i} />
+                <ListDoctors
+                  i={i}
+                  item={item}
+                  user={user}
+                  mutate={mutate}
+                  key={i}
+                />
               )
             )}
           </div>
