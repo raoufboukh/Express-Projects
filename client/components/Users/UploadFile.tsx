@@ -2,6 +2,7 @@ import { addResult } from "@/lib/data-fetching";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { enqueueSnackbar } from "notistack";
+import { useState } from "react";
 interface UploadFileProps {
   file: string | null;
   setFile: (file: string | null) => void;
@@ -11,8 +12,15 @@ interface UploadFileProps {
 }
 
 const UploadFile = ({ file, setFile, setId, id, item }: UploadFileProps) => {
+  const [dateAppointment, setDateAppointment] = useState<string | null>(
+    item.appointments[0].date
+  );
   const { mutate } = useMutation({
-    mutationFn: () => addResult(id, { image: file }),
+    mutationFn: () =>
+      addResult(id, {
+        image: file,
+        dateAppointment: dateAppointment,
+      }),
     onSuccess: () => {
       setFile(null);
     },
@@ -36,6 +44,27 @@ const UploadFile = ({ file, setFile, setId, id, item }: UploadFileProps) => {
             {item.username.charAt(0).toUpperCase() + item.username.slice(1)}
             's account?
           </p>
+          <div>
+            {item.accountType === "premium" &&
+              item.appointments.map((item: any, i: number) => (
+                <div
+                  key={i}
+                  className="flex gap-2 mt-2 cursor-pointer bg-gray-500 relative p-3 rounded-md"
+                  onClick={() => setDateAppointment(item.date)}
+                >
+                  <div className="size-3 bg-white rounded-full flex justify-center items-center absolute top-0 left-0">
+                    <span
+                      className={`${
+                        dateAppointment === item.date && "bg-primary"
+                      } size-2 rounded-full`}
+                    ></span>
+                  </div>
+                  <p className="text-black">
+                    Appointment date: {item.date.slice(0, 10)}
+                  </p>
+                </div>
+              ))}
+          </div>
           <div className="flex gap-2 mt-4">
             <button
               className="bg-blue-500 text-white px-3 py-2 rounded-md cursor-pointer"

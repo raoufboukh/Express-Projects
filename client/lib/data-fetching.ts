@@ -144,9 +144,10 @@ export async function addScan(data: any) {
   }
 }
 
-export async function addResult(id: string, image: any) {
+export async function addResult(id: string, info: any) {
   try {
-    const response = await axiosInstance.post(`/users/add-result/${id}`, image);
+    console.log("Adding result:", info);
+    const response = await axiosInstance.post(`/users/add-result/${id}`, info);
     enqueueSnackbar("File added successfully!", { variant: "success" });
     return response.data;
   } catch (error) {

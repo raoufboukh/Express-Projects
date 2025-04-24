@@ -132,7 +132,11 @@ export const addScan = async (req: any, res: any) => {
 export const addResult = async (req: any, res: any) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status(400).json({ message: "Result ID required" });
+    const { dateAppointment } = req.body;
+    if (!id || !dateAppointment)
+      return res
+        .status(400)
+        .json({ message: id ? "ID required" : "Date required" });
     const { image } = req.body;
     if (!image)
       return res.status(400).json({
@@ -147,6 +151,7 @@ export const addResult = async (req: any, res: any) => {
           results: {
             date: new Date(),
             image: imageUrl,
+            dateAppointment,
           },
         },
       },

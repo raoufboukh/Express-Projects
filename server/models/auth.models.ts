@@ -55,6 +55,10 @@ const Result = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dateAppointment: {
+    type: Date,
+    required: true,
+  },
 });
 
 const NotificationSchema = new mongoose.Schema({

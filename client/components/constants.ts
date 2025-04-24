@@ -399,12 +399,12 @@ export const dashboardLinks = [
   {
     title: "Scan",
     icon: ScanLine,
-    role: ["user", "admin"],
+    role: ["user", "admin", "doctor"],
   },
   {
     title: "Results Scans",
     icon: Scan,
-    role: ["user", "admin"],
+    role: ["user", "admin", "doctor"],
   },
   {
     title: "Logout",

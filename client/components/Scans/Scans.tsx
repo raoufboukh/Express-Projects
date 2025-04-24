@@ -34,13 +34,13 @@ function Scans() {
       ) : data.results.length !== 0 ? (
         <div
           className={`${
-            data.results.length >= 2 && "h-96"
-          } grid lg:grid-cols-2 gap-2 overflow-y-auto scrollbar-custom lg:h-fit`}
+            data.results.length >= 2 && "h-100"
+          } flex flex-wrap gap-5 justify-between overflow-y-auto scrollbar-custom lg:h-fit`}
         >
           {data.results.map((item: any) => (
             <div
               key={item._id}
-              className="text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit"
+              className={`lg:basis-[48%] basis-full text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit`}
             >
               <div className="w-full relative">
                 <div className="absolute top-3 right-5">
@@ -53,7 +53,8 @@ function Scans() {
                   src={item.image}
                   alt={item.image}
                   width={1000}
-                  height={1000}
+                  height={100}
+                  className="w-full rounded-t-md"
                 />
               </div>
               <div className="p-4">
@@ -63,7 +64,13 @@ function Scans() {
                 </p>
                 <p>
                   <span className="text-gray-300">Time: </span>
-                  {item.date.slice(item.date.indexOf("T") + 1, 16)}
+                  {new Date(new Date(item.date).getTime() + 60 * 60 * 1000)
+                    .toISOString()
+                    .slice(11, 16)}
+                </p>
+                <p>
+                  <span className="text-gray-300">Date-Appointment: </span>
+                  {item.dateAppointment.slice(0, 10)}
                 </p>
               </div>
             </div>
