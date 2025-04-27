@@ -1,5 +1,4 @@
 import Link from "next/link";
-import NotificationAppointments from "./NotificationAppointments";
 
 type ButtonLinkProps = {
   item: any;
@@ -28,7 +27,13 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
           : user.accountType === "premium" && activeItem === item.title
           ? theme.premiumActive
           : theme.menuItem
-      } transition-all duration-200`}
+      } transition-all duration-200 ${
+        user?.role === "user" && item?.title === "Doctors"
+          ? user?.accountType === "premium"
+            ? "block"
+            : "hidden"
+          : "block"
+      }`}
       onClick={() => setActiveItem(item.title)}
     >
       <span className={`text-xl ${collapsed ? "" : "mr-3"}`}>

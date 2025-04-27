@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -14,8 +12,8 @@ import Doctors from "@/components/Doctors/Doctors";
 import Notifications from "@/components/Notification/Notifications";
 import Appointments from "@/components/Appointment/Appointments";
 import Scans from "@/components/Scans/Scans";
-import BookApp from "@/components/Appointment/book-app";
 import Scan from "@/components/Scans/Scan";
+import Form from "@/components/Appointment/form-app";
 
 type User = {
   username: string;
@@ -95,7 +93,7 @@ function AppSidebar() {
           ) : activeItem === "Results Scans" ? (
             <Scans />
           ) : activeItem === "BookAppointments" ? (
-            <BookApp />
+            <Form />
           ) : activeItem === "Scan" ? (
             <Scan />
           ) : null}
