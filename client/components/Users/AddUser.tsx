@@ -10,7 +10,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("doctor");
   const [region, setRegion] = useState(wilayas[0]);
-  const [commune, setCommune] = useState(communes[0].communes[0]);
+  const [commune, setCommune] = useState("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -106,6 +106,9 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               onChange={(e) => setCommune(e.target.value)}
               className="w-full p-2  border border-gray-200 rounded-md"
             >
+              <option value="" disabled>
+                Select a commune
+              </option>
               {communes.map(
                 (com) =>
                   com.wilaya_name === region &&

@@ -146,17 +146,20 @@ function Register() {
               id="com"
               value={commune}
               onChange={(e) => setCommune(e.target.value)}
-              className="w-full p-2  border border-gray-200 rounded-md"
+              className="w-full p-2 border border-gray-200 rounded-md"
             >
-              {communes.map(
-                (com) =>
-                  com.wilaya_name === region &&
-                  com.communes.map((com, i) => (
-                    <option key={i} value={com}>
-                      {i + 1}-{com}
+              <option value="" disabled>
+                Select a commune
+              </option>
+              {communes
+                .filter((com) => com.wilaya_name === region)
+                .flatMap((com) =>
+                  com.communes.map((communeName, i) => (
+                    <option key={i} value={communeName}>
+                      {i + 1} - {communeName}
                     </option>
                   ))
-              )}
+                )}
             </select>
           </div>
           <div className="my-2">
