@@ -271,3 +271,13 @@ export const deleteNotification = async (id: string) => {
     throw error;
   }
 };
+
+export const getAppointmentsCount = async () => {
+  try {
+    const response = await axiosInstance.get("/users/appointments/count");
+    return response.data;
+  } catch (error) {
+    console.error("Get appointments count failed:", error);
+    throw error;
+  }
+};

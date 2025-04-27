@@ -579,3 +579,24 @@ export const deleteNotification = async (req: any, res: any) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getAppointmentsCount = async (req: any, res: any) => {
+  try {
+    const counts = await User.aggregate([
+      { $unwind: "$appointments" },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$appointments.date" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $project: { _id: 0, date: "$_id", count: 1 } },
+    ]);
+
+    res.status(200).json(counts);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

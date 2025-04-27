@@ -9,6 +9,7 @@ import {
   cancelAppointment,
   deleteNotification,
   deleteUser,
+  getAppointmentsCount,
   getDoctors,
   getOneDoctor,
   getOneUser,
@@ -59,5 +60,5 @@ userRouter.put(
   rejectNotification
 );
 userRouter.put("/deleteNotification/:id", ProtectRoute, deleteNotification);
-
+userRouter.get("/appointments/count", getAppointmentsCount);
 export default userRouter;
