@@ -1,5 +1,3 @@
-"use client";
-
 import { FaChevronUp } from "react-icons/fa6";
 
 function AllRights() {

@@ -36,11 +36,15 @@ const Faq: React.FC = () => {
                   {openIndex === index ? "−" : "+"}
                 </span>
               </button>
-              {openIndex === index && (
-                <div className="p-4 bg-white border-t border-gray-300">
-                  {faq.answer}
-                </div>
-              )}
+              <div
+                className={`px-4 bg-white border-t border-gray-300 transition-all ${
+                  openIndex === index
+                    ? "max-h-screen py-4"
+                    : "max-h-0 overflow-hidden"
+                }`}
+              >
+                <p className="text-gray-700">{faq.answer}</p>
+              </div>
             </div>
           ))}
         </div>

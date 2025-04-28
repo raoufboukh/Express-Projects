@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { enqueueSnackbar } from "notistack";
 
 type ScanButtonProps = {

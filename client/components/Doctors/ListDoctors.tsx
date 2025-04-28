@@ -1,5 +1,3 @@
-import React from "react";
-
 const ListDoctors = ({ user, item, mutate, i }: any) => {
   return (
     <div className="text-white bg-gray-800 p-4 rounded-md shadow-md flex md:justify-between justify-center items-center gap-5 flex-wrap sm:px-10 sm:text-base text-sm">

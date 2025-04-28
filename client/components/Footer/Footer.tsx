@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
 import { companyFooter, helpFooter } from "../constants";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 
