@@ -4,7 +4,7 @@ import { enqueueSnackbar } from "notistack";
 import { useState, useEffect } from "react";
 import { DatePickerDemo } from "./Date";
 
-const MAX_APPOINTMENTS_PER_DAY = 1;
+const MAX_APPOINTMENTS_PER_DAY = 20;
 
 const Form = () => {
   const date = new Date();

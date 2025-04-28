@@ -28,7 +28,6 @@ export function DatePickerDemo({
   const normalizeDate = (date: Date | null | undefined): Date => {
     if (!date) return new Date();
     const normalizedDate = new Date(date);
-    normalizedDate.setMinutes(0, 0, 0); // Set minutes, seconds, and milliseconds to zero
     return normalizedDate;
   };
 
@@ -39,23 +38,19 @@ export function DatePickerDemo({
   };
 
   const isUnavailableDate = (date: Date): boolean => {
-    const normalized = normalizeDate(date);
-    const dateKey = normalized.toISOString().split("T")[0];
+    const dateKey = date.toISOString().split("T")[0];
     return unavailableDates[dateKey];
   };
 
   const handleSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
-
     const normalizedDate = normalizeDate(selectedDate);
-
     if (isPastDate(normalizedDate)) {
       enqueueSnackbar("Please select a date in the future", {
         variant: "error",
       });
       return;
     }
-
     if (isUnavailableDate(normalizedDate)) {
       enqueueSnackbar(
         "This date is fully booked. Please select another date.",
@@ -65,7 +60,6 @@ export function DatePickerDemo({
       );
       return;
     }
-
     setInfo((prev: any) => ({ ...prev, date: normalizedDate }));
   };
 
