@@ -98,7 +98,7 @@ export const getOneDoctor = async (req: any, res: any) => {
 
 export const addScan = async (req: any, res: any) => {
   try {
-    const { date, result, aiAnalysis, labId } = req.body;
+    const { date, result, aiAnalysis } = req.body;
     if (!date || !result || !aiAnalysis)
       return res.status(400).json({
         message: `${
@@ -117,7 +117,6 @@ export const addScan = async (req: any, res: any) => {
             date,
             result,
             aiAnalysis,
-            labId,
           },
         },
       },

@@ -40,10 +40,6 @@ const scanResults = new mongoose.Schema({
     type: String,
     required: true,
   },
-  labId: {
-    type: String,
-    required: true,
-  },
 });
 
 const Result = new mongoose.Schema({
