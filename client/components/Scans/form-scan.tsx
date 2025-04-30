@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { enqueueSnackbar } from "notistack";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-const ScanForm = () => {
-  const [image, setImage] = useState<string>("");
+interface ScanFormProps {
+  image: string;
+  setImage: (image: string) => void;
+}
+
+const ScanForm = ({ image, setImage }: ScanFormProps) => {
   const ref = useRef<HTMLInputElement>(null);
   const handleUpload = () => {
     const file = ref.current?.files?.[0];

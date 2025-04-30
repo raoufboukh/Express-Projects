@@ -1,13 +1,12 @@
 import { useState } from "react";
-import Labs from "./Labs";
 import ScanForm from "./form-scan";
 
 function Scan() {
-  const [id, setId] = useState(1);
+  const [image, setImage] = useState<string>("");
   const [number, setNumber] = useState(0);
   return (
     <div className="">
-      {number === 0 ? <Labs id={id} setId={setId} /> : <ScanForm />}
+      {number === 0 && <ScanForm image={image} setImage={setImage} />}
       <div className="flex justify-center items-center gap-5">
         <button
           className={`${
