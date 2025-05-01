@@ -38,6 +38,19 @@ export async function register(
   }
 }
 
+export async function modifyInformation(info: any) {
+  try {
+    const { data } = await axiosInstance.put("/auth/modifyInformation", info);
+    enqueueSnackbar("Information modified successfully!", {
+      variant: "success",
+    });
+    return data;
+  } catch (error) {
+    console.error("Modify information failed:", error);
+    throw error;
+  }
+}
+
 export const addUser = async (info: any) => {
   try {
     console.log("Adding user:", info);

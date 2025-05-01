@@ -66,6 +66,48 @@ export const login = async (req: any, res: any) => {
   }
 };
 
+export const modifyInformation = async (req: any, res: any) => {
+  try {
+    const { username, email, password, region, commune } = req.body;
+    console.log("Modifying information:", req.body);
+    if (!username || !email || !region || !commune)
+      return res.status(400).json({
+        message: `${
+          !username
+            ? "username is required"
+            : !email
+            ? "email is required"
+            : !region
+            ? "region is required"
+            : "commune is required"
+        }`,
+      });
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
+      return res.status(400).json({ message: "Invalid email" });
+    if (password && password.length < 6)
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    if (existingUser && existingUser._id.toString() !== user._id.toString())
+      return res.status(400).json({ message: "User already exists" });
+    user.username = username;
+    user.email = email;
+    user.region = region;
+    user.commune = commune;
+    if (password) {
+      const hashedPass = await bcrypt.hash(password, 10);
+      user.password = hashedPass;
+    }
+    await user.save();
+    res.status(200).json({ message: "User information updated" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const logout = async (req: any, res: any) => {
   try {
     res.cookie("token", "", { maxAge: 0 });
