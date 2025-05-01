@@ -6,6 +6,7 @@ import {
   LogOut,
   Scan,
   ScanLine,
+  Settings,
   User,
 } from "lucide-react";
 import { GiDoctorFace } from "react-icons/gi";
@@ -405,6 +406,11 @@ export const dashboardLinks = [
     title: "Results Scans",
     icon: Scan,
     role: ["user", "admin", "doctor"],
+  },
+  {
+    title: "Settings",
+    icon: Settings,
+    role: ["admin", "doctor", "user"],
   },
   {
     title: "Logout",

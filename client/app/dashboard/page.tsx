@@ -14,6 +14,7 @@ import Appointments from "@/components/Appointment/Appointments";
 import Scans from "@/components/Scans/Scans";
 import Scan from "@/components/Scans/Scan";
 import Form from "@/components/Appointment/form-app";
+import Settings from "@/components/Settings/Settings";
 
 type User = {
   username: string;
@@ -96,6 +97,8 @@ function AppSidebar() {
             <Form />
           ) : activeItem === "Scan" ? (
             <Scan />
+          ) : activeItem === "Settings" ? (
+            <Settings user={user} />
           ) : null}
         </main>
       </div>

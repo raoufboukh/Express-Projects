@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {!collapsed && user?.accountType === "premium" && (
         <div className="px-4 py-3">
-          <div className="flex space-x-2">
+          <div className="flex space-x-4">
             <button
               type="button"
               onClick={() => setActiveTheme("dark")}
