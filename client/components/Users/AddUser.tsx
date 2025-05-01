@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addUser } from "@/lib/data-fetching";
 import { IoMdClose } from "react-icons/io";
 import { communes, wilayas } from "../constants";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
   const [username, setUsername] = useState("");
@@ -11,6 +12,7 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
   const [role, setRole] = useState("doctor");
   const [region, setRegion] = useState(wilayas[0]);
   const [commune, setCommune] = useState("");
+  const [show, setSHow] = useState(false);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -56,15 +58,25 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
               value={email}
             />
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 relative">
             <label htmlFor="pass">Password</label>
             <input
               className="border border-gray-300 rounded-md px-2 py-1"
-              type="password"
+              type={show ? "text" : "password"}
               id="pass"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
+            <div className="absolute right-3 top-10 text-gray-400 cursor-pointer">
+              <LuEyeClosed
+                onClick={() => setSHow(true)}
+                className={`${show ? "hidden" : ""}`}
+              />
+              <LuEye
+                onClick={() => setSHow(false)}
+                className={`${show ? "" : "hidden"}`}
+              />
+            </div>
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="role">Role</label>

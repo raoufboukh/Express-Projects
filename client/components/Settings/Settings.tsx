@@ -2,6 +2,7 @@ import React from "react";
 import { communes, wilayas } from "../constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { modifyInformation } from "@/lib/data-fetching";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 const Settings = ({ user }: any) => {
   const queryClient = useQueryClient();
@@ -12,6 +13,7 @@ const Settings = ({ user }: any) => {
     region: user?.region,
     commune: user?.commune,
   });
+  const [show, setShow] = React.useState(false);
   const { mutate, isPending } = useMutation({
     mutationKey: ["modifyInformation"],
     mutationFn: () => modifyInformation(info),
@@ -51,16 +53,26 @@ const Settings = ({ user }: any) => {
           className="w-full p-2 border border-gray-200 rounded-md"
         />
       </div>
-      <div className=" flex flex-col gap-2">
+      <div className="flex flex-col gap-2 relative">
         <label htmlFor="pass">Password</label>
         <input
-          type="password"
+          type={show ? "text" : "password"}
           name="username"
           id="pass"
           value={info.password}
           onChange={(e) => setInfo({ ...info, password: e.target.value })}
           className="w-full p-2 border border-gray-200 rounded-md"
         />
+        <div className="absolute right-4 top-12 text-gray-400 cursor-pointer">
+          <LuEyeClosed
+            onClick={() => setShow(true)}
+            className={`${show ? "hidden" : ""}`}
+          />
+          <LuEye
+            onClick={() => setShow(false)}
+            className={`${show ? "" : "hidden"}`}
+          />
+        </div>
       </div>
       <div className="">
         <label htmlFor="reg" className="block text-gray-400 my-1">
