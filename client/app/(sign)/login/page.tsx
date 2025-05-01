@@ -36,10 +36,10 @@ function Login() {
         router.push("/dashboard");
       }, 200);
     },
-    onError: (err) => {
+    onError: (err: any) => {
       console.error("Login failed", err);
       setErrorMessage(
-        err.message ||
+        err?.response?.data.message ||
           "Erreur de connexion. Veuillez vérifier vos identifiants."
       );
     },

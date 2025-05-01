@@ -9,8 +9,13 @@ export async function login(email: string, password: string) {
     });
     enqueueSnackbar("Welcome Back!", { variant: "success" });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Login failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
+
     throw error;
   }
 }
@@ -32,8 +37,12 @@ export async function register(
     });
     enqueueSnackbar("Account created successfully!", { variant: "success" });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Registration failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -45,8 +54,12 @@ export async function modifyInformation(info: any) {
       variant: "success",
     });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Modify information failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -62,8 +75,12 @@ export const addUser = async (info: any) => {
       { variant: "success" }
     );
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Add user failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 };
@@ -76,8 +93,12 @@ export async function deleteUser(id: string, role: string) {
       { variant: "success" }
     );
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Delete user failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -87,8 +108,12 @@ export async function logout() {
     const { data } = await axiosInstance.get("/auth/logout");
     enqueueSnackbar("Logged out successfully!", { variant: "success" });
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Logout failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -97,11 +122,15 @@ export async function check() {
   try {
     const { data } = await axiosInstance.get("/auth/check");
     return data;
-  } catch (error) {
+  } catch (error: any) {
     if ((error as any)?.response?.status === 401) {
       return null;
     }
     console.error("Auth check failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -110,8 +139,12 @@ export async function getUsers() {
   try {
     const { data } = await axiosInstance.get("/users");
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Get users failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -120,8 +153,12 @@ export async function getUser(id: string) {
   try {
     const { data } = await axiosInstance.get(`/users/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Get user failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -130,8 +167,12 @@ export async function getDoctors() {
   try {
     const { data } = await axiosInstance.get("/users/doctors");
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Get doctors failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -140,8 +181,12 @@ export async function getDoctor(id: string) {
   try {
     const { data } = await axiosInstance.get(`/users/doctors/${id}`);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Get doctor failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -151,8 +196,12 @@ export async function addScan(data: any) {
     const response = await axiosInstance.post("/users/scan", { data });
     enqueueSnackbar("Scan added successfully!", { variant: "success" });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Add scan failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -163,8 +212,12 @@ export async function addResult(id: string, info: any) {
     const response = await axiosInstance.post(`/users/add-result/${id}`, info);
     enqueueSnackbar("File added successfully!", { variant: "success" });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Add result failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -174,8 +227,12 @@ export async function bookAppointment(data: any) {
     const response = await axiosInstance.post("/users/appointment", data);
     enqueueSnackbar("Appointment booked successfully!", { variant: "success" });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Book appointment failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -187,8 +244,12 @@ export async function modifyAppointment(id: string, data: any) {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Modify appointment failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -200,8 +261,12 @@ export async function cancelAppointment(id: string) {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Cancel appointments failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -213,8 +278,12 @@ export async function updateAccountType() {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Update account type failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -226,8 +295,12 @@ export async function acceptNotification(id: string) {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Accept notification failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -239,8 +312,12 @@ export const acceptAccountType = async (id: string) => {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Accept account type failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 };
@@ -252,8 +329,12 @@ export async function rejectNotification(id: string) {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Reject notification failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 }
@@ -265,8 +346,12 @@ export const rejectAccountType = async (id: string) => {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Reject account type failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 };
@@ -279,8 +364,12 @@ export const deleteNotification = async (id: string) => {
       variant: "success",
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Delete notification failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 };
@@ -289,8 +378,12 @@ export const getAppointmentsCount = async () => {
   try {
     const response = await axiosInstance.get("/users/appointments/count");
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Get appointments count failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
     throw error;
   }
 };

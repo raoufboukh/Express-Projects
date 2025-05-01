@@ -44,9 +44,6 @@ const Form = () => {
   const { mutate, isPending } = useMutation({
     mutationKey: ["bookAppointment"],
     mutationFn: () => {
-      if (!Form.firstName || !Form.lastName || !Form.number || !Form.time) {
-        throw new Error("Please fill in all required fields");
-      }
       const dateKey = new Date(Form.date).toISOString().split("T")[0];
       if (unavailableDates[dateKey]) {
         throw new Error(

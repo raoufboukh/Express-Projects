@@ -14,6 +14,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [region, setRegion] = useState(wilayas[0]);
   const [commune, setCommune] = useState("");
   const [show, setShow] = useState(false);
@@ -40,8 +41,12 @@ function Register() {
         router.push("/dashboard");
       }, 200);
     },
-    onError: (err) => {
+    onError: (err: any) => {
       console.error("Login failed", err);
+      setErrorMessage(
+        err?.response?.data.message ||
+          "Erreur de connexion. Veuillez vérifier vos identifiants."
+      );
     },
   });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,7 +72,7 @@ function Register() {
         <div className="text-center">
           <h3 className="text-lg">Welcome!</h3>
           <p className="text-gray-400">Create New Account</p>
-          {error && <p className="text-red-500">Erreur de connexion</p>}
+          {error && <p className="text-red-500">{errorMessage}</p>}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="my-2">
@@ -105,20 +110,17 @@ function Register() {
                 className="w-full p-2 border border-gray-200 rounded-md"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
-              <LuEyeClosed
-                onClick={() => setShow(true)}
-                className={`absolute right-4 top-4 text-gray-400 cursor-pointer ${
-                  show ? "hidden" : ""
-                }`}
-              />
-              <LuEye
-                onClick={() => setShow(false)}
-                className={`absolute right-4 top-4 text-gray-400 cursor-pointer ${
-                  show ? "" : "hidden"
-                }`}
-              />
+              <div className="absolute right-4 top-4 text-gray-400 cursor-pointer">
+                <LuEyeClosed
+                  onClick={() => setShow(true)}
+                  className={`${show ? "hidden" : ""}`}
+                />
+                <LuEye
+                  onClick={() => setShow(false)}
+                  className={`${show ? "" : "hidden"}`}
+                />
+              </div>
             </div>
           </div>
           <div className="my-2">
@@ -148,9 +150,7 @@ function Register() {
               onChange={(e) => setCommune(e.target.value)}
               className="w-full p-2 border border-gray-200 rounded-md"
             >
-              <option value="" disabled>
-                Select a commune
-              </option>
+              <option value="">Select a commune</option>
               {communes
                 .filter((com) => com.wilaya_name === region)
                 .flatMap((com) =>

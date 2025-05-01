@@ -57,7 +57,8 @@ export const login = async (req: any, res: any) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: "Invalid credentials" });
+    if (!match)
+      return res.status(401).json({ message: "Password not correct" });
 
     generateToken(user._id, res);
     res.status(200).json({ message: "Login success" });
@@ -69,7 +70,6 @@ export const login = async (req: any, res: any) => {
 export const modifyInformation = async (req: any, res: any) => {
   try {
     const { username, email, password, region, commune } = req.body;
-    console.log("Modifying information:", req.body);
     if (!username || !email || !region || !commune)
       return res.status(400).json({
         message: `${
