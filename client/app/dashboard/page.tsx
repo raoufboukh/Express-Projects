@@ -67,7 +67,7 @@ function AppSidebar() {
       />
 
       <div className={`flex-1 ${theme.main} overflow-y-auto`}>
-        <header className={`${theme.header} p-6`}>
+        <header className={`${theme.header} px-6 py-4 sm:py-3.5 md:py-4.5`}>
           <h1
             className={`${
               activeTheme === "light" ? "text-black" : "text-white"

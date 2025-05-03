@@ -30,12 +30,12 @@ export default function LayoutWrapper({
   );
 
   return (
-    <SnackbarProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <SnackbarProvider preventDuplicate autoHideDuration={2000}>
         {!hideLayout && <Navbar />}
         {children}
         {!hideLayout && <Footer />}
-      </QueryClientProvider>
-    </SnackbarProvider>
+      </SnackbarProvider>
+    </QueryClientProvider>
   );
 }

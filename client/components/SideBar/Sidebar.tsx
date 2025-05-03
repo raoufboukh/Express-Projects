@@ -6,6 +6,8 @@ import Logout from "./Logout";
 import ScanButton from "./scan-button";
 import ButtonLink from "./button-link";
 import NotificationAppointments from "./NotificationAppointments";
+import Image from "next/image";
+import Link from "next/link";
 
 type SidebarProps = {
   activeItem: string;
@@ -38,7 +40,22 @@ const Sidebar: React.FC<SidebarProps> = ({
     >
       <div className={`${theme.header} p-4 flex items-center justify-between`}>
         {!collapsed && (
-          <h1 className="text-xl font-bold hidden md:block">Dashboard</h1>
+          <Link href="/" className="flex items-center justify-center w-full">
+            <Image
+              src="/assets/logo.png"
+              alt="Logo"
+              width={150}
+              height={50}
+              className="md:block hidden"
+            />
+            <Image
+              src="/assets/home_clinic3_pic5.png"
+              alt="Logo"
+              width={50}
+              height={50}
+              className="md:hidden size-7"
+            />
+          </Link>
         )}
         <button
           type="button"

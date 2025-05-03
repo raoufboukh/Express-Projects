@@ -92,7 +92,7 @@ const Form = () => {
   };
 
   return (
-    <form action="" className="flex flex-col gap-5 text-white">
+    <form action="" className="flex flex-col gap-5 text-white sm:w-100 mx-auto">
       <div className="flex flex-col gap-2">
         <label htmlFor="user" className="w-fit">
           FirstName
@@ -103,7 +103,6 @@ const Form = () => {
           className="border border-gray-300 rounded-md px-2 py-1"
           type="text"
           id="user"
-          required
         />
       </div>
 
@@ -117,7 +116,6 @@ const Form = () => {
           className="border border-gray-300 rounded-md px-2 py-1"
           type="text"
           id="em"
-          required
         />
       </div>
 
@@ -131,7 +129,8 @@ const Form = () => {
           className="border border-gray-300 rounded-md px-2 py-1"
           type="tel"
           id="pass"
-          required
+          maxLength={10}
+          minLength={10}
         />
       </div>
 
@@ -146,7 +145,6 @@ const Form = () => {
           className="border border-gray-300 rounded-md px-2 py-1"
           name="time"
           id="time"
-          required
         />
       </div>
 
