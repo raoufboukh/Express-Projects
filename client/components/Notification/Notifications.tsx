@@ -26,7 +26,7 @@ function Notifications() {
   return (
     <div>
       {isLoading ? (
-        <div className="text-white text-3xl">Chargement...</div>
+        <div className="text-white text-3xl">Loading...</div>
       ) : data && data.length !== 0 ? (
         <div
           className={`${
@@ -51,7 +51,7 @@ function Notifications() {
         </div>
       ) : (
         <div className="text-white bg-gray-800 p-4 rounded-md">
-          Aucune notification
+          No Notification Found.
         </div>
       )}
     </div>
