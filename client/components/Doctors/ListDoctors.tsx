@@ -1,3 +1,4 @@
+import { MdDelete } from "react-icons/md";
 const ListDoctors = ({ user, item, mutate, i }: any) => {
   return (
     <div className="text-white bg-gray-800 p-4 rounded-md shadow-md flex md:justify-between justify-center items-center gap-5 flex-wrap sm:px-10 sm:text-base text-sm">
@@ -17,10 +18,10 @@ const ListDoctors = ({ user, item, mutate, i }: any) => {
       </div>
       {user && user.role === "admin" && (
         <button
-          className="cursor-pointer bg-red-500 text-white px-3 rounded-md py-2"
+          className="cursor-pointer text-red-500 px-3 rounded-md py-2 transition-all duration-300 hover:text-red-500/60"
           onClick={() => mutate({ id: item._id, role: item.role })}
         >
-          Delete
+          <MdDelete className="text-lg" />
         </button>
       )}
     </div>

@@ -5,6 +5,7 @@ import {
 } from "@/lib/data-fetching";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 
 interface Props {
   item: any;
@@ -99,14 +100,14 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
             <div>
               <p className="text-green-500">{item.appointment.status}</p>
               <button
-                className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 block w-fit mx-auto hover:bg-red-500/80"
+                className="text-red-500 px-2 py-1 rounded-md cursor-pointer  block w-fit mx-auto transition-all duration-300 hover:text-red-500/60"
                 onClick={() => {
                   setId(item._id);
                   setMessage("Delete");
                   mutate();
                 }}
               >
-                Delete
+                <MdDelete className="text-lg" />
               </button>
             </div>
           )}
