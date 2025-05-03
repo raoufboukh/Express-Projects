@@ -82,6 +82,10 @@ export const modifyInformation = async (req: any, res: any) => {
             : "commune is required"
         }`,
       });
+    if (password && password.length < 6)
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]{5,}\.[a-zA-Z]{2,}/.test(email))
       return res.status(400).json({ message: "Invalid email" });
     if (password && password.length < 6)
