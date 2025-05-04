@@ -9,7 +9,7 @@ import {
   Settings,
   User,
 } from "lucide-react";
-import { GiDoctorFace } from "react-icons/gi";
+import { FaStethoscope } from "react-icons/fa";
 import {
   faXRay,
   faBrain,
@@ -379,7 +379,7 @@ export const dashboardLinks = [
   },
   {
     title: "Doctors",
-    icon: GiDoctorFace,
+    icon: FaStethoscope,
     role: ["admin", "user"],
   },
   {

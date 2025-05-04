@@ -11,6 +11,7 @@ function Appointments() {
   const [user, setUser] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [item, setItem] = useState({});
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
@@ -56,13 +57,14 @@ function Appointments() {
       return isNameMatch && isDateMatch && isTimeMatch;
     }) || [];
 
-    const dates: string[] = Array.from(
-      new Set<string>(user.appointments?.map((item: any) => item.date.slice(0, 10)) || [])
-    );
-    const times: string[] = Array.from(
-      new Set<string>(user.appointments?.map((item: any) => item.time) || [])
-    );
-    
+  const dates: string[] = Array.from(
+    new Set<string>(
+      user.appointments?.map((item: any) => item.date.slice(0, 10)) || []
+    )
+  );
+  const times: string[] = Array.from(
+    new Set<string>(user.appointments?.map((item: any) => item.time) || [])
+  );
 
   return (
     <div>
@@ -111,7 +113,7 @@ function Appointments() {
             </select>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto scrollbar-custom">
             <table className="min-w-full bg-gray-800 text-white border border-gray-700">
               <thead>
                 <tr>
@@ -166,13 +168,14 @@ function Appointments() {
                           onClick={() => {
                             setId(item._id);
                             setShow(true);
+                            setItem(item);
                           }}
                           title="Modify"
                         >
                           <Pencil className="w-5 h-5 hover:text-yellow-400 transition" />
                         </button>
 
-                        <button onClick={() => console.log("Marked as finished")} title="Finish">
+                        <button title="Finish">
                           <CheckCircle className="w-5 h-5 hover:text-green-400 transition" />
                         </button>
                       </div>
@@ -193,13 +196,7 @@ function Appointments() {
         <Modify
           id={id}
           setShow={setShow}
-          data={{
-            firstName: user.firstName,
-            lastName: user.lastName,
-            number: user.number,
-            date: user.date,
-            time: user.time,
-          }}
+          data={item}
           fetchUserData={fetchUserData}
         />
       )}

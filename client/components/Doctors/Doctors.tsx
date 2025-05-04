@@ -37,13 +37,15 @@ function Doctors({ user }: any) {
               - The doctors in {user.commune}:
             </h3>
           ) : (
-            <div className="flex justify-between items-center text-white mb-2">
-              <h3 className="text-white text-2xl mb-2">- All doctors</h3>
-              <div className="realtive flex items-center gap-2">
+            <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
+              <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
+                - All doctors
+              </h3>
+              <div className="realtive flex items-center gap-2 w-76">
                 <input
                   type="text"
-                  placeholder="Search..."
-                  className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md"
+                  placeholder="Search by username..."
+                  className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md w-full"
                   onChange={(e) => {
                     if (!data) return;
                     if (e.target.value === "") {

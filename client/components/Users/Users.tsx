@@ -18,6 +18,7 @@ function Users({ info }: any) {
     queryKey: ["users"],
     queryFn: getUsers,
   });
+
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: () => deleteUser(id, role),
@@ -25,6 +26,7 @@ function Users({ info }: any) {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
+
   const handleUpload = async () => {
     const file = ref.current?.files?.[0];
     if (!file) return;
@@ -39,24 +41,27 @@ function Users({ info }: any) {
     };
     if (ref.current) ref.current.value = "";
   };
+
   useEffect(() => {
     if (data) {
       setUsers(data);
     }
   }, [data]);
   return (
-    <div className="">
+    <div>
       {isLoading ? (
         <div className="text-white text-3xl">Chargement...</div>
       ) : data.length !== 0 ? (
         <>
-          <div className="flex justify-between items-center text-white  mb-2">
-            <h3 className="text-2xl">- All Users</h3>
-            <div className="realtive flex items-center gap-2">
+          <div className="flex justify-center flex-wrap md:justify-between items-center text-white  mb-2">
+            <h3 className="text-2xl text-center md:mb-0 mb-5 md:w-fit w-76">
+              - All Users
+            </h3>
+            <div className="realtive flex items-center gap-2 w-76">
               <input
                 type="text"
-                placeholder="Search..."
-                className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md"
+                placeholder="Search by name or email..."
+                className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md w-full"
                 onChange={(e) => {
                   if (!data) return;
                   if (e.target.value === "") {
@@ -64,8 +69,10 @@ function Users({ info }: any) {
                     return;
                   }
                   const value = e.target.value.toLowerCase();
-                  const filteredData = data.filter((item: any) =>
-                    item.username.toLowerCase().includes(value)
+                  const filteredData = data.filter(
+                    (item: any) =>
+                      item.username.toLowerCase().includes(value) ||
+                      item.email.toLowerCase().includes(value)
                   );
                   setUsers(filteredData);
                 }}
@@ -165,9 +172,10 @@ function Users({ info }: any) {
         </>
       ) : (
         <div className="text-white bg-gray-800 p-4 rounded-md">
-          Aucun utilisateur trouvé
+          No User Found
         </div>
       )}
+
       {!isLoading && info && info.role === "admin" && (
         <button
           className="bg-primary/70 hover:bg-primary/50 block w-fit mx-auto cursor-pointer text-white px-4 py-2 rounded-md mt-4 transition-all duration-300"

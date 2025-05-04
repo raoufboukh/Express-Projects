@@ -5,7 +5,7 @@ import {
 } from "@/lib/data-fetching";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdCheck, MdClose } from "react-icons/md";
 
 interface Props {
   item: any;
@@ -73,7 +73,7 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
             <div className="flex justify-between mt-5">
               <button
                 type="button"
-                className="bg-primary text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-primary/80 disabled:opacity-50"
+                className="text-primary px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:text-primary/40 disabled:opacity-50"
                 onClick={() => {
                   setId(item._id);
                   setMessage("Accepter");
@@ -81,11 +81,11 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
                 }}
                 disabled={isPending}
               >
-                Accepter
+                <MdCheck className="text-lg" />
               </button>
               <button
                 type="button"
-                className="bg-red-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:bg-red-500/80"
+                className="text-red-500 px-2 py-1 rounded-md cursor-pointer transition-all duration-300 hover:text-red-500/40"
                 onClick={() => {
                   setId(item._id);
                   setMessage("Refuser");
@@ -93,14 +93,14 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
                 }}
                 disabled={isPending}
               >
-                Refuser
+                <MdClose className="text-lg" />
               </button>
             </div>
           ) : (
             <div>
               <p className="text-green-500">{item.appointment.status}</p>
               <button
-                className="text-red-500 px-2 py-1 rounded-md cursor-pointer  block w-fit mx-auto transition-all duration-300 hover:text-red-500/60"
+                className="text-red-500 px-2 py-1 rounded-md cursor-pointer  block w-fit mx-auto transition-all duration-300 hover:text-red-500/40"
                 onClick={() => {
                   setId(item._id);
                   setMessage("Delete");
