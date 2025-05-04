@@ -1,88 +1,64 @@
-import { classifyImage } from "@/lib/classifyImage";
-import { useState } from "react";
+import Image from "next/image";
+import { enqueueSnackbar } from "notistack";
+import { useRef } from "react";
 
-const ScanForm = () => {
-  const [image, setImage] = useState<File | null>(null);
-  const [result, setResult] = useState<any>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+interface ScanFormProps {
+  image: File | null;
+  setImage: (image: File | null) => void;
+  classifyImage: () => void;
+}
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImage(file);
+const ScanForm = ({ image, setImage, classifyImage }: ScanFormProps) => {
+  const ref = useRef<HTMLInputElement>(null);
 
-      // Generate a preview of the uploaded image
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!image) {
-      alert("Please select an image");
+  const handleUpload = () => {
+    const file = ref.current?.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      enqueueSnackbar("Please select an image file", { variant: "error" });
       return;
     }
-
-    try {
-      const response = await classifyImage(image);
-      setResult(response.predictions); // Update to store the nested predictions object
-    } catch (error) {
-      console.error("Error classifying image:", error);
-      alert("Failed to classify image");
-    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    setImage(file);
+    if (ref.current) ref.current.value = "";
   };
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h2 className="text-xl font-bold">Upload an X-ray Image</h2>
-
+      <h2 className="text-xl font-bold text-white underline">
+        Upload an X-ray Image
+      </h2>
       <input
         type="file"
+        ref={ref}
+        className="hidden"
         accept="image/*"
-        onChange={handleImageChange}
-        className="mb-4"
+        onChange={handleUpload}
       />
-
-      {preview && (
-        <div className="w-64 h-64 border rounded-md overflow-hidden">
-          <img
-            src={preview}
-            alt="Uploaded Preview"
-            className="w-full h-full object-cover"
+      <div
+        className="bg-gray-800 rounded-md shadow-md border-2 border-dashed border-white cursor-pointer flex items-center justify-center h-80 sm:h-110 sm:w-[600px]"
+        onClick={() => ref.current?.click()}
+      >
+        {image ? (
+          <Image
+            src={URL.createObjectURL(image)}
+            alt="Uploaded"
+            className="size-full rounded-md"
+            width={1000}
+            height={1000}
           />
-        </div>
-      )}
-
+        ) : (
+          <p className="text-gray-400">No image uploaded</p>
+        )}
+      </div>
       <button
-        onClick={handleSubmit}
+        onClick={classifyImage}
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        disabled={!image}
       >
         Classify Image
       </button>
-
-      {result && (
-        <div className="mt-6 p-4 border rounded-md bg-gray-100 w-full max-w-md">
-          <h3 className="text-lg font-bold">Prediction Results</h3>
-          <p className="mt-2">
-            <strong>Predicted Class:</strong> {result.predicted_class}
-          </p>
-          <div className="mt-2">
-            <strong>Probabilities:</strong>
-            <ul className="list-disc ml-6">
-              {result.predictions[0].map(
-                (probability: number, index: number) => (
-                  <li key={index}>
-                    Class {index + 1}: {(probability * 100).toFixed(2)}%
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
