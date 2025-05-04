@@ -216,25 +216,31 @@ export const bookAppointment = async (req: any, res: any) => {
       await User.findByIdAndUpdate(admin._id, {
         $push: {
           notifications: {
-            message: `${
-              message.charAt(0).toUpperCase() + message.slice(1)
-            } from ${
-              user &&
-              user.username.charAt(0).toUpperCase() + user.username.slice(1)
-            }`,
-            appointment: {
-              _id: user?.appointments[user.appointments.toObject().length - 1]
-                ._id,
-              firstName,
-              lastName,
-              number,
-              time,
-              date,
-              status:
-                user?.appointments[user.appointments.toObject().length - 1]
-                  .status,
-            },
-            senderId: user?._id,
+            $each: [
+              {
+                message: `${
+                  message.charAt(0).toUpperCase() + message.slice(1)
+                } from ${
+                  user &&
+                  user.username.charAt(0).toUpperCase() + user.username.slice(1)
+                }`,
+                appointment: {
+                  _id: user?.appointments[
+                    user.appointments.toObject().length - 1
+                  ]._id,
+                  firstName,
+                  lastName,
+                  number,
+                  time,
+                  date,
+                  status:
+                    user?.appointments[user.appointments.toObject().length - 1]
+                      .status,
+                },
+                senderId: user?._id,
+              },
+            ],
+            $position: 0,
           },
         },
       });
