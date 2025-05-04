@@ -5,6 +5,7 @@ import AddUser from "./AddUser";
 import { enqueueSnackbar } from "notistack";
 import UploadFile from "./UploadFile";
 import { MdFileUpload, MdDelete, MdAdd, MdSearch } from "react-icons/md";
+import LoadingSpinner from "../Spinner";
 
 function Users({ info }: any) {
   const [show, setShow] = useState(false);
@@ -50,7 +51,7 @@ function Users({ info }: any) {
   return (
     <div>
       {isLoading ? (
-        <div className="text-white text-3xl">Chargement...</div>
+        <LoadingSpinner />
       ) : data.length !== 0 ? (
         <>
           <div className="flex justify-center flex-wrap md:justify-between items-center text-white  mb-2">

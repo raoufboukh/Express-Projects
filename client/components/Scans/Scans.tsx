@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { check } from "@/lib/data-fetching";
 import Image from "next/image";
 import { FiDownload } from "react-icons/fi";
+import LoadingSpinner from "../Spinner";
 
 function Scans() {
   const { data, isLoading } = useQuery({
@@ -30,7 +31,7 @@ function Scans() {
   return (
     <div>
       {isLoading ? (
-        <div className="text-white text-3xl">Chargement...</div>
+        <LoadingSpinner />
       ) : data.results.length !== 0 ? (
         <div
           className={`${

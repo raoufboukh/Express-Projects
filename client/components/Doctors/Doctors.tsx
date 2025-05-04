@@ -5,6 +5,7 @@ import AddUser from "../Users/AddUser";
 import ListDoctors from "./ListDoctors";
 import DoctorsCommune from "./DoctorsCommune";
 import { MdAdd, MdSearch } from "react-icons/md";
+import LoadingSpinner from "../Spinner";
 
 function Doctors({ user }: any) {
   const [show, setShow] = useState(false);
@@ -29,13 +30,35 @@ function Doctors({ user }: any) {
   return (
     <div>
       {isLoading ? (
-        <div className="text-white text-3xl">Chargement...</div>
+        <LoadingSpinner />
       ) : data.length !== 0 ? (
         <>
           {user && user.role !== "admin" ? (
-            <h3 className="text-white text-2xl mb-2">
-              - The doctors in {user.commune}:
-            </h3>
+            <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
+              <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
+                - The doctors in {user.commune}:
+              </h3>
+              <div className="realtive flex items-center gap-2 w-76">
+                <input
+                  type="text"
+                  placeholder="Search by username..."
+                  className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md w-full"
+                  onChange={(e) => {
+                    if (!data) return;
+                    if (e.target.value === "") {
+                      setDoctors(data);
+                      return;
+                    }
+                    const value = e.target.value.toLowerCase();
+                    const filteredData = data.filter((item: any) =>
+                      item.username.toLowerCase().includes(value)
+                    );
+                    setDoctors(filteredData);
+                  }}
+                />
+                <MdSearch className="text-gray-600 text-2xl cursor-pointer" />
+              </div>
+            </div>
           ) : (
             <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
               <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">

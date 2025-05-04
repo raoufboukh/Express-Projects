@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cancelAppointment, check } from "@/lib/data-fetching";
 import Modify from "./modify-app";
 import { Search, XCircle, Pencil, CheckCircle } from "lucide-react";
+import LoadingSpinner from "../Spinner";
 
 function Appointments() {
   const queryClient = useQueryClient();
@@ -69,7 +70,7 @@ function Appointments() {
   return (
     <div>
       {isLoading ? (
-        <div className="text-white text-3xl">Loading...</div>
+        <LoadingSpinner />
       ) : user.appointments && user.appointments.length !== 0 ? (
         <>
           <div className="relative w-full mb-4">
