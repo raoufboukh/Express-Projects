@@ -98,23 +98,33 @@ export const getOneDoctor = async (req: any, res: any) => {
 
 export const addScan = async (req: any, res: any) => {
   try {
-    const { date, result, aiAnalysis } = req.body;
-    if (!date || !result || !aiAnalysis)
+    const { date, image, result, aiAnalysis } = req.body;
+
+    if (!date || !image || !result || !aiAnalysis) {
       return res.status(400).json({
         message: `${
           !date
             ? "Date is required"
+            : !image
+            ? "Image is required"
             : !result
             ? "Result is required"
             : "AI Analysis is required"
         }`,
       });
+    }
+
+    const cloudImage = await cloudinary.uploader.upload(image, {
+      folder: "scans",
+    });
+
     await User.findByIdAndUpdate(
       req.user._id,
       {
         $push: {
           scanResults: {
             date,
+            image: cloudImage.secure_url,
             result,
             aiAnalysis,
           },
@@ -122,8 +132,10 @@ export const addScan = async (req: any, res: any) => {
       },
       { new: true }
     );
-    res.status(200).json({ message: "Add Scan Successeful" });
+
+    res.status(200).json({ message: "Scan added successfully" });
   } catch (error: any) {
+    console.error("Error adding scan:", error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -193,7 +193,7 @@ export async function getDoctor(id: string) {
 
 export async function addScan(data: any) {
   try {
-    const response = await axiosInstance.post("/users/scan", { data });
+    const response = await axiosInstance.post("/users/scan", data);
     enqueueSnackbar("Scan added successfully!", { variant: "success" });
     return response.data;
   } catch (error: any) {

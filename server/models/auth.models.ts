@@ -32,6 +32,10 @@ const scanResults = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  image: {
+    type: String,
+    required: true,
+  },
   result: {
     type: String,
     required: true,

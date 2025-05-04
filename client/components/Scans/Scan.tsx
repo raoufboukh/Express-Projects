@@ -39,6 +39,7 @@ function Scan() {
           <ScanResult
             result={result}
             setNumber={setNumber}
+            image={image}
             setImage={setImage}
           />
         </div>
