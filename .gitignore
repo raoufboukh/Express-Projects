@@ -1,0 +1,28 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode and IDE configs
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and compiled files
+*.log
+*.sqlite3
+*.db
+
+# Environment/config files
+.env
+*.env
+
+# Ignore virtual environments
+venv/
+env/
+.tfenv/
+tfenv/
+.venv/

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "./routers/auth.routers.ts";
 import userRouter from "./routers/user.routers.ts";
+import modelRouter from "routers/model.routers.ts";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 app.use("/auth", router);
 app.use("/users", userRouter);
+app.use("/model", modelRouter);
 
 const port = process.env.PORT || 5000;
 
