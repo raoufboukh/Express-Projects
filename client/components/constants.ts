@@ -9,7 +9,7 @@ import {
   Settings,
   User,
 } from "lucide-react";
-import { FaStethoscope } from "react-icons/fa";
+import { FaStethoscope, FaXRay } from "react-icons/fa";
 import {
   faXRay,
   faBrain,
@@ -400,6 +400,11 @@ export const dashboardLinks = [
   {
     title: "Scan",
     icon: ScanLine,
+    role: ["user", "admin", "doctor"],
+  },
+  {
+    title: "Results-Xray",
+    icon: FaXRay,
     role: ["user", "admin", "doctor"],
   },
   {

@@ -15,6 +15,7 @@ import Scans from "@/components/Scans/Scans";
 import Scan from "@/components/Scans/Scan";
 import Form from "@/components/Appointment/form-app";
 import Settings from "@/components/Settings/Settings";
+import Xray from "@/components/Scans/Xray";
 
 type User = {
   username: string;
@@ -99,6 +100,8 @@ function AppSidebar() {
             <Scan />
           ) : activeItem === "Settings" ? (
             <Settings user={user} />
+          ) : activeItem === "Results-Xray" ? (
+            <Xray />
           ) : null}
         </main>
       </div>
