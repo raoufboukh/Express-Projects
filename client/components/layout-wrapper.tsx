@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { SnackbarProvider } from "notistack";
+import "animate.css";
 
 import Footer from "./Footer/Footer";
 import Navbar from "./Navbar/Navbar";
@@ -30,12 +31,14 @@ export default function LayoutWrapper({
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SnackbarProvider preventDuplicate autoHideDuration={2000}>
-        {!hideLayout && <Navbar />}
-        {children}
-        {!hideLayout && <Footer />}
-      </SnackbarProvider>
-    </QueryClientProvider>
+    <div className="animate__animated animate__fadeIn">
+      <QueryClientProvider client={queryClient}>
+        <SnackbarProvider preventDuplicate autoHideDuration={2000}>
+          {!hideLayout && <Navbar />}
+          {children}
+          {!hideLayout && <Footer />}
+        </SnackbarProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
