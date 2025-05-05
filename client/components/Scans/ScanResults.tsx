@@ -1,6 +1,6 @@
 import { handleAddScan } from "@/lib/handleScan";
 import { enqueueSnackbar } from "notistack";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface ScanResultProps {
   result: any;
@@ -15,20 +15,22 @@ const ScanResult = ({
   image,
   setImage,
 }: ScanResultProps) => {
+  const isScanAdded = useRef(false);
   useEffect(() => {
     const AllResults = async () => {
       try {
-        if (!result || !image) {
-          enqueueSnackbar("No results or image available", {
-            variant: "error",
-          });
+        if (!result || !image || isScanAdded.current) {
           return;
         }
-
+        isScanAdded.current = true;
         const date = new Date();
         const classResults = result.predicted_class;
-        const prediction = Math.max(...result.predictions[0]) * 100;
+        const prediction =
+          result.predictions && result.predictions[0]
+            ? Math.max(...result.predictions[0]) * 100
+            : 0;
         const aiAnalysis = prediction.toFixed(2);
+
         await handleAddScan({
           date,
           image,
@@ -46,28 +48,38 @@ const ScanResult = ({
     AllResults();
   }, [result, image]);
 
+  const maxProbability =
+    result?.predictions && result.predictions[0]
+      ? Math.max(...result.predictions[0]) * 100
+      : 0;
+
   return (
-    <>
-      <div className="mt-6 p-4 border rounded-md bg-gray-100 w-full max-w-md">
-        <h3 className="text-lg font-bold">Prediction Results</h3>
-        <p className="mt-2">
-          <strong>Predicted Class:</strong> {result?.predicted_class}
-        </p>
-        <div className="mt-2">
-          <strong>Probabilities:</strong>
-          <ul className="list-disc ml-6">
-            {result?.predictions[0]?.map(
-              (probability: number, index: number) => (
-                <li key={index}>
-                  Class {index + 1}: {(probability * 100).toFixed(2)}%
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl text-gray-800">
+      <h3 className="text-2xl font-semibold mb-4 text-blue-700">
+        Prediction Results
+      </h3>
+
+      <p className="text-lg">
+        <span className="font-medium">Predicted Class:</span>{" "}
+        <span
+          className={`${
+            result?.predicted_class === "Normal"
+              ? "text-green-600"
+              : "text-red-600"
+          } font-semibold`}
+        >
+          {result?.predicted_class || "Unknown"}
+        </span>
+      </p>
+
+      <div className="mt-4">
+        <h4 className="font-medium text-lg mb-2">
+          Probability: {maxProbability.toFixed(2)}%
+        </h4>
       </div>
+
       <button
-        className="bg-gray-500 rounded-md px-3 py-2 cursor-pointer text-white mt-4 hover:bg-gray-600 transition-all duration-300"
+        className="mt-6 px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
         onClick={() => {
           setNumber(0);
           setImage(null);
@@ -75,7 +87,7 @@ const ScanResult = ({
       >
         Upload Another Image
       </button>
-    </>
+    </div>
   );
 };
 

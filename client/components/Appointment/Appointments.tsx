@@ -156,6 +156,7 @@ function Appointments() {
                               new Date() <= new Date(item.date)) ||
                             isPending
                           }
+                          className="disabled:cursor-auto disabled:opacity-30 cursor-pointer"
                           title="Cancel"
                         >
                           <XCircle
@@ -172,12 +173,13 @@ function Appointments() {
                             setItem(item);
                           }}
                           title="Modify"
+                          className="cursor-pointer"
                         >
                           <Pencil className="w-5 h-5 hover:text-yellow-400 transition" />
                         </button>
 
                         <button title="Finish">
-                          <CheckCircle className="w-5 h-5 hover:text-green-400 transition" />
+                          <CheckCircle className="w-5 h-5 hover:text-green-400 transition cursor-pointer" />
                         </button>
                       </div>
                     </td>
