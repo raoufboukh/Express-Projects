@@ -86,7 +86,13 @@ function Doctors({ user }: any) {
               </div>
             </div>
           )}
-          <div className="flex flex-col gap-2 overflow-y-auto h-96 scrollbar-custom">
+          <div
+            className={`${
+              doctors.length > 3
+                ? "h-[calc(100vh - 1px)]"
+                : "lg:h-fit h-[calc(100vh - 1px)]"
+            } flex flex-col gap-2`}
+          >
             {doctors.map((item: any, i: number) =>
               user.role !== "admin" ? (
                 <DoctorsCommune i={i} key={i} item={item} user={user} />
@@ -109,7 +115,7 @@ function Doctors({ user }: any) {
       )}
       {!isLoading && user && user.role === "admin" && (
         <button
-          className="bg-primary/70 hover:bg-primary/50 block w-fit mx-auto cursor-pointer text-white px-4 py-2 rounded-md mt-4 transition-all duration-300"
+          className="bg-primary/70 hover:bg-primary/50 cursor-pointer text-white px-4 py-2 rounded-md transition-all duration-300 sticky bottom-4 left-1/2 transform -translate-x-1/2"
           onClick={() => setShow(!show)}
         >
           <MdAdd className="text-lg" />

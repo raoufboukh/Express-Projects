@@ -35,8 +35,10 @@ function Xray() {
       ) : data.results.length !== 0 ? (
         <div
           className={`${
-            data.results.length >= 2 && "h-100"
-          } flex flex-wrap gap-5 justify-between overflow-y-auto scrollbar-custom lg:h-fit`}
+            data.results.length >= 2
+              ? "h-[calc(100vh - 1px)]"
+              : "lg:h-fit h-[calc(100vh - 1px)]"
+          } flex flex-wrap gap-5 justify-between`}
         >
           {data.results.map((item: any) => (
             <div

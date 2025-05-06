@@ -17,8 +17,10 @@ function Scans() {
       ) : data.scanResults.length !== 0 ? (
         <div
           className={`${
-            data.scanResults.length >= 2 ? "h-100" : "lg:h-fit h-100"
-          } flex flex-wrap gap-5 justify-between overflow-y-auto scrollbar-custom`}
+            data.scanResults.length >= 2
+              ? "h-[calc(100vh - 1px)]"
+              : "lg:h-fit h-[calc(100vh - 1px)]"
+          } flex flex-wrap gap-5 justify-between`}
         >
           {data.scanResults.map((item: any) => (
             <div

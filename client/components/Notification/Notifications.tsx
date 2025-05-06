@@ -118,8 +118,10 @@ function Notifications() {
 
           <div
             className={`${
-              filteredNotifications.length > 2 && "h-96"
-            } grid grid-cols-1 lg:grid-cols-2 gap-2 overflow-y-auto scrollbar-custom`}
+              filteredNotifications.length > 2
+                ? "h-[calc(100vh - 1px)]"
+                : "lg:h-fit h-[calc(100vh - 1px)]"
+            } grid grid-cols-1 lg:grid-cols-2 gap-2`}
           >
             {filteredNotifications.length > 0 ? (
               filteredNotifications.map((item: any, i: number) =>
