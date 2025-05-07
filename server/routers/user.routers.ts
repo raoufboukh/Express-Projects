@@ -10,8 +10,6 @@ import {
   deleteNotification,
   deleteUser,
   getAppointmentsCount,
-  getDoctors,
-  getOneDoctor,
   getOneUser,
   getScanResults,
   getUsers,

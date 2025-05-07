@@ -15,7 +15,7 @@ export const getUsers = async (req: any, res: any) => {
 
 export const getDoctors = async (req: any, res: any) => {
   try {
-    const doctors = await Doctor.find({ role: "doctor" });
+    const doctors = await Doctor.find();
     res.status(200).json(doctors);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -83,15 +83,6 @@ export const deleteUser = async (req: any, res: any) => {
     if (!id) return res.status(400).json({ message: "User ID required" });
     await User.findByIdAndDelete(id);
     res.status(200).json({ message: "User deleted successfully" });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getOneDoctor = async (req: any, res: any) => {
-  try {
-    const doctor = await User.findById(req.params.id).select("-password");
-    res.status(200).json(doctor);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
