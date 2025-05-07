@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { check } from "@/lib/data-fetching";
 import Image from "next/image";
 import { FiDownload } from "react-icons/fi";
@@ -10,6 +9,7 @@ function Xray() {
     queryKey: ["scans"],
     queryFn: check,
   });
+
   const handleDownload = async (imageUrl: string) => {
     try {
       const response = await fetch(imageUrl);
@@ -33,17 +33,11 @@ function Xray() {
       {isLoading ? (
         <LoadingSpinner />
       ) : data.results.length !== 0 ? (
-        <div
-          className={`${
-            data.results.length >= 2
-              ? "h-[calc(100vh - 1px)]"
-              : "lg:h-fit h-[calc(100vh - 1px)]"
-          } flex flex-wrap gap-5 justify-between`}
-        >
+        <div className="flex flex-wrap gap-5 justify-between">
           {data.results.map((item: any) => (
             <div
               key={item._id}
-              className={`lg:basis-[48%] basis-full text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit`}
+              className="w-full sm:w-[48%] lg:w-[23.5%] text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit"
             >
               <div className="w-full relative">
                 <div className="absolute top-3 right-5">

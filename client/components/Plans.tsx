@@ -49,7 +49,7 @@ const Plans = () => {
                 <ul className="mt-4 space-y-2 text-gray-700">
                   {plan.features.map((feature, j) => (
                     <li key={j}>
-                      <span className="text-green-500">✔</span> {feature}
+                      <span className="text-green-500 text-[23px] mr-2">•</span> {feature}
                     </li>
                   ))}
                 </ul>
@@ -84,8 +84,9 @@ const Plans = () => {
                 <ul className="mt-4 space-y-2 text-gray-700">
                   {plan.features.map((feature, j) => (
                     <li key={j}>
-                      <span className="text-green-500">✔</span> {feature}
-                    </li>
+  <span className="text-green-500 text-[25px] mr-2">•</span>
+  {feature}
+  </li>
                   ))}
                 </ul>
                 <p className="text-3xl font-bold mt-6">

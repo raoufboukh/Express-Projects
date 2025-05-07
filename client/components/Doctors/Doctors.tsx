@@ -36,7 +36,7 @@ function Doctors({ user }: any) {
           {user && user.role !== "admin" ? (
             <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
               <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
-                - The doctors in {user.commune}:
+              •  The doctors in {user.commune}:
               </h3>
               <div className="realtive flex items-center gap-2 w-76">
                 <input
@@ -62,7 +62,7 @@ function Doctors({ user }: any) {
           ) : (
             <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
               <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
-                - All doctors
+              •  All doctors
               </h3>
               <div className="realtive flex items-center gap-2 w-76">
                 <input

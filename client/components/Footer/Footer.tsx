@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { companyFooter, helpFooter } from "../constants";
+import { helpFooter } from "../constants";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 
 import AllRights from "../all-rights";
@@ -21,10 +21,10 @@ function Footer() {
               />
 
               <h5 className="text-gray-400">Phone Number</h5>
-              <p className="text-primary text-2xl">+61 (0) 3 8376 6284</p>
+              <p className="text-primary text-2xl">023332812</p>
 
               <h5 className="text-gray-400 mt-4">Email</h5>
-              <p className="text-gray-300 mb-3">support@clinic.com</p>
+              <p className="text-gray-300 mb-3">contact.beclinic@gmail.com</p>
 
               <div className="flex justify-center md:justify-start gap-3 mt-2">
                 <a
@@ -78,22 +78,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="lg:basis-1/3 md:basis-1/2 basis-full text-center md:text-left">
-              <h4 className="text-2xl mb-5">Company</h4>
-              <ul className="flex flex-col gap-2">
-                {companyFooter.map((comp, i) => (
-                  <li key={i} className="text-lg font-[300] text-gray-500">
-                    <Link
-                      href={comp.link}
-                      className="flex items-center gap-2 w-fit hover:text-primary hover:translate-x-0.5 transition-all duration-300"
-                    >
-                      <MdOutlineArrowRightAlt className="text-sm" />{" "}
-                      {comp.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+           
 
             <div className="lg:basis-1/3 md:basis-1/2 basis-full text-center md:text-left">
               <h4 className="text-2xl mb-5">Help</h4>

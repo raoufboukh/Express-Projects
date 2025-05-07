@@ -71,18 +71,13 @@ export const services = [
   },
 ];
 
-export const companyFooter = [
-  { title: "About Us", link: "/about" },
-  { title: "Our Services", link: "/services" },
-  { title: "Careers", link: "/careers" },
-  { title: "Contact", link: "/contact" },
-];
+
 
 export const helpFooter = [
   { title: "FAQs", link: "/faq" },
-  { title: "Support", link: "/support" },
-  { title: "Privacy Policy", link: "/privacy-policy" },
-  { title: "Terms of Service", link: "/terms" },
+  { title: "About Us", link: "/about" },
+  { title: "Our Services", link: "/services" },
+  { title: "Contact", link: "/contact" },
 ];
 
 export const testimonials = [
@@ -134,13 +129,14 @@ export const aboutInfo = [
   {
     title: "Beclinic",
     paragraph1: "Localisation",
-    paragraph2: "Constantine, Algeria",
+    paragraph2: "Rue Belhoula Mekki, Constantine",
     image: "/assets/localisation-icon.png",
   },
   {
-    title: "Ultrasound",
-    paragraph1: "Irm",
-    paragraph2: "Scanner",
+    title: "Calls",
+    paragraph1: "Fix : 0666455941",
+    paragraph2: "Phone : 0567453689",
+
     image: "/assets/call-icon.png",
   },
 ];
@@ -184,14 +180,14 @@ export const radiologists = [
     image: "/assets/avatar.png",
     name: "Dr. Hacene Namous",
     role: "Radiologist",
-    location: "Constantine, Algeria",
+    location: "NAMOUS Cabinet de Radiologie, Constantine, Algeria",
     timing: "Tuesday - Saturday, 10AM - 4PM",
   },
   {
     image: "/assets/avatar.png",
     name: "Dr. Adib Azzoug",
     role: "Radiologist",
-    location: "Constantine, Algeria",
+    location: "11 Rue des Frères Bouchama, Constantine, Algeria",
     timing: "Sunday - Thursday, 8AM - 3PM",
   },
   {
@@ -201,38 +197,38 @@ export const radiologists = [
     location: "Constantine, Algeria",
     timing: "Wednesday - Sunday, 9AM - 2PM",
   },
+  {
+    image: "/assets/avatar.png",
+    name: "Dr. Souad Filali (Bououden)",
+    role: "Radiologist",
+    location: "BOUOUDEN Cabinet de Radiologie, Constantine, Algeria",
+    timing: "Monday - Tuesday, 9AM - 5PM",
+  },
+  {
+    image: "/assets/avatar.png",
+    name: "Dr. Abdelmoutalib Madoui",
+    role: "Radiologist",
+    location: "MADOUI Cabinet de Radiologie, Constantine, Algeria",
+    timing: "Sunday - Thursday, 10AM - 4PM",
+  },
+  {
+    image: "/assets/avatar.png",
+    name: "Dr. Amina Messaoudi",
+    role: "Radiologist",
+    location: "Clinique Al-Farabi, Constantine, Algeria",
+    timing: "Sunday - Monday, 8AM - 3PM",
+  },
+  {
+    image: "/assets/avatar.png",
+    name: "Dr. Mohamed Khelifa",
+    role: "Radiologist",
+    location: "Cabinet de Radiologie Khelifa, Constantine, Algeria",
+    timing: "Sunday - Thursday, 9AM - 4PM",
+  }
 ];
 
-export const pneumologists = [
-  {
-    image: "/assets/avatar.png",
-    name: "Dr. Narimene Koreichi",
-    role: "Pneumologist",
-    location: "El Khroub, Constantine, Algeria",
-    timing: "Sunday - Wednesday, 9AM - 4PM",
-  },
-  {
-    image: "/assets/avatar.png",
-    name: "Dr. Djamila Harbi",
-    role: "Pneumologist",
-    location: "Constantine, Algeria",
-    timing: "Tuesday - Saturday, 10AM - 3PM",
-  },
-  {
-    image: "/assets/avatar.png",
-    name: "Dr. Amel Dehmachi",
-    role: "Pneumologist",
-    location: "Constantine, Algeria",
-    timing: "Monday - Thursday, 8AM - 3PM",
-  },
-  {
-    image: "/assets/avatar.png",
-    name: "Dr. Malika Haouchine",
-    role: "Pneumologist",
-    location: "Constantine, Algeria",
-    timing: "Wednesday - Sunday, 9AM - 2PM",
-  },
-];
+
+
 
 export const faqs = [
   {

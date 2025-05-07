@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 # Load the model once when the server starts
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "../../best_multiclass.keras")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "C:/Users/GE/Downloads/best_multiclass.keras")
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     print("Model loaded successfully")
