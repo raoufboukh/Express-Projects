@@ -711,7 +711,11 @@ export const getAppointmentsCount = async (req: any, res: any) => {
       {
         $group: {
           _id: {
-            $dateToString: { format: "%Y-%m-%d", date: "$appointments.date" },
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$appointments.date",
+              timezone: "UTC",
+            },
           },
           count: { $sum: 1 },
         },

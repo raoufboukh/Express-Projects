@@ -40,13 +40,29 @@ const Modify: React.FC<ModifyProps> = ({
   });
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     if (info.message.length < 10) {
       enqueueSnackbar("Message must be at least 10 characters", {
         variant: "error",
       });
       return;
     }
-    mutate({ id, data: info });
+
+    const utcDate = new Date(
+      Date.UTC(
+        info.date.getFullYear(),
+        info.date.getMonth(),
+        info.date.getDate()
+      )
+    );
+
+    mutate({
+      id,
+      data: {
+        ...info,
+        date: utcDate,
+      },
+    });
   };
   return (
     <div className="fixed top-0 left-0 z-50 size-full flex items-center justify-center bg-black/40">

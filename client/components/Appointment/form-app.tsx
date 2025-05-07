@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const MAX_APPOINTMENTS_PER_DAY = 20;
+const MAX_APPOINTMENTS_PER_DAY = 1;
 
 const Form = () => {
   const date = new Date();
@@ -17,7 +17,7 @@ const Form = () => {
     lastName: "",
     number: "",
     time: "",
-    date: date,
+    date: format(date, "yyyy-MM-dd"),
     message: "",
   });
 
@@ -34,6 +34,7 @@ const Form = () => {
     if (appointmentCounts) {
       const unavailable: Record<string, boolean> = {};
       appointmentCounts.forEach((item: any) => {
+        // Convert the date to UTC before comparison
         const dateKey = new Date(item.date).toISOString().split("T")[0];
         if (item.count >= MAX_APPOINTMENTS_PER_DAY) {
           unavailable[dateKey] = true;
@@ -45,14 +46,14 @@ const Form = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["bookAppointment"],
-    mutationFn: () => {
-      const dateKey = new Date(form.date).toISOString().split("T")[0];
+    mutationFn: (formData: typeof form) => {
+      const dateKey = new Date(formData.date).toISOString().split("T")[0];
       if (unavailableDates[dateKey]) {
         throw new Error(
           "This date is fully booked. Please select another date."
         );
       }
-      return bookAppointment(form);
+      return bookAppointment(formData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -69,12 +70,7 @@ const Form = () => {
         lastName: "",
         number: "",
         time: "",
-        date: (() => {
-          const d = new Date();
-          d.setDate(d.getDate() + 1);
-          d.setHours(0, 0, 0, 0);
-          return d;
-        })(),
+        date: format(date, "yyyy-MM-dd"),
         message: "",
       });
       enqueueSnackbar("Appointment booked successfully!", {
@@ -90,7 +86,9 @@ const Form = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate();
+    mutate({
+      ...form,
+    });
   };
 
   const isPastDate = (date: Date): boolean => {
@@ -100,20 +98,17 @@ const Form = () => {
   };
 
   const isUnavailableDate = (date: Date): boolean => {
-    const dateKey = date.toISOString().split("T")[0];
+    const dateKey = format(date, "yyyy-MM-dd");
     return unavailableDates[dateKey];
   };
-
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
-    
     if (isPastDate(selectedDate)) {
       enqueueSnackbar("Please select a date in the future", {
         variant: "error",
       });
       return;
     }
-    
     if (isUnavailableDate(selectedDate)) {
       enqueueSnackbar(
         "This date is fully booked. Please select another date.",
@@ -123,14 +118,16 @@ const Form = () => {
       );
       return;
     }
-    
-    setForm({ ...form, date: selectedDate });
+    setForm({ ...form, date: format(selectedDate, "yyyy-MM-dd") });
   };
 
   return (
     <div className="flex flex-col md:flex-row gap-8 max-w-5xl mx-auto p-6">
       <div className="flex-1">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 text-white">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5 text-white"
+        >
           <div className="flex flex-col gap-2">
             <label htmlFor="firstName" className="w-fit text-sm font-medium">
               First Name
@@ -141,7 +138,6 @@ const Form = () => {
               className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
               type="text"
               id="firstName"
-              required
             />
           </div>
 
@@ -155,7 +151,6 @@ const Form = () => {
               className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
               type="text"
               id="lastName"
-              required
             />
           </div>
 
@@ -171,7 +166,6 @@ const Form = () => {
               id="number"
               maxLength={10}
               minLength={10}
-              required
             />
           </div>
 
@@ -186,7 +180,6 @@ const Form = () => {
               className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
               name="time"
               id="time"
-              required
             />
           </div>
 
@@ -214,70 +207,68 @@ const Form = () => {
       </div>
 
       <div className="w-full md:w-[30%]">
-    <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-gray-900 mb-2">
-        Select Appointment Date
-      </h2>
-      <p className="text-gray-700 mb-4">
-        <span className="font-medium">Selected:</span> {format(form.date, "PPP")}
-      </p>
-      
-      <div className="mb-4 border-b border-gray-200"></div>
+        <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            Select Appointment Date
+          </h2>
+          <p className="text-gray-700 mb-4">
+            <span className="font-medium">Selected:</span>{" "}
+            {format(form.date, "PPP")}
+          </p>
 
-      {isLoading ? (
-        <Skeleton className="h-[280px] w-full rounded-lg" />
-      ) : (
-        <div className="mb-4">
-          <Calendar
-            mode="single"
-            selected={form.date}
-            onSelect={handleDateSelect}
-            initialFocus
-            className="text-gray-900 [&_.rdp-day_selected]:bg-blue-500 [&_.rdp-day_selected]:text-white"
-            modifiers={{
-              past: isPastDate,
-              unavailable: isUnavailableDate,
-            }}
-            modifiersStyles={{
-              past: {
-                color: "#9CA3AF",
-                textDecoration: "line-through",
-              },
-              unavailable: {
-                color: "#9CA3AF",
-                textDecoration: "line-through",
-              },
-            }}
-            styles={{
-              caption: { 
-                color: "inherit",
-                marginBottom: "0.75rem",
-                fontSize: "0.9rem",
-              },
-              caption_label: { 
-                fontSize: "0.9rem",
-                fontWeight: "500",
-              },
-              head_cell: { 
-                color: "#6B7280",
-                fontSize: "0.75rem",
-                fontWeight: "500",
-              },
-              cell: {
-                padding: "0.2rem 0",
-              },
-              day: { 
-                fontSize: "0.875rem",
-                margin: "0.1rem",
+          <div className="mb-4 border-b border-gray-200"></div>
 
-              },
-            }}
-          />
+          {isLoading ? (
+            <Skeleton className="h-[280px] w-full rounded-lg" />
+          ) : (
+            <div className="mb-4">
+              <Calendar
+                mode="single"
+                selected={new Date(form.date)}
+                onSelect={handleDateSelect}
+                initialFocus
+                className="text-gray-900 [&_.rdp-day_selected]:bg-blue-500 [&_.rdp-day_selected]:text-white"
+                modifiers={{
+                  past: isPastDate,
+                  unavailable: isUnavailableDate,
+                }}
+                modifiersStyles={{
+                  past: {
+                    color: "#9CA3AF",
+                    textDecoration: "line-through",
+                  },
+                  unavailable: {
+                    color: "#9CA3AF",
+                    textDecoration: "line-through",
+                  },
+                }}
+                styles={{
+                  caption: {
+                    color: "inherit",
+                    marginBottom: "0.75rem",
+                    fontSize: "0.9rem",
+                  },
+                  caption_label: {
+                    fontSize: "0.9rem",
+                    fontWeight: "500",
+                  },
+                  head_cell: {
+                    color: "#6B7280",
+                    fontSize: "0.75rem",
+                    fontWeight: "500",
+                  },
+                  cell: {
+                    padding: "0.2rem 0",
+                  },
+                  day: {
+                    fontSize: "0.875rem",
+                    margin: "0.1rem",
+                  },
+                }}
+              />
+            </div>
+          )}
         </div>
-      )}
-      
-     
-    </div>
       </div>
     </div>
   );
