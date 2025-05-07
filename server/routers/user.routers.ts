@@ -13,6 +13,7 @@ import {
   getDoctors,
   getOneDoctor,
   getOneUser,
+  getScanResults,
   getUsers,
   modifyAppointment,
   rejectAppointment,
@@ -25,9 +26,7 @@ const userRouter = express.Router();
 
 userRouter.get("/", getUsers);
 userRouter.post("/", ProtectRoute, addUser);
-userRouter.get("/doctors", getDoctors);
 userRouter.get("/:id", getOneUser);
-userRouter.get("/doctors/:id", getOneDoctor);
 userRouter.post("/scan", ProtectRoute, checkPrimaryExpire, addScan);
 userRouter.post(
   "/appointment",
@@ -47,6 +46,7 @@ userRouter.put(
 );
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);
 userRouter.put("/acceptNotification/:id", ProtectRoute, acceptAppointment);
+userRouter.get("/scanResults/:id", ProtectRoute, getScanResults);
 userRouter.put(
   "/acceptAccountType/:id",
   ProtectRoute,
