@@ -165,7 +165,7 @@ export async function getUser(id: string) {
 
 export async function getDoctors() {
   try {
-    const { data } = await axiosInstance.get("/users/doctors");
+    const { data } = await axiosInstance.get("/doctors");
     return data;
   } catch (error: any) {
     console.error("Get doctors failed:", error);
@@ -177,9 +177,9 @@ export async function getDoctors() {
   }
 }
 
-export async function getDoctor(id: string) {
+export async function addDoctor(form: any) {
   try {
-    const { data } = await axiosInstance.get(`/users/doctors/${id}`);
+    const { data } = await axiosInstance.post(`/doctors`, form);
     return data;
   } catch (error: any) {
     console.error("Get doctor failed:", error);
@@ -380,6 +380,20 @@ export const getAppointmentsCount = async () => {
     return response.data;
   } catch (error: any) {
     console.error("Get appointments count failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
+    throw error;
+  }
+};
+
+export const getScanResults = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/users/scanResults/${id}`);
+    return response.data;
+  } catch (error: any) {
+    console.error("Get scan results failed:", error);
     const errorMessage = error.response?.data?.message || error.message;
     enqueueSnackbar(errorMessage, {
       variant: "error",
