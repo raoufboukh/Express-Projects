@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/popover";
 import { enqueueSnackbar } from "notistack";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { getAppointmentsCount } from "@/lib/data-fetching";
 
 interface DatePickerProps {
   date: Date;
@@ -19,39 +21,54 @@ interface DatePickerProps {
   isLoading?: boolean;
 }
 
+const MAX_APPOINTMENTS_PER_DAY = 1;
+
 export function DatePickerDemo({
   date,
   setInfo,
-  unavailableDates = {},
   isLoading = false,
 }: DatePickerProps) {
-  const normalizeDate = (date: Date | null | undefined): Date => {
-    if (!date) return new Date();
-    const normalizedDate = new Date(date);
-    return normalizedDate;
-  };
+  const { data: appointmentCounts } = useQuery({
+    queryKey: ["appointmentCounts"],
+    queryFn: getAppointmentsCount,
+  });
+
+  const [unavailableDates, setUnavailableDates] = useState<
+    Record<string, boolean>
+  >({});
+
+  useEffect(() => {
+    if (appointmentCounts) {
+      const unavailable: Record<string, boolean> = {};
+      appointmentCounts.forEach((item: any) => {
+        const dateKey = new Date(item.date).toISOString().split("T")[0];
+        if (item.count >= MAX_APPOINTMENTS_PER_DAY) {
+          unavailable[dateKey] = true;
+        }
+      });
+      setUnavailableDates(unavailable);
+    }
+  }, [appointmentCounts]);
 
   const isPastDate = (date: Date): boolean => {
     const today = new Date();
-    const normalized = normalizeDate(date);
-    return normalized < today;
+    today.setHours(0, 0, 0, 0);
+    return date < today;
   };
 
   const isUnavailableDate = (date: Date): boolean => {
-    const dateKey = date.toISOString().split("T")[0];
+    const dateKey = format(date, "yyyy-MM-dd");
     return unavailableDates[dateKey];
   };
-
-  const handleSelect = (selectedDate: Date | undefined) => {
+  const handleDateSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
-    const normalizedDate = normalizeDate(selectedDate);
-    if (isPastDate(normalizedDate)) {
+    if (isPastDate(selectedDate)) {
       enqueueSnackbar("Please select a date in the future", {
         variant: "error",
       });
       return;
     }
-    if (isUnavailableDate(normalizedDate)) {
+    if (isUnavailableDate(selectedDate)) {
       enqueueSnackbar(
         "This date is fully booked. Please select another date.",
         {
@@ -60,7 +77,10 @@ export function DatePickerDemo({
       );
       return;
     }
-    setInfo((prev: any) => ({ ...prev, date: normalizedDate }));
+    setInfo((prevInfo: any) => ({
+      ...prevInfo,
+      date: format(selectedDate, "yyyy-MM-dd"),
+    }));
   };
 
   return (
@@ -83,7 +103,7 @@ export function DatePickerDemo({
           <Calendar
             mode="single"
             selected={date}
-            onSelect={handleSelect}
+            onSelect={handleDateSelect}
             initialFocus
             modifiers={{
               past: isPastDate,

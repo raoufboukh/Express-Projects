@@ -1,9 +1,12 @@
-import { modifyAppointment } from "@/lib/data-fetching";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { getAppointmentsCount, modifyAppointment } from "@/lib/data-fetching";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { DatePickerDemo } from "./Date";
 import { enqueueSnackbar } from "notistack";
+import { format } from "date-fns";
+
+const MAX_APPOINTMENTS_PER_DAY = 1;
 
 interface ModifyProps {
   id: string;
@@ -26,6 +29,28 @@ const Modify: React.FC<ModifyProps> = ({
     time: data.time,
     message: "",
   });
+
+  const { data: appointmentCounts, isLoading } = useQuery({
+    queryKey: ["appointmentCounts"],
+    queryFn: getAppointmentsCount,
+  });
+
+  const [unavailableDates, setUnavailableDates] = useState<
+    Record<string, boolean>
+  >({});
+
+  useEffect(() => {
+    if (appointmentCounts) {
+      const unavailable: Record<string, boolean> = {};
+      appointmentCounts.forEach((item: any) => {
+        const dateKey = new Date(item.date).toISOString().split("T")[0];
+        if (item.count >= MAX_APPOINTMENTS_PER_DAY) {
+          unavailable[dateKey] = true;
+        }
+      });
+      setUnavailableDates(unavailable);
+    }
+  }, [appointmentCounts]);
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationKey: ["modify-appointment"],
@@ -48,22 +73,14 @@ const Modify: React.FC<ModifyProps> = ({
       return;
     }
 
-    const utcDate = new Date(
-      Date.UTC(
-        info.date.getFullYear(),
-        info.date.getMonth(),
-        info.date.getDate()
-      )
-    );
-
     mutate({
       id,
       data: {
         ...info,
-        date: utcDate,
       },
     });
   };
+
   return (
     <div className="fixed top-0 left-0 z-50 size-full flex items-center justify-center bg-black/40">
       <div className="bg-white text-black rounded-2xl p-8 relative sm:min-w-96">

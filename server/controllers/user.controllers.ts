@@ -350,7 +350,7 @@ export const modifyAppointment = async (req: any, res: any) => {
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
       return res.status(400).json({ message: "Aucun Admin trouve" });
-    await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       {
         _id: req.user._id,
         "appointments._id": appointmentId,
@@ -363,6 +363,7 @@ export const modifyAppointment = async (req: any, res: any) => {
           "appointments.$.time": time,
           "appointments.$.date": date,
           "appointments.$.message": message,
+          "appointments.$.status": "pending",
         },
       },
       { new: true }
@@ -377,7 +378,10 @@ export const modifyAppointment = async (req: any, res: any) => {
       await User.findByIdAndUpdate(admin._id, {
         $push: {
           notifications: {
-            message: message,
+            message: `${message} from ${
+              (user?.username || "").charAt(0).toUpperCase() +
+              (user?.username || "").slice(1)
+            }`,
             appointment: {
               _id: appointmentId,
               firstName,
