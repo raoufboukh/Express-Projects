@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { check } from "@/lib/data-fetching";
 import Image from "next/image";
 import LoadingSpinner from "../Spinner";
@@ -18,41 +17,40 @@ function Scans() {
         <div
           className={`${
             data.scanResults.length >= 2
-              ? "h-[calc(100vh - 1px)]"
-              : "lg:h-fit h-[calc(100vh - 1px)]"
-          } flex flex-wrap gap-5 justify-between`}
+              ? "h-[calc(100vh-1px)]"
+              : "lg:h-fit h-[calc(100vh-1px)]"
+          } flex flex-wrap gap-4 justify-start`}
         >
-          {data.scanResults.map((item: any) => (
+{[...data.scanResults].reverse().map((item: any) => (
             <div
               key={item._id}
-              className={`lg:basis-[48%] basis-full text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit`}
+              className="lg:basis-[23%] md:basis-[30%] sm:basis-[45%] basis-full text-white bg-gray-800 rounded-md shadow-md text-sm overflow-hidden h-fit"
             >
-              <div className="w-full relative">
+              <div className="w-full relative h-36">
                 <Image
                   src={item.image}
                   alt={item.image}
-                  width={1000}
-                  height={100}
-                  className="w-full h-100 rounded-t-md"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-t-md"
                 />
               </div>
-              <div className="p-4">
+              <div className="p-2 space-y-1">
                 <p>
-                  <span className="text-gray-300">Date: </span>
+                  <span className="text-gray-400">Date:</span>{" "}
                   {item.date.slice(0, 10)}
                 </p>
                 <p>
-                  <span className="text-gray-300">Time: </span>
+                  <span className="text-gray-400">Time:</span>{" "}
                   {new Date(new Date(item.date).getTime() + 60 * 60 * 1000)
                     .toISOString()
                     .slice(11, 16)}
                 </p>
                 <p>
-                  <span className="text-gray-300">Result: </span>
-                  {item.result}
+                  <span className="text-gray-400">Result:</span> {item.result}
                 </p>
                 <p>
-                  <span className="text-gray-300">AiAnalysis: </span>
+                  <span className="text-gray-400">AiAnalysis:</span>{" "}
                   {item.aiAnalysis}%
                 </p>
               </div>
@@ -61,7 +59,7 @@ function Scans() {
         </div>
       ) : (
         <div className="text-white bg-gray-800 p-4 rounded-md">
-          Aucune Results
+          No Result Found.
         </div>
       )}
     </div>

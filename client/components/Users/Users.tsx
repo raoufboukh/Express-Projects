@@ -56,7 +56,7 @@ function Users({ info }: any) {
         <>
           <div className="flex justify-center flex-wrap md:justify-between items-center text-white  mb-2">
             <h3 className="text-2xl text-center md:mb-0 mb-5 md:w-fit w-76">
-              - All Users
+            • All Users
             </h3>
             <div className="realtive flex items-center gap-2 w-76">
               <input
