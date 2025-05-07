@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteUser, getDoctors } from "@/lib/data-fetching";
 import { useEffect, useState } from "react";
-import AddUser from "../Users/AddUser";
 import ListDoctors from "./ListDoctors";
 import DoctorsCommune from "./DoctorsCommune";
 import { MdAdd, MdSearch } from "react-icons/md";
 import LoadingSpinner from "../Spinner";
+import AddDoctorModal from "../AddDoctorModal";
 
 function Doctors({ user }: any) {
   const [show, setShow] = useState(false);
@@ -14,6 +14,8 @@ function Doctors({ user }: any) {
     queryKey: ["doctors"],
     queryFn: getDoctors,
   });
+  console.log("doctors", data);
+
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: ({ id, role }: { id: any; role: string }) =>
@@ -36,12 +38,12 @@ function Doctors({ user }: any) {
           {user && user.role !== "admin" ? (
             <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
               <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
-              •  The doctors in {user.commune}:
+                • The doctors in {user.region}:
               </h3>
               <div className="realtive flex items-center gap-2 w-76">
                 <input
                   type="text"
-                  placeholder="Search by username..."
+                  placeholder="Search by name..."
                   className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md w-full"
                   onChange={(e) => {
                     if (!data) return;
@@ -62,12 +64,12 @@ function Doctors({ user }: any) {
           ) : (
             <div className="flex flex-wrap justify-center md:justify-between items-center text-white mb-2">
               <h3 className="text-white text-2xl w-76 text-center md:w-fit md:mb-0 mb-5">
-              •  All doctors
+                • All doctors
               </h3>
               <div className="realtive flex items-center gap-2 w-76">
                 <input
                   type="text"
-                  placeholder="Search by username..."
+                  placeholder="Search by name..."
                   className="placeholder:text-white p-2 border-2 outline-none border-gray-600 bg-gray-800 rounded-md w-full"
                   onChange={(e) => {
                     if (!data) return;
@@ -121,7 +123,7 @@ function Doctors({ user }: any) {
           <MdAdd className="text-lg" />
         </button>
       )}
-      {show && <AddUser setShow={setShow} />}
+      {show && <AddDoctorModal setShow={setShow} />}
     </div>
   );
 }

@@ -21,7 +21,7 @@ function Scans() {
               : "lg:h-fit h-[calc(100vh-1px)]"
           } flex flex-wrap gap-4 justify-start`}
         >
-{[...data.scanResults].reverse().map((item: any) => (
+          {[...data.scanResults].reverse().map((item: any) => (
             <div
               key={item._id}
               className="lg:basis-[23%] md:basis-[30%] sm:basis-[45%] basis-full text-white bg-gray-800 rounded-md shadow-md text-sm overflow-hidden h-fit"
