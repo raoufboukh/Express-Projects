@@ -19,12 +19,12 @@ function Scans() {
             data.scanResults.length >= 2
               ? "h-[calc(100vh-1px)]"
               : "lg:h-fit h-[calc(100vh-1px)]"
-          } flex flex-wrap gap-4 justify-start`}
+          } grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4`}
         >
           {[...data.scanResults].reverse().map((item: any) => (
             <div
               key={item._id}
-              className="lg:basis-[23%] md:basis-[30%] sm:basis-[45%] basis-full text-white bg-gray-800 rounded-md shadow-md text-sm overflow-hidden h-fit"
+              className="text-white bg-gray-800 rounded-md shadow-md text-sm h-fit"
             >
               <div className="w-full relative h-36">
                 <Image

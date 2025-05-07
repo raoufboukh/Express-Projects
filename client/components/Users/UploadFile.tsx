@@ -7,21 +7,11 @@ interface UploadFileProps {
   file: string | null;
   setFile: (file: string | null) => void;
   setId: (id: string) => void;
-  setSelectedUser: (user: any) => void;
-  setUser: (user: any) => void;
   item: any;
   id: string;
 }
 
-const UploadFile = ({
-  file,
-  setFile,
-  setId,
-  setSelectedUser,
-  setUser,
-  id,
-  item,
-}: UploadFileProps) => {
+const UploadFile = ({ file, setFile, setId, id, item }: UploadFileProps) => {
   const [dateAppointment, setDateAppointment] = useState<string | null>(
     item.appointments[0].date
   );
@@ -40,7 +30,7 @@ const UploadFile = ({
   });
   return (
     file && (
-      <div className="bg-black/30 absolute top-0 left-0 size-full flex justify-center items-center">
+      <div className="bg-black/15 absolute top-0 left-0 size-full flex justify-center items-center z-10">
         <div className="flex flex-col justify-center items-center bg-white">
           <Image
             src={file}
@@ -79,12 +69,10 @@ const UploadFile = ({
             <button
               className="bg-blue-500 text-white px-3 py-2 rounded-md cursor-pointer"
               onClick={(e) => {
-                e.stopPropagation(); // Stop propagation on the Yes button
+                e.stopPropagation();
 
                 setId(item._id);
                 mutate();
-                setSelectedUser(null);
-                setUser(null);
               }}
             >
               Yes
@@ -94,8 +82,6 @@ const UploadFile = ({
               onClick={(e) => {
                 e.stopPropagation();
                 setFile(null);
-                setSelectedUser(null);
-                setUser(null);
               }}
             >
               No
