@@ -134,7 +134,8 @@ export const addScan = async (req: any, res: any) => {
 
 export const getScanResults = async (req: any, res: any) => {
   try {
-    const user = await User.findById(req.user._id).select("scanResults");
+    const { id } = req.params;
+    const user = await User.findById(id).select("scanResults");
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user.scanResults);
   } catch (error: any) {
