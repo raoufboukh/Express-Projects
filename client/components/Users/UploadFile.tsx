@@ -78,7 +78,9 @@ const UploadFile = ({
           <div className="flex gap-2 mt-4">
             <button
               className="bg-blue-500 text-white px-3 py-2 rounded-md cursor-pointer"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation(); // Stop propagation on the Yes button
+
                 setId(item._id);
                 mutate();
                 setSelectedUser(null);
@@ -89,7 +91,8 @@ const UploadFile = ({
             </button>
             <button
               className="bg-red-500 text-white px-3 py-2 rounded-md cursor-pointer"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setFile(null);
                 setSelectedUser(null);
                 setUser(null);
