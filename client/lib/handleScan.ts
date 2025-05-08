@@ -3,7 +3,7 @@ import { enqueueSnackbar } from "notistack";
 
 export const handleAddScan = async (data: {
   date: Date;
-  image: File;
+  image: File | string;
   result: string;
   aiAnalysis: string;
 }) => {
@@ -17,7 +17,12 @@ export const handleAddScan = async (data: {
       });
     };
 
-    const base64Image = await convertToBase64(data.image);
+    let base64Image;
+    if (typeof data.image === "string") {
+      base64Image = data.image;
+    } else {
+      base64Image = await convertToBase64(data.image);
+    }
 
     const payload = {
       date: data.date,

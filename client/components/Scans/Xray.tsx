@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { check, classifyScan } from "@/lib/data-fetching"; // Assume classifyScan is your API call
+import { check } from "@/lib/data-fetching";
 import Image from "next/image";
 import { FiDownload } from "react-icons/fi";
 import LoadingSpinner from "../Spinner";
@@ -39,28 +39,22 @@ function Xray() {
     setLoadingResult(true);
     setSelectedScan(item);
     try {
-      // Fetch the image as a Blob
       const response = await fetch(item.image);
       if (!response.ok) throw new Error("Image fetch failed");
       const blob = await response.blob();
-      // Convert Blob to File
       const file = new File([blob], "scan.jpg", { type: blob.type });
-      // Use classifyImage (which expects a File)
       const result = await classifyImage(file);
 
-      // Normalize the response structure
       if (
         result.predictions &&
         typeof result.predictions === "object" &&
         result.predictions.predictions
       ) {
-        // If we have a nested structure
         setScanResult({
           predictions: result.predictions.predictions,
           predicted_class: result.predictions.predicted_class,
         });
       } else {
-        // If we already have the expected structure
         setScanResult(result);
       }
     } catch (err) {
@@ -70,7 +64,6 @@ function Xray() {
     setLoadingResult(false);
   };
 
-  // Show ScanResult if a scan is selected and result is available
   if (selectedScan && scanResult) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
@@ -80,7 +73,7 @@ function Xray() {
             setSelectedScan(null);
             setScanResult(null);
           }}
-          image={selectedScan.image} // If you want to pass the image file, adjust accordingly
+          image={selectedScan.image}
           setImage={() => {}}
         />
       </div>
