@@ -28,6 +28,8 @@ export function DatePickerDemo({
   setInfo,
   isLoading = false,
 }: DatePickerProps) {
+  const dateObj = date instanceof Date ? date : new Date(date);
+
   const { data: appointmentCounts } = useQuery({
     queryKey: ["appointmentCounts"],
     queryFn: getAppointmentsCount,
@@ -60,6 +62,7 @@ export function DatePickerDemo({
     const dateKey = format(date, "yyyy-MM-dd");
     return unavailableDates[dateKey];
   };
+
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
     if (isPastDate(selectedDate)) {
@@ -77,10 +80,7 @@ export function DatePickerDemo({
       );
       return;
     }
-    setInfo((prevInfo: any) => ({
-      ...prevInfo,
-      date: format(selectedDate, "yyyy-MM-dd"),
-    }));
+    setInfo(selectedDate);
   };
 
   return (
@@ -91,7 +91,7 @@ export function DatePickerDemo({
           className="w-[240px] justify-start text-left font-normal"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {dateObj ? format(dateObj, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -102,7 +102,7 @@ export function DatePickerDemo({
         ) : (
           <Calendar
             mode="single"
-            selected={date}
+            selected={dateObj}
             onSelect={handleDateSelect}
             initialFocus
             modifiers={{

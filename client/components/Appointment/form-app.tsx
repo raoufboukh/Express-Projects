@@ -3,7 +3,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DatePickerDemo } from "./Date";
 
@@ -18,7 +17,7 @@ const Form = () => {
     lastName: "",
     number: "",
     time: "",
-    date: format(date, "yyyy-MM-dd"),
+    date: date,
     message: "",
   });
 
@@ -48,13 +47,16 @@ const Form = () => {
   const { mutate, isPending } = useMutation({
     mutationKey: ["bookAppointment"],
     mutationFn: (formData: typeof form) => {
-      const dateKey = new Date(formData.date).toISOString().split("T")[0];
+      const dateKey = format(formData.date, "yyyy-MM-dd");
       if (unavailableDates[dateKey]) {
         throw new Error(
           "This date is fully booked. Please select another date."
         );
       }
-      return bookAppointment(formData);
+      return bookAppointment({
+        ...formData,
+        date: format(formData.date, "yyyy-MM-dd"),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -71,7 +73,7 @@ const Form = () => {
         lastName: "",
         number: "",
         time: "",
-        date: format(date, "yyyy-MM-dd"),
+        date: date,
         message: "",
       });
       enqueueSnackbar("Appointment booked successfully!", {
@@ -183,8 +185,8 @@ const Form = () => {
                 <Skeleton className="h-[280px] w-full rounded-lg" />
               ) : (
                 <DatePickerDemo
-                  date={new Date(form.date)}
-                  setInfo={(selectedDate: string) =>
+                  date={form.date}
+                  setInfo={(selectedDate: Date) =>
                     setForm({ ...form, date: selectedDate })
                   }
                 />

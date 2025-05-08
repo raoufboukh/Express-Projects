@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { DatePickerDemo } from "./Date";
 import { enqueueSnackbar } from "notistack";
-import { format } from "date-fns";
 
 const MAX_APPOINTMENTS_PER_DAY = 1;
 
