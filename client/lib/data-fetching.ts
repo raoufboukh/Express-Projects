@@ -405,9 +405,27 @@ export const getScanResults = async (id: string) => {
 export async function classifyScan(imageUrl: string) {
   try {
     console.log("Classifying scan:", imageUrl);
-    const response = await axiosInstance.post("/model/classify", {
-      image: imageUrl,
+
+    // Fetch the image as a Blob first
+    const imageResponse = await fetch(imageUrl);
+    if (!imageResponse.ok) throw new Error("Failed to fetch image");
+
+    const imageBlob = await imageResponse.blob();
+
+    // Convert Blob to File
+    const imageFile = new File([imageBlob], "image.jpg", {
+      type: imageBlob.type,
     });
+
+    // Create FormData and append the file
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    // Send the request with the file
+    const response = await axiosInstance.post("/model/classify", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
     enqueueSnackbar("Image classified successfully!", { variant: "success" });
     return response.data;
   } catch (error: any) {

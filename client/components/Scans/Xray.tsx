@@ -47,8 +47,24 @@ function Xray() {
       const file = new File([blob], "scan.jpg", { type: blob.type });
       // Use classifyImage (which expects a File)
       const result = await classifyImage(file);
-      setScanResult(result);
+
+      // Normalize the response structure
+      if (
+        result.predictions &&
+        typeof result.predictions === "object" &&
+        result.predictions.predictions
+      ) {
+        // If we have a nested structure
+        setScanResult({
+          predictions: result.predictions.predictions,
+          predicted_class: result.predictions.predicted_class,
+        });
+      } else {
+        // If we already have the expected structure
+        setScanResult(result);
+      }
     } catch (err) {
+      console.error("Classification error:", err);
       setScanResult({ error: "Classification failed." });
     }
     setLoadingResult(false);
