@@ -32,7 +32,7 @@ function Scans() {
                   alt={item.image}
                   layout="fill"
                   objectFit="cover"
-                  className="rounded-t-md"
+                  className="rounded-t-md h-40"
                 />
               </div>
               <div className="p-2 space-y-1">

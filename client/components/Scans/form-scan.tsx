@@ -54,7 +54,7 @@ const ScanForm = ({ image, setImage, classifyImage }: ScanFormProps) => {
       </div>
       <button
         onClick={classifyImage}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 cursor-pointer"
         disabled={!image}
       >
         Classify Image

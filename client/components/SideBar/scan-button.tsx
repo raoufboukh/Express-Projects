@@ -22,30 +22,16 @@ const ScanButton: React.FC<ScanButtonProps> = ({
       className={`flex items-center cursor-pointer ${
         collapsed ? "justify-center px-3" : "px-4"
       } py-3 rounded-lg ${
-        user.accountType === "basic" && activeItem === item.title
-          ? theme.active
-          : user.accountType === "premium" && activeItem === item.title
-          ? theme.premiumActive
+        user.accountType === "basic" && user.role !== "admin"
+          ? "hidden"
+          : activeItem === item.title
+          ? user.accountType === "premium"
+            ? theme.premiumActive
+            : theme.active
           : theme.menuItem
       } transition-all duration-200`}
       onClick={() => {
-        if (
-          user.role === "admin" ||
-          user.role === "doctor" ||
-          user.accountType === "premium"
-        ) {
-          setActiveItem(item.title);
-        } else if (
-          user.appointments &&
-          user.appointments.length !== 0 &&
-          user.appointments[0]?.status === "accepted"
-        ) {
-          setActiveItem(item.title);
-        } else {
-          enqueueSnackbar("You need to have an accepted appointment to scan", {
-            variant: "warning",
-          });
-        }
+        setActiveItem(item.title);
       }}
     >
       <span className={`text-xl ${collapsed ? "" : "mr-3"}`}>

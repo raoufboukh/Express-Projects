@@ -401,3 +401,19 @@ export const getScanResults = async (id: string) => {
     throw error;
   }
 };
+
+export async function classifyScan(imageUrl: string) {
+  try {
+    console.log("Classifying scan:", imageUrl);
+    const response = await axiosInstance.post("/model/classify", {
+      image: imageUrl,
+    });
+    enqueueSnackbar("Image classified successfully!", { variant: "success" });
+    return response.data;
+  } catch (error: any) {
+    console.error("Image classification failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, { variant: "error" });
+    throw error;
+  }
+}
