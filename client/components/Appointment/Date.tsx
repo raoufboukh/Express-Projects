@@ -28,8 +28,6 @@ export function DatePickerDemo({
   setInfo,
   isLoading = false,
 }: DatePickerProps) {
-  const dateObj = date instanceof Date ? date : new Date(date);
-
   const { data: appointmentCounts } = useQuery({
     queryKey: ["appointmentCounts"],
     queryFn: getAppointmentsCount,
@@ -91,7 +89,11 @@ export function DatePickerDemo({
           className="w-[240px] justify-start text-left font-normal"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {dateObj ? format(dateObj, "PPP") : <span>Pick a date</span>}
+          {date ? (
+            format(date instanceof Date ? date : new Date(date), "PPP")
+          ) : (
+            <span>Pick a date</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -102,7 +104,7 @@ export function DatePickerDemo({
         ) : (
           <Calendar
             mode="single"
-            selected={dateObj}
+            selected={date}
             onSelect={handleDateSelect}
             initialFocus
             modifiers={{

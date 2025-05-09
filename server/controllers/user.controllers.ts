@@ -644,7 +644,7 @@ export const acceptAppointment = async (req: any, res: any) => {
       { new: true }
     );
 
-    if (req.user.role !== "admin") {
+    if (req.user.role === "admin") {
       admins.forEach(async (admin) => {
         await User.findByIdAndUpdate(admin._id, {
           $pull: {

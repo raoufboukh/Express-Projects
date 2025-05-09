@@ -144,7 +144,10 @@ const Form = () => {
 
           <div className="flex flex-col gap-2">
             <label htmlFor="time" className="w-fit text-sm font-medium">
-              Time
+              Time{" "}
+              <span className="text-gray-400 text-xs">
+                (select time from 8:00 to 17:00)
+              </span>
             </label>
             <input
               value={form.time}

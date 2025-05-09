@@ -23,13 +23,13 @@ const Modify: React.FC<ModifyProps> = ({
   const [info, setInfo] = useState({
     firstName: data.firstName,
     lastName: data.lastName,
-    date: data.date,
+    date: new Date(data.date),
     number: data.number,
     time: data.time,
     message: "",
   });
 
-  const { data: appointmentCounts, isLoading } = useQuery({
+  const { data: appointmentCounts } = useQuery({
     queryKey: ["appointmentCounts"],
     queryFn: getAppointmentsCount,
   });
@@ -121,7 +121,12 @@ const Modify: React.FC<ModifyProps> = ({
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="date">Date</label>
-            <DatePickerDemo date={info.date} setInfo={setInfo} />
+            <DatePickerDemo
+              date={info.date}
+              setInfo={(selectedDate: Date) =>
+                setInfo({ ...info, date: selectedDate })
+              }
+            />
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="pass">Time</label>
