@@ -1,7 +1,4 @@
-const DoctorsCommune = ({ user, item, i }: any) => {
-  console.log("user.region", user.region);
-  console.log("item.region", item.region);
-
+const DoctorsCommune = ({ user, item }: any) => {
   return (
     user.region.toLowerCase() == item.region.toLowerCase() && (
       <div className="text-white bg-gray-800 p-4 rounded-md shadow-md flex md:justify-between justify-center gap-5 flex-wrap sm:px-10 sm:text-base text-sm">
