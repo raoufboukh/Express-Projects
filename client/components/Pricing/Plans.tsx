@@ -1,21 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { pricingPlans } from "./constants";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { check, updateAccountType } from "@/lib/data-fetching";
+import { pricingPlans } from "../constants";
+import { useQueryClient } from "@tanstack/react-query";
+import { check } from "@/lib/data-fetching";
 import { useRouter } from "next/navigation";
 
-const Plans = () => {
+const Plans = ({ setNumber }: any) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["pricing"],
-    mutationFn: updateAccountType,
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["pricing"] });
-      const updatedUserData = await check();
-      setUser(updatedUserData);
-    },
-  });
   const router = useRouter();
   const [user, setUser] = useState<any>({});
   useEffect(() => {
@@ -30,7 +21,7 @@ const Plans = () => {
     checkAuth();
   }, []);
   return (
-    <div className="w-full bg-gray-950 py-24 min-h-screen flex justify-center items-center">
+    <div className=" flex justify-center items-center">
       <div className="container mx-auto lg:px-20 px-4">
         <h3 className="text-4xl font-bold text-center text-gray-700 mb-16">
           Choose Your Premium Plan
@@ -49,7 +40,8 @@ const Plans = () => {
                 <ul className="mt-4 space-y-2 text-gray-700">
                   {plan.features.map((feature, j) => (
                     <li key={j}>
-                      <span className="text-green-500 text-[23px] mr-2">•</span> {feature}
+                      <span className="text-green-500 text-[23px] mr-2">•</span>{" "}
+                      {feature}
                     </li>
                   ))}
                 </ul>
@@ -59,12 +51,10 @@ const Plans = () => {
                 </p>
                 <button
                   className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-                  disabled={isPending || user.accountType === "premium"}
-                  onClick={() => mutate()}
+                  disabled={user.accountType === "premium"}
+                  onClick={() => setNumber(1)}
                 >
-                  {isPending
-                    ? "Loading..."
-                    : user.accountType === "premium"
+                  {user.accountType === "premium"
                     ? "You have premium account"
                     : "Upgrade Now"}
                 </button>
@@ -84,9 +74,9 @@ const Plans = () => {
                 <ul className="mt-4 space-y-2 text-gray-700">
                   {plan.features.map((feature, j) => (
                     <li key={j}>
-  <span className="text-green-500 text-[25px] mr-2">•</span>
-  {feature}
-  </li>
+                      <span className="text-green-500 text-[25px] mr-2">•</span>
+                      {feature}
+                    </li>
                   ))}
                 </ul>
                 <p className="text-3xl font-bold mt-6">
@@ -95,19 +85,11 @@ const Plans = () => {
                 </p>
                 <button
                   className="mt-6 bg-blue-600 text-white py-3 px-10 rounded-lg text-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-                  disabled={
-                    isPending ||
-                    user.accountType === "premium" ||
-                    user.statusType === "pending"
-                  }
-                  onClick={() => mutate()}
+                  disabled={user.accountType === "premium"}
+                  onClick={() => setNumber(1)}
                 >
-                  {isPending
-                    ? "Loading..."
-                    : user.accountType === "premium"
+                  {user.accountType === "premium"
                     ? "You have premium account"
-                    : user.statusType === "pending"
-                    ? "Pending..."
                     : "Upgrade Now"}
                 </button>
               </div>
