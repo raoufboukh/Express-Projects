@@ -18,17 +18,12 @@ interface DatePickerProps {
   date: Date;
   setInfo: (info: any) => void;
   unavailableDates?: Record<string, boolean>;
-  isLoading?: boolean;
 }
 
 const MAX_APPOINTMENTS_PER_DAY = 1;
 
-export function DatePickerDemo({
-  date,
-  setInfo,
-  isLoading = false,
-}: DatePickerProps) {
-  const { data: appointmentCounts } = useQuery({
+export function DatePickerDemo({ date, setInfo }: DatePickerProps) {
+  const { data: appointmentCounts, isLoading } = useQuery({
     queryKey: ["appointmentCounts"],
     queryFn: getAppointmentsCount,
   });
@@ -53,7 +48,7 @@ export function DatePickerDemo({
   const isPastDate = (date: Date): boolean => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date < today;
+    return date <= today;
   };
 
   const isUnavailableDate = (date: Date): boolean => {
@@ -86,7 +81,7 @@ export function DatePickerDemo({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className="w-[240px] justify-start text-left font-normal"
+          className="sm:w-[240px] justify-start text-left font-normal"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? (

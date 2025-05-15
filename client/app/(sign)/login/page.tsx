@@ -48,11 +48,6 @@ function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
-    if (!email || !password) {
-      setErrorMessage("Veuillez remplir tous les champs");
-      return;
-    }
-
     try {
       mutate();
     } catch (err) {
@@ -93,7 +88,6 @@ function Login() {
               className="w-full p-2 border border-gray-200 rounded-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
           <div className="my-4">
@@ -107,7 +101,6 @@ function Login() {
                 className="w-full p-2 border border-gray-200 rounded-md"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
               <LuEyeClosed
                 onClick={() => setShow(true)}

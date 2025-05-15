@@ -92,12 +92,14 @@ function Xray() {
               className=" text-white bg-gray-800 rounded-md shadow-md flex flex-col sm:text-base text-sm overflow-hidden h-fit"
             >
               <div className="w-full relative">
-                <div className="absolute top-3 right-5">
-                  <FiDownload
-                    className="size-7 cursor-pointer bg-primary rounded-full p-1"
-                    onClick={() => handleDownload(item.image)}
-                  />
-                </div>
+                {data.accountType === "premium" && (
+                  <div className="absolute top-3 right-5">
+                    <FiDownload
+                      className="size-7 cursor-pointer bg-primary rounded-full p-1"
+                      onClick={() => handleDownload(item.image)}
+                    />
+                  </div>
+                )}
                 <Image
                   src={item.image}
                   alt={item.image}

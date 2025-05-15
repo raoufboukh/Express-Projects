@@ -71,8 +71,6 @@ export const services = [
   },
 ];
 
-
-
 export const helpFooter = [
   { title: "FAQs", link: "/faq" },
   { title: "About Us", link: "/about" },
@@ -224,11 +222,8 @@ export const radiologists = [
     role: "Radiologist",
     location: "Cabinet de Radiologie Khelifa, Constantine, Algeria",
     timing: "Sunday - Thursday, 9AM - 4PM",
-  }
+  },
 ];
-
-
-
 
 export const faqs = [
   {
@@ -363,12 +358,6 @@ export const linksUser = [
 
 export const dashboardLinks = [
   {
-    title: "Home",
-    link: "/",
-    icon: Home,
-    role: ["admin", "doctor", "user"],
-  },
-  {
     title: "Users",
     icon: User,
     role: ["admin", "doctor"],
@@ -379,7 +368,7 @@ export const dashboardLinks = [
     role: ["admin", "user"],
   },
   {
-    title: "BookAppointments",
+    title: "Book-Appointments",
     icon: BookOpen,
     role: ["user", "admin"],
   },
