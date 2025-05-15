@@ -1,12 +1,9 @@
-import { bookAppointment, getAppointmentsCount } from "@/lib/data-fetching";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { bookAppointment } from "@/lib/data-fetching";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
-import { Skeleton } from "@/components/ui/skeleton";
 import { DatePickerDemo } from "./Date";
-
-const MAX_APPOINTMENTS_PER_DAY = 1;
 
 const Form = () => {
   const date = new Date();
@@ -21,38 +18,9 @@ const Form = () => {
     message: "",
   });
 
-  const { data: appointmentCounts, isLoading } = useQuery({
-    queryKey: ["appointmentCounts"],
-    queryFn: getAppointmentsCount,
-  });
-
-  const [unavailableDates, setUnavailableDates] = useState<
-    Record<string, boolean>
-  >({});
-
-  useEffect(() => {
-    if (appointmentCounts) {
-      const unavailable: Record<string, boolean> = {};
-      appointmentCounts.forEach((item: any) => {
-        // Convert the date to UTC before comparison
-        const dateKey = new Date(item.date).toISOString().split("T")[0];
-        if (item.count >= MAX_APPOINTMENTS_PER_DAY) {
-          unavailable[dateKey] = true;
-        }
-      });
-      setUnavailableDates(unavailable);
-    }
-  }, [appointmentCounts]);
-
   const { mutate, isPending } = useMutation({
     mutationKey: ["bookAppointment"],
     mutationFn: (formData: typeof form) => {
-      const dateKey = format(formData.date, "yyyy-MM-dd");
-      if (unavailableDates[dateKey]) {
-        throw new Error(
-          "This date is fully booked. Please select another date."
-        );
-      }
       return bookAppointment({
         ...formData,
         date: format(formData.date, "yyyy-MM-dd"),
@@ -80,11 +48,6 @@ const Form = () => {
         variant: "success",
       });
     },
-    onError: (error: any) => {
-      enqueueSnackbar(error.message || "Failed to book appointment", {
-        variant: "error",
-      });
-    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -108,7 +71,7 @@ const Form = () => {
             <input
               value={form.firstName}
               onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
               type="text"
               id="firstName"
             />
@@ -121,7 +84,7 @@ const Form = () => {
             <input
               value={form.lastName}
               onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
               type="text"
               id="lastName"
             />
@@ -134,7 +97,7 @@ const Form = () => {
             <input
               value={form.number}
               onChange={(e) => setForm({ ...form, number: e.target.value })}
-              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
               type="tel"
               id="number"
               maxLength={10}
@@ -153,7 +116,7 @@ const Form = () => {
               value={form.time}
               onChange={(e) => setForm({ ...form, time: e.target.value })}
               type="time"
-              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="border border-gray-600 rounded-lg px-4 py-2.5 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
               name="time"
               id="time"
             />
@@ -166,7 +129,7 @@ const Form = () => {
             <textarea
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="border border-gray-600 rounded-lg px-4 py-2.5 min-h-[120px] bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="border border-gray-600 rounded-lg px-4 py-2.5 min-h-[120px] bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
               name="message"
               id="message"
             />
@@ -184,16 +147,12 @@ const Form = () => {
 
               <div className="mb-4 border-b border-gray-200"></div>
 
-              {isLoading ? (
-                <Skeleton className="h-[280px] w-full rounded-lg" />
-              ) : (
-                <DatePickerDemo
-                  date={form.date}
-                  setInfo={(selectedDate: Date) =>
-                    setForm({ ...form, date: selectedDate })
-                  }
-                />
-              )}
+              <DatePickerDemo
+                date={form.date}
+                setInfo={(selectedDate: Date) =>
+                  setForm({ ...form, date: selectedDate })
+                }
+              />
             </div>
           </div>
 
