@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { updateAccountType } from "@/lib/data-fetching";
 import LoadingSpinner from "../Spinner";
+import { Router } from "next/router";
 
 export default function PaymentMethod() {
   const [method, setMethod] = useState("card");
@@ -22,12 +23,14 @@ export default function PaymentMethod() {
     year: "",
     cvc: "",
   });
+
   const { mutate, isPending } = useMutation({
     mutationKey: ["payment"],
     mutationFn: updateAccountType,
     onSuccess: () => {
       setDone(true);
-      window.location.reload();
+
+      window.location.href = "/dashboard";
     },
   });
 
