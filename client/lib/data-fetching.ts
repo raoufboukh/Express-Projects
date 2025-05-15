@@ -274,7 +274,7 @@ export async function cancelAppointment(id: string) {
 export async function updateAccountType() {
   try {
     const response = await axiosInstance.put(`/users/account-type`);
-    enqueueSnackbar("Account type updated send to admin!", {
+    enqueueSnackbar("Account Type Update Successful ", {
       variant: "success",
     });
     return response.data;
@@ -305,23 +305,6 @@ export async function acceptNotification(id: string) {
   }
 }
 
-export const acceptAccountType = async (id: string) => {
-  try {
-    const response = await axiosInstance.put(`/users/acceptAccountType/${id}`);
-    enqueueSnackbar("Account type accepted successfully!", {
-      variant: "success",
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error("Accept account type failed:", error);
-    const errorMessage = error.response?.data?.message || error.message;
-    enqueueSnackbar(errorMessage, {
-      variant: "error",
-    });
-    throw error;
-  }
-};
-
 export async function rejectNotification(id: string) {
   try {
     const response = await axiosInstance.put(`/users/rejectNotification/${id}`);
@@ -338,41 +321,6 @@ export async function rejectNotification(id: string) {
     throw error;
   }
 }
-
-export const rejectAccountType = async (id: string) => {
-  try {
-    const response = await axiosInstance.put(`/users/rejectAccountType/${id}`);
-    enqueueSnackbar("Account type rejected successfully!", {
-      variant: "success",
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error("Reject account type failed:", error);
-    const errorMessage = error.response?.data?.message || error.message;
-    enqueueSnackbar(errorMessage, {
-      variant: "error",
-    });
-    throw error;
-  }
-};
-
-export const deleteNotification = async (id: string) => {
-  try {
-    console.log("Deleting notification:", id);
-    const response = await axiosInstance.put(`/users/deleteNotification/${id}`);
-    enqueueSnackbar("Notification deleted successfully!", {
-      variant: "success",
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error("Delete notification failed:", error);
-    const errorMessage = error.response?.data?.message || error.message;
-    enqueueSnackbar(errorMessage, {
-      variant: "error",
-    });
-    throw error;
-  }
-};
 
 export const getAppointmentsCount = async () => {
   try {

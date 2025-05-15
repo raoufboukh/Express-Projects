@@ -240,8 +240,6 @@ export const addResult = async (req: any, res: any) => {
 export const bookAppointment = async (req: any, res: any) => {
   try {
     let { firstName, lastName, number, time, date, message } = req.body;
-
-    // Convert the date to UTC if it's not already
     date = new Date(date);
     const utcDate = new Date(
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
@@ -264,10 +262,18 @@ export const bookAppointment = async (req: any, res: any) => {
         }`,
       });
 
-    // Proceed with booking the appointment
     const admins = await User.find({ role: "admin" });
     if (admins.length === 0)
       return res.status(404).json({ message: "No admins found" });
+
+    if (
+      req.user.role !== "admin" &&
+      req.user.accountType !== "premium" &&
+      req.user.appointments.length === 1
+    )
+      return res.status(400).json({
+        message: "You can only book one appointment upgrade to premium",
+      });
 
     const user = await User.findByIdAndUpdate(
       req.user._id,
@@ -278,7 +284,7 @@ export const bookAppointment = async (req: any, res: any) => {
             lastName,
             number,
             time,
-            date: utcDate, // Store the UTC date in the database
+            date: utcDate,
             message,
           },
         },
@@ -306,7 +312,7 @@ export const bookAppointment = async (req: any, res: any) => {
                   lastName,
                   number,
                   time,
-                  date: utcDate, // Store the UTC date in the notification
+                  date: utcDate,
                   status:
                     user?.appointments[user.appointments.toObject().length - 1]
                       .status,
@@ -448,54 +454,10 @@ export const cancelAppointment = async (req: any, res: any) => {
 
 export const updateAccountType = async (req: any, res: any) => {
   try {
-    const admins = await User.find({ role: "admin" });
-    if (admins.length === 0)
-      return res.status(404).json({ message: "No admins found" });
-    await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $set: {
-          statusType: "pending",
-        },
-      },
-      { new: true }
-    );
-    admins.forEach(async (admin) => {
-      await User.findByIdAndUpdate(admin._id, {
-        $push: {
-          notifications: {
-            message: `Update account type for premium from ${req.user.username}`,
-            appointment: {},
-            senderId: req.user._id,
-          },
-        },
-      });
-    });
-    res.status(200).json({ message: "Updated Account Send to admins" });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const acceptNotification = async (req: any, res: any) => {
-  try {
-    const { id } = req.params;
-    if (!id)
-      return res.status(400).json({ message: "Notification ID required" });
-    const admins = await User.find({ role: "admin" });
-    if (admins.length === 0)
-      return res.status(404).json({ message: "No admins found" });
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 30);
-    const notification = await User.findOne(
-      { _id: req.user._id, "notifications._id": id },
-      { "notifications.$": 1 }
-    );
-    if (!notification || !notification.notifications[0])
-      return res.status(404).json({ message: "Notification not found" });
-    const senderId = notification.notifications[0].senderId;
     await User.findByIdAndUpdate(
-      senderId,
+      req.user._id,
       {
         $set: {
           statusType: "accepted",
@@ -505,47 +467,7 @@ export const acceptNotification = async (req: any, res: any) => {
       },
       { new: true }
     );
-    admins.forEach(async (admin) => {
-      await User.findByIdAndUpdate(admin._id, {
-        $pull: {
-          notifications: { _id: id },
-        },
-      });
-    });
-    res.status(200).json({
-      message: "Account type updated successfully",
-    });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const rejectNotification = async (req: any, res: any) => {
-  try {
-    const { id } = req.params;
-    if (!id)
-      return res.status(400).json({ message: "Notification ID required" });
-    const admins = await User.find({ role: "admin" });
-    if (admins.length === 0)
-      return res.status(404).json({ message: "No admins found" });
-    const notification = await User.findOne(
-      { _id: req.user._id, "notifications._id": id },
-      { "notifications.$": 1 }
-    );
-    if (!notification || !notification.notifications[0])
-      return res.status(404).json({ message: "Notification not found" });
-    const senderId = notification.notifications[0].senderId;
-    await User.findByIdAndUpdate(
-      senderId,
-      {
-        $set: {
-          accountTypeExpire: null,
-          accountType: "basic",
-          statusType: null,
-        },
-      },
-      { new: true }
-    );
+    res.status(200).json({ message: "Account type updated successfully" });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -619,6 +541,7 @@ export const acceptAppointment = async (req: any, res: any) => {
 
     const senderId = notification.notifications[0].senderId;
     const appointmentId = notification.notifications[0].appointment._id;
+
     await User.findOneAndUpdate(
       {
         _id: senderId,
@@ -631,6 +554,7 @@ export const acceptAppointment = async (req: any, res: any) => {
       },
       { new: true }
     );
+
     await User.findOneAndUpdate(
       {
         _id: req.user._id,
@@ -644,43 +568,60 @@ export const acceptAppointment = async (req: any, res: any) => {
       { new: true }
     );
 
-    if (req.user.role === "admin") {
-      admins.forEach(async (admin) => {
-        await User.findByIdAndUpdate(admin._id, {
-          $pull: {
-            notifications: { _id: id },
+    if (senderId && req.user._id.toString() === senderId.toString()) {
+      await User.findOneAndUpdate(
+        {
+          _id: req.user._id,
+          "appointments._id": appointmentId,
+        },
+        {
+          $set: {
+            "appointments.$.status": "accepted",
           },
-          $push: {
-            appointments: {
-              _id: appointmentId,
-              firstName: notification.notifications[0].appointment.firstName,
-              lastName: notification.notifications[0].appointment.lastName,
-              number: notification.notifications[0].appointment.number,
-              time: notification.notifications[0].appointment.time,
-              date: notification.notifications[0].appointment.date,
-              status: "accepted",
-            },
-          },
-        });
-      });
-    } else {
-      admins.forEach(async (admin) => {
-        await User.findOneAndUpdate(
-          {
-            _id: admin._id,
-            "notifications._id": id,
-          },
-          {
+        },
+        { new: true }
+      );
+      await Promise.all(
+        admins.map(async (admin) => {
+          await User.findByIdAndUpdate(admin._id, {
             $pull: {
               notifications: { _id: id },
             },
-            $set: {
-              "appointments.$.status": "accepted",
+          });
+        })
+      );
+    } else {
+      await Promise.all(
+        admins.map(async (admin) => {
+          await User.findByIdAndUpdate(admin._id, {
+            $pull: {
+              notifications: { _id: id },
             },
+          });
+          const adminDoc = await User.findById(admin._id);
+          const exists = adminDoc?.appointments?.some(
+            (a: any) => a._id.toString() === appointmentId.toString()
+          );
+          if (!exists) {
+            await User.findByIdAndUpdate(admin._id, {
+              $push: {
+                appointments: {
+                  _id: appointmentId,
+                  firstName:
+                    notification.notifications[0].appointment.firstName,
+                  lastName: notification.notifications[0].appointment.lastName,
+                  number: notification.notifications[0].appointment.number,
+                  time: notification.notifications[0].appointment.time,
+                  date: notification.notifications[0].appointment.date,
+                  status: "accepted",
+                },
+              },
+            });
           }
-        );
-      });
+        })
+      );
     }
+
     res.status(200).json({
       message: "Appointment accept",
     });
