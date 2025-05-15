@@ -1,8 +1,4 @@
-import {
-  acceptNotification,
-  deleteNotification,
-  rejectNotification,
-} from "@/lib/data-fetching";
+import { acceptNotification, rejectNotification } from "@/lib/data-fetching";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { MdDelete, MdCheck, MdClose } from "react-icons/md";
@@ -21,10 +17,8 @@ const AppointmentNotification = ({ item, fetchUserData }: Props) => {
     mutationFn: () => {
       if (message === "Accepter") {
         return acceptNotification(id);
-      } else if (message === "Refuser") {
-        return rejectNotification(id);
       } else {
-        return deleteNotification(id);
+        return rejectNotification(id);
       }
     },
     onSuccess: () => {

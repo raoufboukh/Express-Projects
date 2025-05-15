@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 import { check } from "@/lib/data-fetching";
-import TypeNotification from "./TypeNotif";
 import AppointmentNotification from "./AppNotification";
 import LoadingSpinner from "../Spinner";
 
@@ -124,20 +123,15 @@ function Notifications() {
             } grid grid-cols-1 lg:grid-cols-2 gap-2`}
           >
             {filteredNotifications.length > 0 ? (
-              filteredNotifications.map((item: any, i: number) =>
-                item.appointment?.firstName ? (
-                  <AppointmentNotification
-                    key={i}
-                    item={item}
-                    fetchUserData={fetchUserData}
-                  />
-                ) : (
-                  <TypeNotification
-                    key={i}
-                    item={item}
-                    fetchUserData={fetchUserData}
-                  />
-                )
+              filteredNotifications.map(
+                (item: any, i: number) =>
+                  item.appointment?.firstName && (
+                    <AppointmentNotification
+                      key={i}
+                      item={item}
+                      fetchUserData={fetchUserData}
+                    />
+                  )
               )
             ) : (
               <div className="lg:col-span-2 text-white bg-gray-800 p-4 rounded-md">
