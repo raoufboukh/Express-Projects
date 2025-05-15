@@ -16,6 +16,9 @@ import Scan from "@/components/Scans/Scan";
 import Form from "@/components/Appointment/form-app";
 import Settings from "@/components/Settings/Settings";
 import Xray from "@/components/Scans/Xray";
+import { FaCrown } from "react-icons/fa";
+import Plan from "@/components/Pricing/Plan";
+import PaymentForm from "@/components/Pricing/Payment";
 
 type User = {
   username: string;
@@ -26,12 +29,13 @@ type User = {
   appointments: any[];
   scans: any[];
   accountType: string;
+  accountTypeExpire?: string;
 };
 
 function AppSidebar() {
   const router = useRouter();
   const [activeTheme, setActiveTheme] = useState("dark");
-  const [activeItem, setActiveItem] = useState("");
+  const [activeItem, setActiveItem] = useState("Book-Appointments");
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -68,14 +72,36 @@ function AppSidebar() {
       />
 
       <div className={`flex-1 ${theme.main} overflow-y-auto`}>
-        <header className={`${theme.header} px-6 py-4 sm:py-3.5 md:py-4.5`}>
+        <header
+          className={`${theme.header} px-6 py-4 sm:py-3.5 md:py-3.5 flex items-center justify-between`}
+        >
           <h1
             className={`${
               activeTheme === "light" ? "text-black" : "text-white"
-            } sm:text-2xl text-lg font-bold`}
+            } sm:text-2xl text-xs font-bold`}
           >
             Welcome to your dashboard
           </h1>
+          {user?.role !== "admin" &&
+            (user?.accountType === "basic" ? (
+              <p
+                className="flex items-center gap-2 bg-primary/60 text-white hover:bg-primary/70 transition-all duration-300 px-3 py-2 rounded-4xl cursor-pointer"
+                onClick={() => setActiveItem("Pricing")}
+              >
+                <FaCrown />{" "}
+                <span className="md:block hidden">Upgrade Premium</span>{" "}
+              </p>
+            ) : (
+              <div className="flex items-center flex-col sm:text-base my-2 text-xs">
+                <p className="text-white">
+                  {user?.accountTypeExpire
+                    ? new Date(
+                        new Date(user.accountTypeExpire).getTime() + 60 * 1000
+                      ).toLocaleString()
+                    : ""}
+                </p>
+              </div>
+            ))}
         </header>
         <main className="p-6">
           {activeItem === "" ? (
@@ -94,7 +120,7 @@ function AppSidebar() {
             <Appointments />
           ) : activeItem === "Results Scans" ? (
             <Scans />
-          ) : activeItem === "BookAppointments" ? (
+          ) : activeItem === "Book-Appointments" ? (
             <Form />
           ) : activeItem === "Scan" ? (
             <Scan />
@@ -102,7 +128,11 @@ function AppSidebar() {
             <Settings user={user} />
           ) : activeItem === "Results-Xray" ? (
             <Xray />
-          ) : null}
+          ) : activeItem === "Pricing" ? (
+            <Plan user={user} setActiveItem={setActiveItem} />
+          ) : (
+            <PaymentForm />
+          )}
         </main>
       </div>
     </div>
