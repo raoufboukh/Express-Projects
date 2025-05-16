@@ -64,10 +64,11 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # vercel
-.vercel
+.vercelsdf
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 best_multiclass.keras
+best_binary.keras

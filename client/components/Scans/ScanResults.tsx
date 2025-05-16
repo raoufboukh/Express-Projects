@@ -1,13 +1,16 @@
 import { handleAddScan } from "@/lib/handleScan";
 import { enqueueSnackbar } from "notistack";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"; // For animations
+import { useUser } from "@/lib/UserProvider";
+import { check } from "@/lib/data-fetching";
 
 interface ScanResultProps {
   result: any;
   setNumber: (number: number) => void;
   image: File | string | null;
   setImage: (image: File | null) => void;
+  saveCompleted?: boolean;
 }
 
 const ScanResult = ({
@@ -15,8 +18,25 @@ const ScanResult = ({
   setNumber,
   image,
   setImage,
+  saveCompleted = false,
 }: ScanResultProps) => {
   const isScanAdded = useRef(false);
+  const [accountType, setAccountType] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAccountType = async () => {
+      try {
+        const data = await check();
+        setAccountType(data.accountType);
+      } catch (error) {
+        console.error("Error fetching account type:", error);
+      }
+    };
+
+    fetchAccountType();
+  }, []);
+
+  const isPremium = accountType === "premium";
 
   useEffect(() => {
     const AllResults = async () => {
@@ -46,17 +66,49 @@ const ScanResult = ({
     };
 
     AllResults();
-  }, [result, image]);
+  }, [result, image, saveCompleted]);
 
-  const maxProbability =
-    result?.predictions && result.predictions[0]
-      ? Math.max(...result.predictions[0]) * 100
-      : 0;
+  const getPredictedClass = () => {
+    if (!result) return "Unknown";
+
+    if (result.predictions && result.predictions.predicted_class) {
+      return result.predictions.predicted_class;
+    } else if (result.predicted_class) {
+      return result.predicted_class;
+    }
+    return "Unknown";
+  };
+
+  const getMaxProbability = () => {
+    if (!result) return 0;
+
+    let predictions;
+
+    // Handle nested structure
+    if (result.predictions && result.predictions.predictions) {
+      predictions = result.predictions.predictions[0];
+    }
+    // Handle flat structure
+    else if (result.predictions && Array.isArray(result.predictions[0])) {
+      predictions = result.predictions[0];
+    }
+    // No valid predictions found
+    else {
+      return 0;
+    }
+
+    return predictions ? Math.max(...predictions) * 100 : 0;
+  };
+
+  const predictedClass = getPredictedClass();
+  const maxProbability = getMaxProbability();
 
   const getStatusColor = () => {
     switch (result?.predicted_class) {
       case "Normal":
         return "bg-green-100 border-green-400";
+      case "Disease": // New for binary model
+        return "bg-red-100 border-red-400";
       case "Pneumonia":
       case "Viral Pneumonia":
         return "bg-red-100 border-red-400";
@@ -80,6 +132,8 @@ const ScanResult = ({
     switch (predictedClass) {
       case "Normal":
         return "Keep up the good work! Maintain a healthy lifestyle with regular exercise, clean air, and periodic check-ups.";
+      case "Disease": // New for binary model
+        return "The AI has detected abnormalities in your X-ray. Please consult with a healthcare provider for a detailed diagnosis.";
       case "Pneumonia":
         return "Pneumonia can be serious. Stay hydrated, rest, and consult your doctor for proper treatment and possible antibiotics.";
       case "Lung Opacity":
@@ -90,6 +144,8 @@ const ScanResult = ({
         return "If you're feeling unwell, consult a medical professional for accurate guidance and next steps.";
     }
   };
+
+  // Calculate max probability correctly for both binary and multiclass
 
   return (
     <motion.div
@@ -104,12 +160,12 @@ const ScanResult = ({
         </h3>
         <div
           className={`px-4 py-2 rounded-full ${
-            result?.predicted_class === "Normal"
+            predictedClass === "Normal"
               ? "bg-green-200 text-green-800"
               : "bg-red-200 text-red-800"
           } font-semibold`}
         >
-          {result?.predicted_class || "Unknown"}
+          {predictedClass || "Unknown"}
         </div>
       </div>
 
@@ -121,9 +177,7 @@ const ScanResult = ({
           <div className="w-full bg-gray-200 rounded-full h-4">
             <div
               className={`h-4 rounded-full ${
-                result?.predicted_class === "Normal"
-                  ? "bg-green-500"
-                  : "bg-red-500"
+                predictedClass === "Normal" ? "bg-green-500" : "bg-red-500"
               } transition-all duration-1000`}
               style={{ width: `${maxProbability}%` }}
             ></div>
@@ -132,14 +186,39 @@ const ScanResult = ({
             {maxProbability.toFixed(2)}% confident
           </p>
         </div>
-        {result?.predicted_class && (
+
+        {predictedClass && (
           <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg shadow-sm">
             <h4 className="text-md font-semibold text-blue-800 mb-2">
               Health Tip
             </h4>
             <p className="text-sm text-blue-700">
-              {getHealthTip(result.predicted_class)}
+              {getHealthTip(predictedClass)}
             </p>
+          </div>
+        )}
+
+        {!isPremium && predictedClass === "Disease" && (
+          <div className="mt-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-lg shadow-sm">
+            <h4 className="text-md font-semibold text-amber-800 mb-2">
+              Premium Account Feature
+            </h4>
+            <p className="text-sm text-amber-700">
+              Upgrade to a premium account to get detailed classification of the
+              specific condition detected.
+            </p>
+            <button
+              className="mt-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm"
+              onClick={() => (window.location.href = "/pricing")}
+            >
+              Upgrade Now
+            </button>
+          </div>
+        )}
+
+        {saveCompleted && (
+          <div className="mt-4 p-3 bg-green-50 border border-green-300 rounded-lg text-green-700 text-sm">
+            This result has been saved to your scan history.
           </div>
         )}
 
@@ -161,6 +240,14 @@ const ScanResult = ({
           Results are generated by AI and should be reviewed by a medical
           professional.
         </p>
+        {!isPremium && (
+          <p className="mt-2 text-amber-600">
+            Free account provides basic classification only.
+            <a href="/pricing" className="underline ml-1">
+              Upgrade for detailed analysis
+            </a>
+          </p>
+        )}
       </div>
     </motion.div>
   );
