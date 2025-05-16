@@ -10,24 +10,19 @@ class ClassifyImageView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            # Get the uploaded image
             file = request.FILES['image']
             
-            # Check if premium parameter is provided (default to False)
             is_premium = request.data.get('is_premium', 'false').lower() == 'true'
-            
-            # Open the image - don't convert to RGB since we need grayscale
+
             image = Image.open(file)
             
-            # Convert to numpy array
             image_array = np.array(image)
             
-            # Classify the image based on account type
             predictions = classify_image(image_array, is_premium)
             return Response({"predictions": predictions})
         except Exception as e:
             import traceback
-            print(traceback.format_exc())  # Print detailed error info
+            print(traceback.format_exc())
             return Response({"error": str(e)}, status=500)
 
 class ClassifyImageBinaryView(APIView):

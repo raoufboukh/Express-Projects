@@ -9,7 +9,6 @@ export async function classifyImage(
   formData.append("image", image);
 
   try {
-    // Choose endpoint based on premium status
     const endpoint = isPremiumOnly
       ? "/model/classify/multiclass"
       : "/model/classify";
@@ -35,8 +34,6 @@ export async function classifyImage(
     throw error;
   }
 }
-
-// Function specifically for binary classification (free tier)
 export async function classifyImageBinary(image: File) {
   const formData = new FormData();
   formData.append("image", image);

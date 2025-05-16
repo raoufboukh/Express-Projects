@@ -35,11 +35,9 @@ function Scan() {
     }
     setNumber((prev) => prev + 1);
     try {
-      // Use the isPremium flag to determine which endpoint to use
-      const response = await classifyImage(image, false); // Always use the main endpoint which routes based on user type
+      const response = await classifyImage(image, false);
       setResult(response.predictions);
 
-      // Show appropriate messages based on account type
       if (!isPremium) {
         enqueueSnackbar(
           "Free account: Basic classification provided. Upgrade for detailed analysis.",
@@ -48,7 +46,7 @@ function Scan() {
       }
     } catch (error) {
       console.error("Error classifying image:", error);
-      setNumber(0); // Reset to show form again
+      setNumber(0);
     }
   };
 

@@ -7,8 +7,7 @@ import { ProtectRoute } from "middleware/middleware.ts";
 const router = express.Router();
 const upload = multer();
 
-// Helper function to forward classification request
-const forwardClassificationRequest = async (endpoint, file) => {
+const forwardClassificationRequest = async (endpoint: any, file: any) => {
   const formData = new FormData();
   formData.append("image", file.buffer, file.originalname);
 
@@ -27,12 +26,11 @@ const forwardClassificationRequest = async (endpoint, file) => {
   }
 };
 
-// Main classify endpoint that routes based on account type
 router.post(
   "/classify",
   ProtectRoute,
   upload.single("image"),
-  async (req, res) => {
+  async (req: any, res: any) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No image file provided" });
@@ -45,7 +43,6 @@ router.post(
       formData.append("image", req.file.buffer, req.file.originalname);
       formData.append("is_premium", isPremium ? "true" : "false");
 
-      // Send request to Django service
       const response = await axios.post(
         "http://127.0.0.1:8000/api/classify/",
         formData,
@@ -55,7 +52,7 @@ router.post(
       );
 
       res.json(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error in classification:", error);
       res.status(500).json({
         error: "Classification failed",
@@ -66,38 +63,40 @@ router.post(
 );
 
 // Binary classification endpoint (free tier)
-router.post("/classify/binary", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No image file provided" });
-    }
-
-    const result = await forwardClassificationRequest(
-      "classify/binary/",
-      req.file
-    );
-    res.json(result);
-  } catch (error) {
-    console.error("Error in binary classification:", error);
-    res.status(500).json({
-      error: "Binary classification failed",
-      message: error.message,
-    });
-  }
-});
-
-// Multiclass classification endpoint (premium tier)
 router.post(
-  "/classify/multiclass",
-  ProtectRoute,
+  "/classify/binary",
   upload.single("image"),
-  async (req, res) => {
+  async (req: any, res: any) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No image file provided" });
       }
 
-      // Check if user has premium account
+      const result = await forwardClassificationRequest(
+        "classify/binary/",
+        req.file
+      );
+      res.json(result);
+    } catch (error: any) {
+      console.error("Error in binary classification:", error);
+      res.status(500).json({
+        error: "Binary classification failed",
+        message: error.message,
+      });
+    }
+  }
+);
+
+router.post(
+  "/classify/multiclass",
+  ProtectRoute,
+  upload.single("image"),
+  async (req: any, res: any) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No image file provided" });
+      }
+
       const user = req.user;
       if (!user || user.accountType !== "premium") {
         return res.status(403).json({
@@ -111,7 +110,7 @@ router.post(
         req.file
       );
       res.json(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error in multiclass classification:", error);
       res.status(500).json({
         error: "Multiclass classification failed",

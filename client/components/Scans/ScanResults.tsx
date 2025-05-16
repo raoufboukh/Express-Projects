@@ -1,8 +1,7 @@
 import { handleAddScan } from "@/lib/handleScan";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion"; // For animations
-import { useUser } from "@/lib/UserProvider";
+import { motion } from "framer-motion";
 import { check } from "@/lib/data-fetching";
 
 interface ScanResultProps {
@@ -84,16 +83,11 @@ const ScanResult = ({
 
     let predictions;
 
-    // Handle nested structure
     if (result.predictions && result.predictions.predictions) {
       predictions = result.predictions.predictions[0];
-    }
-    // Handle flat structure
-    else if (result.predictions && Array.isArray(result.predictions[0])) {
+    } else if (result.predictions && Array.isArray(result.predictions[0])) {
       predictions = result.predictions[0];
-    }
-    // No valid predictions found
-    else {
+    } else {
       return 0;
     }
 
@@ -107,7 +101,7 @@ const ScanResult = ({
     switch (result?.predicted_class) {
       case "Normal":
         return "bg-green-100 border-green-400";
-      case "Disease": // New for binary model
+      case "Disease":
         return "bg-red-100 border-red-400";
       case "Pneumonia":
       case "Viral Pneumonia":
@@ -132,7 +126,7 @@ const ScanResult = ({
     switch (predictedClass) {
       case "Normal":
         return "Keep up the good work! Maintain a healthy lifestyle with regular exercise, clean air, and periodic check-ups.";
-      case "Disease": // New for binary model
+      case "Disease":
         return "The AI has detected abnormalities in your X-ray. Please consult with a healthcare provider for a detailed diagnosis.";
       case "Pneumonia":
         return "Pneumonia can be serious. Stay hydrated, rest, and consult your doctor for proper treatment and possible antibiotics.";
@@ -144,8 +138,6 @@ const ScanResult = ({
         return "If you're feeling unwell, consult a medical professional for accurate guidance and next steps.";
     }
   };
-
-  // Calculate max probability correctly for both binary and multiclass
 
   return (
     <motion.div
