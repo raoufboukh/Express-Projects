@@ -37,7 +37,7 @@ const ScanForm = ({ image, setImage, classifyImage }: ScanFormProps) => {
         onChange={handleUpload}
       />
       <div
-        className="bg-gray-800 rounded-md shadow-md border-2 border-dashed border-white cursor-pointer flex items-center justify-center h-80 sm:h-110 sm:w-[600px]"
+        className="bg-gray-800 rounded-md shadow-md border-2 border-dashed border-white cursor-pointer flex items-center justify-center h-80 w-[250px] sm:h-110 sm:w-[500px] md:w-[600px]"
         onClick={() => ref.current?.click()}
       >
         {image ? (
