@@ -418,8 +418,29 @@ export const cancelAppointment = async (req: any, res: any) => {
     if (admins.length === 0)
       return res.status(404).json({ message: "No admins found" });
 
+    let senderId;
+    if (admins[0].appointments) {
+      const appointment = admins[0].appointments.find(
+        (a: any) => a._id.toString() === appointmentId.toString()
+      );
+      senderId = appointment ? appointment.senderId : undefined;
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
+      {
+        $pull: {
+          appointments: { _id: appointmentId },
+        },
+      },
+      { new: true }
+    );
+
+    const userSender = await User.findOneAndUpdate(
+      {
+        _id: senderId,
+        "appointments._id": appointmentId,
+      },
       {
         $pull: {
           appointments: { _id: appointmentId },
@@ -615,6 +636,7 @@ export const acceptAppointment = async (req: any, res: any) => {
                   time: notification.notifications[0].appointment.time,
                   date: notification.notifications[0].appointment.date,
                   status: "accepted",
+                  senderId: senderId,
                 },
               },
             });

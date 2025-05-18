@@ -25,6 +25,10 @@ const appointments = new mongoose.Schema({
     type: String,
     default: "pending",
   },
+  senderId: {
+    type: String,
+    default: null,
+  },
 });
 
 const scanResults = new mongoose.Schema({
