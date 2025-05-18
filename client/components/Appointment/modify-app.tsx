@@ -65,6 +65,24 @@ const Modify: React.FC<ModifyProps> = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
+    if (
+      !info.firstName.trim() ||
+      !info.lastName.trim() ||
+      !info.number.trim() ||
+      !info.message.trim()
+    ) {
+      return enqueueSnackbar(
+        !info.firstName.trim()
+          ? "First Name required"
+          : !info.lastName.trim()
+          ? "Last Name required"
+          : !info.number.trim()
+          ? "Phone Number required"
+          : "Message required",
+        { variant: "error" }
+      );
+    }
+
     if (info.message.length < 10) {
       enqueueSnackbar("Message must be at least 10 characters", {
         variant: "error",

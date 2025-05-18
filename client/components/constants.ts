@@ -360,7 +360,7 @@ export const dashboardLinks = [
   {
     title: "Users",
     icon: User,
-    role: ["admin", "doctor"],
+    role: ["admin"],
   },
   {
     title: "Doctors",
@@ -380,33 +380,33 @@ export const dashboardLinks = [
   {
     title: "Notifications",
     icon: Inbox,
-    role: ["admin", "doctor"],
+    role: ["admin"],
   },
   {
     title: "Scan",
     icon: ScanLine,
-    role: ["user", "admin", "doctor"],
+    role: ["user", "admin"],
   },
   {
     title: "Results-Xray",
     icon: FaXRay,
-    role: ["user", "admin", "doctor"],
+    role: ["user"],
   },
   {
     title: "Results Scans",
     icon: Scan,
-    role: ["user", "admin", "doctor"],
+    role: ["user", "admin"],
   },
   {
     title: "Settings",
     icon: Settings,
-    role: ["admin", "doctor", "user"],
+    role: ["admin", "user"],
   },
   {
     title: "Logout",
     link: "/",
     icon: LogOut,
-    role: ["admin", "doctor", "user"],
+    role: ["admin", "user"],
   },
 ];
 

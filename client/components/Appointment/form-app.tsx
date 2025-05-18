@@ -52,6 +52,23 @@ const Form = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (
+      !form.firstName.trim() ||
+      !form.lastName.trim() ||
+      !form.number.trim() ||
+      !form.message.trim()
+    ) {
+      return enqueueSnackbar(
+        !form.firstName.trim()
+          ? "First Name required"
+          : !form.lastName.trim()
+          ? "Last Name required"
+          : !form.number.trim()
+          ? "Phone Number required"
+          : "Message required",
+        { variant: "error" }
+      );
+    }
     mutate({
       ...form,
     });
