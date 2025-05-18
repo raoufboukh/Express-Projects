@@ -438,6 +438,7 @@ export const cancelAppointment = async (req: any, res: any) => {
           {
             $pull: {
               notifications: { "appointment._id": appointmentId },
+              appointments: { _id: appointmentId },
             },
           },
           { new: true }

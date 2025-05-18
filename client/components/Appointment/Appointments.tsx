@@ -151,11 +151,7 @@ function Appointments() {
                             setId(item._id);
                             mutate();
                           }}
-                          disabled={
-                            (item.status === "accepted" &&
-                              new Date() <= new Date(item.date)) ||
-                            isPending
-                          }
+                          disabled={isPending}
                           className="disabled:cursor-auto disabled:opacity-30 cursor-pointer"
                           title="Cancel"
                         >
