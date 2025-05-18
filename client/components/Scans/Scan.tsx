@@ -53,27 +53,11 @@ function Scan() {
   return (
     <div className="flex flex-col items-center gap-8">
       {number === 0 ? (
-        <>
-          <ScanForm
-            image={image}
-            setImage={setImage}
-            classifyImage={handleClassifyImage}
-          />
-          {!isPremium && (
-            <div className="text-center p-4 bg-amber-50 border border-amber-200 rounded-lg max-w-md">
-              <p className="text-amber-700 text-sm">
-                <strong>Free Account:</strong> Your analysis will provide basic
-                classification (Normal vs Disease).
-              </p>
-              <p className="text-amber-700 text-sm mt-2">
-                <a href="/upgrade" className="underline font-medium">
-                  Upgrade to Premium
-                </a>{" "}
-                for detailed disease classification and advanced analytics.
-              </p>
-            </div>
-          )}
-        </>
+        <ScanForm
+          image={image}
+          setImage={setImage}
+          classifyImage={handleClassifyImage}
+        />
       ) : (
         <ScanResult
           result={result}
