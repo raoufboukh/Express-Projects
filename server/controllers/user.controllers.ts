@@ -2,21 +2,11 @@ import mongoose from "mongoose";
 import { User } from "../models/auth.models.ts";
 import bcrypt from "bcrypt";
 import cloudinary from "lib/cloudinary.ts";
-import { Doctor } from "models/doctor.models.ts";
 
 export const getUsers = async (req: any, res: any) => {
   try {
     const users = await User.find({ role: "user" }).select("-password");
     res.status(200).json(users);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getDoctors = async (req: any, res: any) => {
-  try {
-    const doctors = await Doctor.find();
-    res.status(200).json(doctors);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -33,8 +23,8 @@ export const getOneUser = async (req: any, res: any) => {
 
 export const addUser = async (req: any, res: any) => {
   try {
-    const { username, email, password, role, region, commune } = req.body;
-    if (!username || !email || !password || !role || !region || !commune)
+    const { username, email, password, region, commune } = req.body;
+    if (!username || !email || !password || !region || !commune)
       return res.status(400).json({
         message: `${
           !username
@@ -43,8 +33,6 @@ export const addUser = async (req: any, res: any) => {
             ? "email is required"
             : !password
             ? "password is required"
-            : !role
-            ? "role is required"
             : !region
             ? "region is required"
             : "commune is required"
@@ -64,7 +52,6 @@ export const addUser = async (req: any, res: any) => {
       username,
       email,
       password: hashedPass,
-      role,
       region,
       commune,
     });
@@ -138,66 +125,6 @@ export const getScanResults = async (req: any, res: any) => {
     const user = await User.findById(id).select("scanResults");
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user.scanResults);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const addDoctor = async (req: any, res: any) => {
-  try {
-    const {
-      username,
-      number,
-      region,
-      commune,
-      startDay,
-      endDay,
-      startTime,
-      endTime,
-    } = req.body;
-    if (
-      !username ||
-      !region ||
-      !commune ||
-      !startDay ||
-      !endDay ||
-      !startTime ||
-      !number ||
-      !endTime
-    )
-      return res.status(400).json({
-        message: `${
-          !username
-            ? "username is required"
-            : !region
-            ? "region is required"
-            : !commune
-            ? "commune is required"
-            : !startDay
-            ? "startDay is required"
-            : !endDay
-            ? "endDay is required"
-            : !startTime
-            ? "startTime is required"
-            : !number
-            ? "number is required"
-            : "endTime is required"
-        }`,
-      });
-    const user = new Doctor({
-      username,
-      number,
-      region,
-      commune,
-      startDay,
-      endDay,
-      startTime,
-      endTime,
-    });
-    if (user) {
-      await user.save();
-    }
-    res.status(201).json({ message: "Doctor added successfully" });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -648,26 +575,6 @@ export const acceptAppointment = async (req: any, res: any) => {
     res.status(200).json({
       message: "Appointment accept",
     });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const deleteNotification = async (req: any, res: any) => {
-  try {
-    const { id } = req.params;
-    if (!id)
-      return res.status(400).json({ message: "Notification ID required" });
-    await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $pull: {
-          notifications: { _id: id },
-        },
-      },
-      { new: true }
-    );
-    res.status(200).json({ message: "Notification deleted" });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

@@ -6,7 +6,6 @@ import {
   addUser,
   bookAppointment,
   cancelAppointment,
-  deleteNotification,
   deleteUser,
   getAppointmentsCount,
   getOneUser,
@@ -43,6 +42,5 @@ userRouter.put(
 userRouter.put("/rejectNotification/:id", ProtectRoute, rejectAppointment);
 userRouter.put("/acceptNotification/:id", ProtectRoute, acceptAppointment);
 userRouter.get("/scanResults/:id", ProtectRoute, getScanResults);
-userRouter.put("/deleteNotification/:id", ProtectRoute, deleteNotification);
 userRouter.get("/appointments/count", getAppointmentsCount);
 export default userRouter;

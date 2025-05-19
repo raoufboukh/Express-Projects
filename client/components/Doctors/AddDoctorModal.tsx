@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addDoctor } from "@/lib/data-fetching";
 import { IoMdClose } from "react-icons/io";
-import { communes, wilayas } from "./constants";
+import { communes, wilayas } from "../constants";
 
 function AddDoctorModal({ setShow }: { setShow: (show: boolean) => void }) {
   const [username, setUsername] = useState("");
@@ -38,7 +38,6 @@ function AddDoctorModal({ setShow }: { setShow: (show: boolean) => void }) {
     });
   };
 
-  // Array of weekdays for the day selectors
   const weekdays = [
     "Monday",
     "Tuesday",
@@ -76,6 +75,8 @@ function AddDoctorModal({ setShow }: { setShow: (show: boolean) => void }) {
               id="number"
               onChange={(e) => setNumber(e.target.value)}
               value={number}
+              minLength={10}
+              maxLength={10}
             />
           </div>
           <div className="">

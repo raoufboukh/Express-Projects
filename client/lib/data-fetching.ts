@@ -68,12 +68,7 @@ export const addUser = async (info: any) => {
   try {
     console.log("Adding user:", info);
     const { data } = await axiosInstance.post("/users", info);
-    enqueueSnackbar(
-      `${
-        info.role.charAt(0).toUpperCase() + info.role.slice(1)
-      } added successfully!`,
-      { variant: "success" }
-    );
+    enqueueSnackbar(`User added successfully!`, { variant: "success" });
     return data;
   } catch (error: any) {
     console.error("Add user failed:", error);
@@ -88,10 +83,7 @@ export const addUser = async (info: any) => {
 export async function deleteUser(id: string, role: string) {
   try {
     const { data } = await axiosInstance.delete(`/users/${id}`);
-    enqueueSnackbar(
-      `${role.charAt(0).toUpperCase() + role.slice(1)} deleted successfully!`,
-      { variant: "success" }
-    );
+    enqueueSnackbar(`User deleted successfully!`, { variant: "success" });
     return data;
   } catch (error: any) {
     console.error("Delete user failed:", error);
@@ -183,6 +175,21 @@ export async function addDoctor(form: any) {
     return data;
   } catch (error: any) {
     console.error("Get doctor failed:", error);
+    const errorMessage = error.response?.data?.message || error.message;
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
+    throw error;
+  }
+}
+
+export async function deleteDoctor(id: string) {
+  try {
+    const { data } = await axiosInstance.delete(`/doctors/delete/${id}`);
+    enqueueSnackbar("Doctor deleted successfully!", { variant: "success" });
+    return data;
+  } catch (error: any) {
+    console.error("Delete doctor failed:", error);
     const errorMessage = error.response?.data?.message || error.message;
     enqueueSnackbar(errorMessage, {
       variant: "error",

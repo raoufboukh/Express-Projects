@@ -4,12 +4,12 @@ import { addUser } from "@/lib/data-fetching";
 import { IoMdClose } from "react-icons/io";
 import { communes, wilayas } from "../constants";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { enqueueSnackbar } from "notistack";
 
 function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("doctor");
   const [region, setRegion] = useState(wilayas[0]);
   const [commune, setCommune] = useState("");
   const [show, setSHow] = useState(false);
@@ -26,7 +26,13 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ username, email, password, role, region, commune });
+    if (!username.trim() || !password.trim()) {
+      return enqueueSnackbar(
+        !username.trim() ? "Username required" : "Password required",
+        { variant: "error" }
+      );
+    }
+    mutation.mutate({ username, email, password, region, commune });
   };
 
   return (
@@ -77,19 +83,6 @@ function AddUser({ setShow }: { setShow: (show: boolean) => void }) {
                 className={`${show ? "" : "hidden"}`}
               />
             </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="role">Role</label>
-            <select
-              className="border border-gray-300 rounded-md px-2 py-1"
-              name="role"
-              id="role"
-              onChange={(e) => setRole(e.target.value)}
-              value={role}
-            >
-              <option value="doctor">Doctor</option>
-              <option value="user">User</option>
-            </select>
           </div>
           <div className="">
             <label htmlFor="reg" className="block mb-1">

@@ -30,7 +30,7 @@ const ListDoctors = ({ user, item, mutate }: any) => {
       {user && user.role === "admin" && (
         <button
           className="cursor-pointer text-red-500 px-3 rounded-md py-2 transition-all duration-300 hover:text-red-500/60"
-          onClick={() => mutate({ id: item._id, role: item.role })}
+          onClick={() => mutate({ id: item._id })}
         >
           <MdDelete className="text-lg" />
         </button>

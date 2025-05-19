@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteUser, getDoctors } from "@/lib/data-fetching";
+import { deleteDoctor, getDoctors } from "@/lib/data-fetching";
 import { useEffect, useState } from "react";
 import ListDoctors from "./ListDoctors";
 import DoctorsCommune from "./DoctorsCommune";
 import { MdAdd, MdSearch } from "react-icons/md";
 import LoadingSpinner from "../Spinner";
-import AddDoctorModal from "../AddDoctorModal";
+import AddDoctorModal from "./AddDoctorModal";
 
 function Doctors({ user }: any) {
   const [show, setShow] = useState(false);
@@ -14,12 +14,10 @@ function Doctors({ user }: any) {
     queryKey: ["doctors"],
     queryFn: getDoctors,
   });
-  console.log("doctors", data);
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: ({ id, role }: { id: any; role: string }) =>
-      deleteUser(id, role),
+    mutationFn: ({ id }: { id: any }) => deleteDoctor(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
     },
