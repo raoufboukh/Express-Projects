@@ -37,13 +37,6 @@ function Scan() {
     try {
       const response = await classifyImage(image, false);
       setResult(response.predictions);
-
-      if (!isPremium) {
-        enqueueSnackbar(
-          "Free account: Basic classification provided. Upgrade for detailed analysis.",
-          { variant: "info" }
-        );
-      }
     } catch (error) {
       console.error("Error classifying image:", error);
       setNumber(0);
